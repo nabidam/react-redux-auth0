@@ -17,7 +17,7 @@ class Callback extends Component {
   };
   componentDidMount = () => {
     this.props.auth.parseHash((err, authResult) => {
-      console.log(authResult);
+      // console.log(authResult);
       if (authResult && authResult.accessToken && authResult.idToken) {
         console.log("ok");
         this.props.loginSuccess(authResult);
@@ -32,7 +32,7 @@ class Callback extends Component {
   };
 
   render() {
-    return <h3>logging in........</h3>;
+    return <p>logging in........</p>;
   }
 }
 

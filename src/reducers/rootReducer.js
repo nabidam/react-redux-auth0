@@ -14,6 +14,7 @@ const initState = {
   access_token: null,
   id_token: null,
   expires_at: null,
+  isDrawerOpen: false,
   auth
 };
 
@@ -48,6 +49,16 @@ const rootReducer = (state = initState, action) => {
         expires_at: action.expires_at,
         auth: state.auth
       };
+    case "TRIGGER_DRAWER":
+      return {
+        isAuthenticated: state.isAuthenticated,
+        access_token: state.access_token,
+        id_token: state.id_token,
+        expires_at: state.expires_at,
+        auth: state.auth,
+        isDrawerOpen: !state.isDrawerOpen
+      };
+      return;
     default:
       return state;
   }

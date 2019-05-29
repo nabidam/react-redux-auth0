@@ -1,15 +1,17 @@
 import React, {Component} from "react";
 import {Router, Route, Switch} from "react-router-dom";
 import Home from "./components/Home";
-import Dashboard from "./components/Dashboard";
+import Dashboard from "./components/Dashboard/Dashboard";
 import Header from "./components/Header";
 import Callback from "./components/Callback";
 import About from "./components/About";
+import Login from "./components/Login";
 import NotAllowedDashboard from "./components/NotAllowedDashboard";
 import {connect} from "react-redux";
 import {withStyles} from "@material-ui/core/styles";
 import history from "./history";
 import authenticateChecked from "./actions/authenticateChecked";
+import "./styles/styles.css";
 
 const styles = theme => ({
   root: {
@@ -38,10 +40,17 @@ class App extends Component {
     return (
       <Router history={history}>
         <div className={classes.root}>
-          <Header />
+          {/* <Header /> */}
           {this.props.isAuthenticated}
           <Switch>
-            <Route exact path="/" component={Home} />
+            {/* <Route exact path="/" component={Login} /> */}
+            <Route
+              exact
+              path="/"
+              render={props =>
+                this.props.isAuthenticated ? <Dashboard /> : <Login />
+              }
+            />
             <Route exact path="/home" component={Home} />
             {/* <Route path="/dashboard" component={Dashboard} /> */}
             <Route
