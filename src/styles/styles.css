@@ -1,0 +1,27 @@
+@font-face {
+    font-family: 'BYekan';
+    src: url('../fonts/byekan/BYekan.eot');
+    src: local('BYekan'), url('../fonts/byekan/BYekan.woff') format('woff'), url('../fonts/byekan/BYekan.ttf') format('truetype');
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "BYekan", "Lato", "Segoe UI", "Roboto", "Oxygen" !important;
+}
+
+.login-grid {
+    background: url('../images/login_bgdark.png') no-repeat center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.list-item-right {
+    text-align: right;
+}
+
+.MuiToolbar-gutters {
+    padding-left: 0 !important;
+}
