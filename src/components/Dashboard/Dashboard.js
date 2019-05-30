@@ -7,8 +7,7 @@ import {
   Container,
   Grid,
   Paper,
-  Avatar,
-  Icon
+  Avatar
 } from "@material-ui/core";
 import HistoryIcon from "@material-ui/icons/History";
 import Traffic from "@material-ui/icons/Traffic";
@@ -109,7 +108,7 @@ const styles = theme => ({
 
 class Index extends React.Component {
   render() {
-    const {classes, theme} = this.props;
+    const {classes} = this.props;
 
     return (
       <div className={classes.root}>

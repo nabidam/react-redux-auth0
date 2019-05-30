@@ -2,7 +2,6 @@ import React, {Component} from "react";
 import {Router, Route, Switch} from "react-router-dom";
 import Home from "./components/Home";
 import Dashboard from "./components/Dashboard/Dashboard";
-import Header from "./components/Header";
 import Callback from "./components/Callback";
 import About from "./components/About";
 import Login from "./components/Login";
@@ -48,7 +47,7 @@ class App extends Component {
               exact
               path="/"
               render={props =>
-                this.props.isAuthenticated ? <Dashboard /> : <Login />
+                this.props.isAuthenticated ? (<Dashboard />) : (<Login />)
               }
             />
             <Route exact path="/home" component={Home} />
@@ -59,7 +58,7 @@ class App extends Component {
                 this.props.isAuthenticated ? (
                   <Dashboard />
                 ) : (
-                  <NotAllowedDashboard />
+                  <Login />
                 )
               }
             />

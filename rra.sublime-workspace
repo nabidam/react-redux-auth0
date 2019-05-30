@@ -150,16 +150,16 @@
 		"selected_items":
 		[
 			[
+				"ins",
+				"Package Control: Install Package"
+			],
+			[
 				"colo",
 				"Color Picker"
 			],
 			[
 				"inden",
 				"Indentation: Reindent Lines"
-			],
-			[
-				"ins",
-				"Package Control: Install Package"
 			],
 			[
 				"lore",
@@ -488,8 +488,8 @@
 						"selection":
 						[
 							[
-								314,
-								314
+								523,
+								523
 							]
 						],
 						"settings":

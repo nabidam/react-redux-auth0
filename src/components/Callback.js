@@ -19,7 +19,6 @@ class Callback extends Component {
     this.props.auth.parseHash((err, authResult) => {
       // console.log(authResult);
       if (authResult && authResult.accessToken && authResult.idToken) {
-        console.log("ok");
         this.props.loginSuccess(authResult);
         this.setSession(authResult);
         history.replace("/dashboard");

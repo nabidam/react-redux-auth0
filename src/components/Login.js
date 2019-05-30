@@ -1,11 +1,8 @@
 import React, {Component} from "react";
-import {Link} from "react-router-dom";
-import {AppBar, Toolbar, Typography, Button, Grid} from "@material-ui/core";
 import {withStyles} from "@material-ui/core/styles";
 import {connect} from "react-redux";
-import requestLogin from "../actions/requestLogin";
-import requestLogout from "../actions/requestLogout";
 import history from "../history";
+import loginSuccess from "../actions/loginSuccess";
 // import "../styles/styles.css";
 
 const styles = theme => ({
@@ -21,10 +18,6 @@ const styles = theme => ({
 });
 
 class Login extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount = () => {
     let access_token = localStorage.getItem("access_token");
     let id_token = localStorage.getItem("id_token");
@@ -32,6 +25,14 @@ class Login extends Component {
 
     if (!access_token && !id_token && new Date().getTime() > expires_at) {
       this.props.auth.authorize();
+    }else{
+        const authResult = {
+            access_token,
+            id_token,
+            expires_at
+        };
+        this.props.loginSuccess(authResult);
+        history.replace("/dashboard");
     }
   };
 
@@ -44,11 +45,10 @@ const mapStateToProps = state => {
   return {auth: state.auth, isAuthenticated: state.isAuthenticated};
 };
 
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     requestLogin: () => dispatch(requestLogin()),
-//     requestLogout: () => dispatch(requestLogout())
-//   };
-// };
+const mapDispatchToProps = dispatch => {
+  return {
+    loginSuccess: () => dispatch(loginSuccess())
+  };
+};
 
-export default connect(mapStateToProps)(withStyles(styles)(Login));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Login));
