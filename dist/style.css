@@ -16,8 +16,10 @@
   background-size: cover; }
 
 .list-item-right {
-  font-size: 0.7em;
   text-align: right; }
+
+.level-2-items > span {
+  font-size: 0.8rem; }
 
 .MuiToolbar-gutters {
   padding: 0 !important; }
