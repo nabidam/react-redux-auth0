@@ -13,6 +13,9 @@ import requestLogout from "../../actions/requestLogout";
 import history from "../../history";
 import {connect} from "react-redux";
 import triggerDrawer from "../../actions/triggerDrawer";
+import Profile from "./Profile";
+import Notifications from "./Notifications";
+import UpgradePremium from "./UpgradePremium";
 
 const drawerWidth = 240;
 
@@ -147,15 +150,10 @@ class MiniDrawer extends React.Component {
           >
             <MenuIcon />
           </IconButton>
-          <Typography
-            variant="h6"
-            color="inherit"
-            className={classes.grow}
-            noWrap
-          >
-            داشبورد
-          </Typography>
-          <Tooltip title="خروج" placement="right">
+          <UpgradePremium />
+          <Notifications />
+          <Profile />
+          <Tooltip title="خروج" placement="bottom">
             <IconButton
               onClick={() => this.logout()}
               className={classes.logoutbtn}
