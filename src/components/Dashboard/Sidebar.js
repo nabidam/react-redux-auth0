@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Component} from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 import {withStyles} from "@material-ui/core/styles";
@@ -18,14 +18,28 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MailIcon from "@material-ui/icons/Mail";
+import {Grid, Button} from "@material-ui/core";
 import {connect} from "react-redux";
 import triggerDrawer from "../../actions/triggerDrawer";
+import Icon from '@material-ui/core/Icon';
+import Collapse from "@material-ui/core/Collapse";
+import ListSubheader from '@material-ui/core/ListSubheader';
+import DraftsIcon from '@material-ui/icons/Drafts';
+import SendIcon from '@material-ui/icons/Send';
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
+import StarBorder from '@material-ui/icons/StarBorder';
+import InsertChart from "@material-ui/icons/InsertChart";
 
 const drawerWidth = 240;
 
 const styles = theme => ({
   root: {
     display: "flex"
+  },
+  nested: {
+    paddingRight: theme.spacing(4),
+    fontSize: "0.7em"
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
@@ -99,13 +113,25 @@ const styles = theme => ({
   }
 });
 
-class Sidebar extends React.Component {
+class Sidebar extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      menuOpen: false
+    };
+
+    this.handleClickMenu = this.handleClickMenu.bind(this);
+  }
+
+  handleClickMenu = () => {
+    this.setState({menuOpen: !this.state.menuOpen});
+  }
+
   render() {
     const {classes, theme} = this.props;
-
     return (
       <Drawer
-        variant="permanent"
+        variant="fixed"
         anchor="right"
         className={classNames(classes.drawer, {
           [classes.drawerOpen]: this.props.isDrawerOpen,
@@ -130,16 +156,48 @@ class Sidebar extends React.Component {
         </div>
         <Divider />
         <List>
-          {["لینک اول", "لینک دوم", "لینک سوم", "لینک چهارم"].map(
-            (text, index) => (
-              <ListItem button key={text}>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} className="list-item-right" />
+          <ListItem button>
+            <ListItemIcon>
+              <Icon>
+                <i className="fas fa-plus"></i>
+              </Icon>
+            </ListItemIcon>
+            <ListItemText className="list-item-right">ایجاد کوئری جدید</ListItemText>
+          </ListItem>
+        </List>
+        <Divider />
+        <List component="nav" >
+          <ListItem button onClick={() => this.handleClickMenu()}>
+            <ListItemIcon>
+              <InsertChart />
+            </ListItemIcon>
+            <ListItemText primary="سرویس‌ها" className="list-item-right"/>
+            {this.state.menuOpen ? <ExpandLess /> : <ExpandMore />}
+          </ListItem>
+          <Collapse in={this.state.menuOpen} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding>
+              <ListItem button className={classes.nested}>
+                <ListItemText primary="پست‌ها"  className="list-item-right level-2-items"/>
               </ListItem>
-            )
-          )}
+              <ListItem button className={classes.nested}>
+                <ListItemText primary="کلمات کلیدی"  className="list-item-right level-2-items"/>
+              </ListItem>
+              <ListItem button className={classes.nested}>
+                <ListItemText primary="اینفلوئنسرها"  className="list-item-right level-2-items"/>
+              </ListItem>
+              <ListItem button className={classes.nested}>
+                <ListItemText primary="احساس‌سنج"  className="list-item-right level-2-items"/>
+              </ListItem>
+            </List>
+          </Collapse>
+          <ListItem button>
+            <ListItemIcon>
+              <Icon>
+                <i class="fas fa-users fa-xs"></i>
+              </Icon>
+            </ListItemIcon>
+            <ListItemText primary="شبکه‌های اجتماعی" className="list-item-right"/>
+          </ListItem>
         </List>
         <Divider />
       </Drawer>

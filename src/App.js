@@ -11,7 +11,7 @@ import {connect} from "react-redux";
 import {withStyles} from "@material-ui/core/styles";
 import history from "./history";
 import authenticateChecked from "./actions/authenticateChecked";
-import "./styles/styles.css";
+// import "./styles/fontawesome.css";
 
 const styles = theme => ({
   root: {

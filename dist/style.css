@@ -6,7 +6,7 @@
 * {
   margin: 0;
   padding: 0;
-  font-family: "BYekan", "Lato", "Segoe UI", "Roboto", "Oxygen" !important; }
+  font-family: "BYekan", "Lato", "Segoe UI", "Roboto", "Oxygen"; }
 
 .login-grid {
   background: url(login_bgdark.png) no-repeat center center;
@@ -16,7 +16,8 @@
   background-size: cover; }
 
 .list-item-right {
+  font-size: 0.7em;
   text-align: right; }
 
 .MuiToolbar-gutters {
-  padding-left: 0 !important; }
+  padding: 0 !important; }

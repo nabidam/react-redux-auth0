@@ -6,8 +6,14 @@ import {
   Typography,
   Container,
   Grid,
-  Paper
+  Paper,
+  Avatar,
+  Icon
 } from "@material-ui/core";
+import HistoryIcon from "@material-ui/icons/History";
+import Traffic from "@material-ui/icons/Traffic";
+import Whatshot from "@material-ui/icons/Whatshot";
+import People from "@material-ui/icons/People";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
 
@@ -17,6 +23,13 @@ const styles = theme => ({
   root: {
     display: "flex",
     flexGrow: 1
+  },
+  avatar: {
+    width: 30,
+    height: 30,
+    marginLeft: 10,
+    marginBottom: 5,
+    color: "#3c3c3c",
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
@@ -89,8 +102,8 @@ const styles = theme => ({
     marginRight: drawerWidth
   },
   paper: {
-    height: "40vh"
-    // width: 100
+    height: "35vh"
+    // width: "40%vw"
   }
 });
 
@@ -111,17 +124,65 @@ class Index extends React.Component {
             /> */}
             <Grid container className={classes.root} spacing={2}>
               <Grid item xs={12}>
-                <Grid container justify="center" spacing={1}>
+                <Grid container justify="center" spacing={4}>
                   <Grid item xs={6}>
+                    <Grid container>
+                      <Grid item>
+                        <Avatar className={classes.avatar}>
+                          <HistoryIcon/>
+                        </Avatar>
+                      </Grid>
+                      <Grid item xs>
+                        <Typography variant="body1">
+                          آخرین کوئری ها
+                        </Typography>
+                      </Grid>
+                    </Grid>
                     <Paper className={classes.paper} />
                   </Grid>
                   <Grid item xs={6}>
+                    <Grid container>
+                      <Grid item>
+                        <Avatar className={classes.avatar}>
+                          <Traffic/>
+                        </Avatar>
+                      </Grid>
+                      <Grid item>
+                        <Typography variant="body1">
+                          تحلیل ترافیکی
+                        </Typography>
+                      </Grid>
+                    </Grid>
                     <Paper className={classes.paper} />
                   </Grid>
                   <Grid item xs={6}>
+                    <Grid container>
+                      <Grid item>
+                        <Avatar className={classes.avatar}>
+                          <Whatshot/>
+                        </Avatar>
+                      </Grid>
+                      <Grid item xs>
+                        <Typography variant="body1">
+                          پر‌تکرارترین موضوعات
+                        </Typography>
+                      </Grid>
+                    </Grid>
                     <Paper className={classes.paper} />
                   </Grid>
                   <Grid item xs={6}>
+                    <Grid container>
+                      <Grid item>
+                        <Avatar className={classes.avatar}>
+                          <People/>
+                        </Avatar>
+                      </Grid>
+                      <Grid item xs>
+                        <Typography variant="body1">
+                          شبکه‌های احتماعی
+                        </Typography>
+                      </Grid>
+                    </Grid>
                     <Paper className={classes.paper} />
                   </Grid>
                 </Grid>
