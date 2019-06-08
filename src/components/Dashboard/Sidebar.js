@@ -16,10 +16,18 @@ import {connect} from "react-redux";
 import triggerDrawer from "../../actions/triggerDrawer";
 import Icon from '@material-ui/core/Icon';
 import Collapse from "@material-ui/core/Collapse";
+import Dialog from '@material-ui/core/Dialog';
+import TextField from '@material-ui/core/TextField';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Typography from "@material-ui/core/Typography";
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import InsertChart from "@material-ui/icons/InsertChart";
 import DashboardIcon from "@material-ui/icons/Dashboard";
+import addQuery from "../../actions/addQuery";
 
 const drawerWidth = 240;
 
@@ -107,21 +115,49 @@ const styles = theme => ({
         "&:hover": {
             backgroundColor: "rgb(0, 179, 18)"
         }
-    }
+    },
+    paper: {
+        position: 'absolute',
+        width: 400,
+        backgroundColor: theme.palette.background.paper,
+        boxShadow: theme.shadows[5],
+        padding: theme.spacing(4),
+        outline: 'none',
+    },
+
 });
 
 class Sidebar extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            menuOpen: false
+            queryUsername: '',
+            menuOpen: false,
+            newQueryDialog: false,
         };
 
         this.handleClickMenu = this.handleClickMenu.bind(this);
+        this.handleNewQueryDialog = this.handleNewQueryDialog.bind(this);
+        this.handleChangeQueryUsername = this.handleChangeQueryUsername.bind(this);
+        this.handleAddQuery = this.handleAddQuery.bind(this);
     }
 
     handleClickMenu = () => {
         this.setState({menuOpen: !this.state.menuOpen});
+    }
+
+    handleNewQueryDialog = () => {
+        this.setState({newQueryDialog: !this.state.newQueryDialog});
+    }
+
+    handleChangeQueryUsername = event => {
+        this.setState({queryUsername: event.target.value});
+    }
+
+    handleAddQuery = () => {
+        this.handleNewQueryDialog();
+        this.setState({queryUsername: ''});
+        this.props.addQuery(this.state.queryUsername);
     }
 
     render() {
@@ -152,7 +188,7 @@ class Sidebar extends Component {
                     </div>
                     <Divider />
                     <List>
-                        <ListItem button className={classes.bgGreen}>
+                        <ListItem button className={classes.bgGreen} onClick={() => this.handleNewQueryDialog()}>
                             <ListItemIcon>
                                 <Icon>
                                     <i className="fas fa-plus"></i>
@@ -160,6 +196,32 @@ class Sidebar extends Component {
                             </ListItemIcon>
                             <ListItemText className="list-item-right">ایجاد کوئری جدید</ListItemText>
                         </ListItem>
+                        <Dialog open={this.state.newQueryDialog} onClose={() => this.handleNewQueryDialog()} aria-labelledby="newQuery" maxWidth="xs">
+                            <DialogTitle className="list-item-right" id="newQuery">ایجاد کوئری جدید</DialogTitle>
+                            <DialogContent>
+                                <DialogContentText className="list-item-right">
+                                    نام کاربری مورد نظر را وارد کنید:
+                                </DialogContentText>
+                                <TextField
+                                    autoFocus
+                                    margin="dense"
+                                    id="username"
+                                    label="username"
+                                    type="text"
+                                    fullWidth
+                                    value={this.state.queryUsername}
+                                    onChange={ this.handleChangeQueryUsername }
+                                />
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={() => this.handleNewQueryDialog()} color="primary">
+                                    لغو
+                                </Button>
+                                <Button onClick={() => this.handleAddQuery()} color="primary">
+                                    ثبت
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
                     </List>
                     <Divider />
                     <List component="nav" >
@@ -222,7 +284,8 @@ class Sidebar extends Component {
 
     const mapDispatchToProps = dispatch => {
         return {
-            triggerDrawer: () => dispatch(triggerDrawer())
+            triggerDrawer: () => dispatch(triggerDrawer()),
+            addQuery: (username) => dispatch(addQuery(username))
         };
     };
 
