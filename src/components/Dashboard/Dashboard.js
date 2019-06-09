@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import {withStyles} from "@material-ui/core/styles";
 import classNames from "classnames";
+import {PDFDownloadLink, Document, Page, View, Text} from "@react-pdf/renderer";
 import {
   CssBaseline,
   Typography,
@@ -15,8 +16,10 @@ import {
   ListItemText,
   Divider,
   Modal,
-  Button
+  Button,
+  Tooltip as MTooltip
 } from "@material-ui/core";
+import ExcelDownload from "./ExcelDownload";
 import InboxIcon from "@material-ui/icons/Inbox";
 import DraftsIcon from "@material-ui/icons/Drafts";
 import HistoryIcon from "@material-ui/icons/History";
@@ -40,6 +43,7 @@ import {
 import {connect} from "react-redux";
 import changeSelectedQuery from "../../actions/changeSelectedQuery";
 import ReactExport from "react-data-export";
+import LatestQueriesPDF from "./LatestQueriesPDF";
 
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
@@ -486,11 +490,37 @@ class Index extends React.Component {
                                   sm={6}
                                   className={classNames(
                                     classes.leftToRight,
-                                    classes.aboveChartIcon,
-                                    classes.textRed
+                                    classes.aboveChartIcon
                                   )}
                                 >
-                                  <i className="fas fa-file-pdf" />
+                                  <PDFDownloadLink
+                                    document={
+                                      <Document>
+                                        <Page wrap>
+                                          <Text>Name:number of Posts</Text>
+                                          {data.map((item, index) => (
+                                            <Text key={index}>
+                                              {item.name}:{item.posts}
+                                            </Text>
+                                          ))}
+                                        </Page>
+                                      </Document>
+                                    }
+                                    fileName={
+                                      this.props.latestQueries.find(
+                                        x => x.id == this.props.selectedQuery
+                                      ).username + ".pdf"
+                                    }
+                                  >
+                                    <MTooltip title="دانلود">
+                                      <i
+                                        className={classNames(
+                                          classes.textRed,
+                                          "fas fa-file-pdf pointer"
+                                        )}
+                                      />
+                                    </MTooltip>
+                                  </PDFDownloadLink>
                                 </Grid>
                                 <Grid
                                   item
@@ -501,10 +531,12 @@ class Index extends React.Component {
                                   )}
                                 >
                                   <ExcelFile
-                                    filename={this.props.selectedQuery.toString()}
-                                    element={
-                                      <i className="fas fa-file-excel pointer" />
+                                    filename={
+                                      this.props.latestQueries.find(
+                                        x => x.id == this.props.selectedQuery
+                                      ).username
                                     }
+                                    element={<ExcelDownload />}
                                   >
                                     <ExcelSheet data={data} name="posts">
                                       <ExcelColumn label="Name" value="name" />

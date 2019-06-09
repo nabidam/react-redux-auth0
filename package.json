@@ -5,6 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^4.0.2",
     "@material-ui/icons": "^4.0.1",
+    "@react-pdf/renderer": "^1.6.2",
     "auth0-js": "^9.10.4",
     "classnames": "^2.2.6",
     "css-loader": "^2.1.1",
@@ -16,6 +17,7 @@
     "react": "^16.8.6",
     "react-data-export": "^0.5.0",
     "react-dom": "^16.8.6",
+    "react-pdf": "^4.0.5",
     "react-redux": "^7.0.3",
     "react-router-dom": "^5.0.1",
     "react-scripts": "^3.0.1",
