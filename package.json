@@ -10,7 +10,9 @@
     "css-loader": "^2.1.1",
     "echarts": "^4.2.1",
     "echarts-for-react": "^2.0.15-beta.0",
+    "file-saver": "^2.0.2",
     "history": "^4.9.0",
+    "json-loader": "^0.5.7",
     "react": "^16.8.6",
     "react-data-export": "^0.5.0",
     "react-dom": "^16.8.6",
@@ -18,7 +20,8 @@
     "react-router-dom": "^5.0.1",
     "react-scripts": "^3.0.1",
     "recharts": "^1.6.2",
-    "redux": "^4.0.1"
+    "redux": "^4.0.1",
+    "xlsx": "^0.14.3"
   },
   "scripts": {
     "dev": "webpack-dev-server --mode development --watch",
