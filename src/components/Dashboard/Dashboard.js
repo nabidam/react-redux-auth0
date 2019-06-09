@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import {withStyles} from "@material-ui/core/styles";
 import classNames from "classnames";
+import {PDFDownloadLink, Document, Page, View, Text} from "@react-pdf/renderer";
 import {
   CssBaseline,
   Typography,
@@ -14,8 +15,11 @@ import {
   ListItemIcon,
   ListItemText,
   Divider,
-  Modal
+  Modal,
+  Button,
+  Tooltip as MTooltip
 } from "@material-ui/core";
+import ExcelDownload from "./ExcelDownload";
 import InboxIcon from "@material-ui/icons/Inbox";
 import DraftsIcon from "@material-ui/icons/Drafts";
 import HistoryIcon from "@material-ui/icons/History";
@@ -38,8 +42,41 @@ import {
 } from "recharts";
 import {connect} from "react-redux";
 import changeSelectedQuery from "../../actions/changeSelectedQuery";
+import ReactExport from "react-data-export";
+import LatestQueriesPDF from "./LatestQueriesPDF";
+
+const ExcelFile = ReactExport.ExcelFile;
+const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
+const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
 
 const drawerWidth = 240;
+
+const dataSet1 = [
+  {
+    name: "Johson",
+    amount: 30000,
+    sex: "M",
+    is_married: true
+  },
+  {
+    name: "Monika",
+    amount: 355000,
+    sex: "F",
+    is_married: false
+  },
+  {
+    name: "John",
+    amount: 250000,
+    sex: "M",
+    is_married: false
+  },
+  {
+    name: "Josef",
+    amount: 450500,
+    sex: "M",
+    is_married: true
+  }
+];
 
 const styles = theme => ({
   root: {
@@ -138,7 +175,8 @@ const styles = theme => ({
   lists: {
     maxHeight: "100%",
     overflowY: "scroll",
-    direction: "ltr"
+    direction: "ltr",
+    fontSize: "0.7em"
   },
   displayFlex: {
     display: "flex",
@@ -169,6 +207,129 @@ const styles = theme => ({
     color: "#207245"
   }
 });
+
+const data = [
+  {
+    name: "1",
+    posts: 100
+  },
+  {
+    name: "2",
+    posts: 150
+  },
+  {
+    name: "3",
+    posts: 200
+  },
+  {
+    name: "4",
+    posts: 321
+  },
+  {
+    name: "5",
+    posts: 100
+  },
+  {
+    name: "6",
+    posts: 533
+  },
+  {
+    name: "7",
+    posts: 423
+  },
+  {
+    name: "8",
+    posts: 324
+  },
+  {
+    name: "9",
+    posts: 423
+  },
+  {
+    name: "10",
+    posts: 312
+  },
+  {
+    name: "11",
+    posts: 123
+  },
+  {
+    name: "12",
+    posts: 253
+  },
+  {
+    name: "13",
+    posts: 397
+  },
+  {
+    name: "14",
+    posts: 456
+  },
+  {
+    name: "15",
+    posts: 575
+  },
+  {
+    name: "16",
+    posts: 423
+  },
+  {
+    name: "17",
+    posts: 100
+  },
+  {
+    name: "18",
+    posts: 222
+  },
+  {
+    name: "19",
+    posts: 321
+  },
+  {
+    name: "20",
+    posts: 123
+  },
+  {
+    name: "21",
+    posts: 99
+  },
+  {
+    name: "22",
+    posts: 654
+  },
+  {
+    name: "23",
+    posts: 122
+  },
+  {
+    name: "24",
+    posts: 344
+  },
+  {
+    name: "25",
+    posts: 244
+  },
+  {
+    name: "26",
+    posts: 354
+  },
+  {
+    name: "27",
+    posts: 421
+  },
+  {
+    name: "28",
+    posts: 124
+  },
+  {
+    name: "29",
+    posts: 123
+  },
+  {
+    name: "30",
+    posts: 456
+  }
+];
 
 class Index extends React.Component {
   constructor(props) {
@@ -256,128 +417,7 @@ class Index extends React.Component {
           }
         ]
       },
-      data: [
-        {
-          name: "1",
-          posts: 100
-        },
-        {
-          name: "2",
-          posts: 150
-        },
-        {
-          name: "3",
-          posts: 200
-        },
-        {
-          name: "4",
-          posts: 321
-        },
-        {
-          name: "5",
-          posts: 100
-        },
-        {
-          name: "6",
-          posts: 533
-        },
-        {
-          name: "7",
-          posts: 423
-        },
-        {
-          name: "8",
-          posts: 324
-        },
-        {
-          name: "9",
-          posts: 423
-        },
-        {
-          name: "10",
-          posts: 312
-        },
-        {
-          name: "11",
-          posts: 123
-        },
-        {
-          name: "12",
-          posts: 253
-        },
-        {
-          name: "13",
-          posts: 397
-        },
-        {
-          name: "14",
-          posts: 456
-        },
-        {
-          name: "15",
-          posts: 575
-        },
-        {
-          name: "16",
-          posts: 423
-        },
-        {
-          name: "17",
-          posts: 100
-        },
-        {
-          name: "18",
-          posts: 222
-        },
-        {
-          name: "19",
-          posts: 321
-        },
-        {
-          name: "20",
-          posts: 123
-        },
-        {
-          name: "21",
-          posts: 99
-        },
-        {
-          name: "22",
-          posts: 654
-        },
-        {
-          name: "23",
-          posts: 122
-        },
-        {
-          name: "24",
-          posts: 344
-        },
-        {
-          name: "25",
-          posts: 244
-        },
-        {
-          name: "26",
-          posts: 354
-        },
-        {
-          name: "27",
-          posts: 421
-        },
-        {
-          name: "28",
-          posts: 124
-        },
-        {
-          name: "29",
-          posts: 123
-        },
-        {
-          name: "30",
-          posts: 456
-        }
-      ]
+      data
     };
   }
 
@@ -428,6 +468,7 @@ class Index extends React.Component {
                             >
                               <ListItemText
                                 primary={item.username}
+                                primaryTypographyProps={{variant: "caption"}}
                                 className="list-item-right"
                               />
                             </ListItem>
@@ -449,11 +490,37 @@ class Index extends React.Component {
                                   sm={6}
                                   className={classNames(
                                     classes.leftToRight,
-                                    classes.aboveChartIcon,
-                                    classes.textRed
+                                    classes.aboveChartIcon
                                   )}
                                 >
-                                  <i className="fas fa-file-pdf" />
+                                  <PDFDownloadLink
+                                    document={
+                                      <Document>
+                                        <Page wrap>
+                                          <Text>Name:number of Posts</Text>
+                                          {data.map((item, index) => (
+                                            <Text key={index}>
+                                              {item.name}:{item.posts}
+                                            </Text>
+                                          ))}
+                                        </Page>
+                                      </Document>
+                                    }
+                                    fileName={
+                                      this.props.latestQueries.find(
+                                        x => x.id == this.props.selectedQuery
+                                      ).username + ".pdf"
+                                    }
+                                  >
+                                    <MTooltip title="دانلود">
+                                      <i
+                                        className={classNames(
+                                          classes.textRed,
+                                          "fas fa-file-pdf pointer"
+                                        )}
+                                      />
+                                    </MTooltip>
+                                  </PDFDownloadLink>
                                 </Grid>
                                 <Grid
                                   item
@@ -463,12 +530,27 @@ class Index extends React.Component {
                                     classes.textGreen
                                   )}
                                 >
-                                  <i className="fas fa-file-excel" />
+                                  <ExcelFile
+                                    filename={
+                                      this.props.latestQueries.find(
+                                        x => x.id == this.props.selectedQuery
+                                      ).username
+                                    }
+                                    element={<ExcelDownload />}
+                                  >
+                                    <ExcelSheet data={data} name="posts">
+                                      <ExcelColumn label="Name" value="name" />
+                                      <ExcelColumn
+                                        label="number of Posts"
+                                        value="posts"
+                                      />
+                                    </ExcelSheet>
+                                  </ExcelFile>
                                 </Grid>
                               </Grid>
                             </Grid>
                             <Grid item sm={10}>
-                              <Grid container>
+                              <Grid container className="padding-lr-5">
                                 <Grid item sm={3}>
                                   <Grid container>
                                     <Grid

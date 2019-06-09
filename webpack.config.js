@@ -40,6 +40,7 @@ module.exports = {
   resolve: {
     extensions: ["*", ".js", ".jsx"]
   },
+
   output: {
     path: path.resolve(__dirname, "dist"),
     // publicPath: "/public",
@@ -55,5 +56,6 @@ module.exports = {
     hot: true,
     // compress: true,
     port: 3000
-  }
+  },
+  node: {fs: "empty"}
 };
