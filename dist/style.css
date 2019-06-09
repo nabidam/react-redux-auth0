@@ -16,7 +16,8 @@
   background-size: cover; }
 
 .list-item-right {
-  text-align: right; }
+  text-align: right;
+  direction: rtl; }
 
 .level-2-items > span {
   font-size: 0.8rem; }
