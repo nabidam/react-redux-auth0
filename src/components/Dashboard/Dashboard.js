@@ -154,6 +154,7 @@ const styles = theme => ({
     paddingTop: 5
   },
   aboveChartIcon: {
+    fontSize: "1.2em",
     paddingRight: 5,
     paddingTop: 5,
     color: "#00bfff"
@@ -441,7 +442,7 @@ class Index extends React.Component {
                             justify="center"
                             className={classes.aboveChartList}
                           >
-                            <Grid item sm={4}>
+                            <Grid item sm={2}>
                               <Grid container>
                                 <Grid
                                   item
@@ -452,7 +453,7 @@ class Index extends React.Component {
                                     classes.textRed
                                   )}
                                 >
-                                  <i className="fas fa-file-pdf fa-2x" />
+                                  <i className="fas fa-file-pdf" />
                                 </Grid>
                                 <Grid
                                   item
@@ -462,113 +463,123 @@ class Index extends React.Component {
                                     classes.textGreen
                                   )}
                                 >
-                                  <i className="fas fa-file-excel fa-2x" />
+                                  <i className="fas fa-file-excel" />
                                 </Grid>
                               </Grid>
                             </Grid>
-                            <Grid item sm={2}>
+                            <Grid item sm={10}>
                               <Grid container>
-                                <Grid
-                                  item
-                                  sm={6}
-                                  className={classes.leftToRight}
-                                >
-                                  <Typography variant="body2">8,377</Typography>
-                                  <Typography
-                                    variant="caption"
-                                    display="block"
-                                    gutterBottom
-                                    className={classes.smallText}
-                                  >
-                                    IMPRESSIONS
-                                  </Typography>
+                                <Grid item sm={3}>
+                                  <Grid container>
+                                    <Grid
+                                      item
+                                      sm={8}
+                                      className={classes.leftToRight}
+                                    >
+                                      <Typography variant="body2">
+                                        8,377
+                                      </Typography>
+                                      <Typography
+                                        variant="caption"
+                                        display="block"
+                                        gutterBottom
+                                        className={classes.smallText}
+                                      >
+                                        IMPRESSIONS
+                                      </Typography>
+                                    </Grid>
+                                    <Grid
+                                      item
+                                      sm={4}
+                                      className={classes.aboveChartIcon}
+                                    >
+                                      <i className="fa fa-microphone" />
+                                    </Grid>
+                                  </Grid>
                                 </Grid>
-                                <Grid
-                                  item
-                                  sm={6}
-                                  className={classes.aboveChartIcon}
-                                >
-                                  <i className="fa fa-microphone fa-2x" />
+                                <Grid item sm={3}>
+                                  <Grid container>
+                                    <Grid
+                                      item
+                                      sm={8}
+                                      className={classes.leftToRight}
+                                    >
+                                      <Typography variant="body2">
+                                        79,098
+                                      </Typography>
+                                      <Typography
+                                        variant="caption"
+                                        display="block"
+                                        gutterBottom
+                                        className={classes.smallText}
+                                      >
+                                        REACH
+                                      </Typography>
+                                    </Grid>
+                                    <Grid
+                                      item
+                                      sm={4}
+                                      className={classes.aboveChartIcon}
+                                    >
+                                      <i className="fas fa-project-diagram" />
+                                    </Grid>
+                                  </Grid>
                                 </Grid>
-                              </Grid>
-                            </Grid>
-                            <Grid item sm={2}>
-                              <Grid container>
-                                <Grid
-                                  item
-                                  sm={6}
-                                  className={classes.leftToRight}
-                                >
-                                  <Typography variant="body2">
-                                    79,098
-                                  </Typography>
-                                  <Typography
-                                    variant="caption"
-                                    display="block"
-                                    gutterBottom
-                                    className={classes.smallText}
-                                  >
-                                    REACH
-                                  </Typography>
+                                <Grid item sm={3}>
+                                  <Grid container>
+                                    <Grid
+                                      item
+                                      sm={8}
+                                      className={classes.leftToRight}
+                                    >
+                                      <Typography variant="body2">
+                                        401
+                                      </Typography>
+                                      <Typography
+                                        variant="caption"
+                                        display="block"
+                                        gutterBottom
+                                        className={classes.smallText}
+                                      >
+                                        USERS
+                                      </Typography>
+                                    </Grid>
+                                    <Grid
+                                      item
+                                      sm={4}
+                                      className={classes.aboveChartIcon}
+                                    >
+                                      <i className="fa fa-user" />
+                                    </Grid>
+                                  </Grid>
                                 </Grid>
-                                <Grid
-                                  item
-                                  sm={6}
-                                  className={classes.aboveChartIcon}
-                                >
-                                  <i className="fas fa-project-diagram fa-2x" />
-                                </Grid>
-                              </Grid>
-                            </Grid>
-                            <Grid item sm={2}>
-                              <Grid container>
-                                <Grid
-                                  item
-                                  sm={6}
-                                  className={classes.leftToRight}
-                                >
-                                  <Typography variant="body2">401</Typography>
-                                  <Typography
-                                    variant="caption"
-                                    display="block"
-                                    gutterBottom
-                                    className={classes.smallText}
-                                  >
-                                    USERS
-                                  </Typography>
-                                </Grid>
-                                <Grid
-                                  item
-                                  sm={6}
-                                  className={classes.aboveChartIcon}
-                                >
-                                  <i className="fa fa-user fa-2x" />
-                                </Grid>
-                              </Grid>
-                            </Grid>
-                            <Grid item sm={2}>
-                              <Grid container>
-                                <Grid
-                                  item
-                                  sm={6}
-                                  className={classes.leftToRight}
-                                >
-                                  <Typography variant="body2">500</Typography>
-                                  <Typography
-                                    variant="caption"
-                                    display="block"
-                                    gutterBottom
-                                    className={classes.smallText}
-                                  >
-                                    POSTS
-                                  </Typography>
-                                </Grid>
-                                <Grid
-                                  item
-                                  sm={6}
-                                  className={classes.aboveChartIcon}
-                                >
-                                  <i className="fas fa-comment fa-2x" />
+                                <Grid item sm={3}>
+                                  <Grid container>
+                                    <Grid
+                                      item
+                                      sm={8}
+                                      className={classes.leftToRight}
+                                    >
+                                      <Typography variant="body2">
+                                        500
+                                      </Typography>
+                                      <Typography
+                                        variant="caption"
+                                        display="block"
+                                        gutterBottom
+                                        className={classes.smallText}
+                                      >
+                                        POSTS
+                                      </Typography>
+                                    </Grid>
+                                    <Grid
+                                      item
+                                      sm={4}
+                                      className={classes.aboveChartIcon}
+                                    >
+                                      <i className="fas fa-comment" />
+                                    </Grid>
+                                  </Grid>
                                 </Grid>
                               </Grid>
                             </Grid>
