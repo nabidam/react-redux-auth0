@@ -138,7 +138,8 @@ const styles = theme => ({
   lists: {
     maxHeight: "100%",
     overflowY: "scroll",
-    direction: "ltr"
+    direction: "ltr",
+    fontSize: "0.7em"
   },
   displayFlex: {
     display: "flex",
@@ -428,6 +429,7 @@ class Index extends React.Component {
                             >
                               <ListItemText
                                 primary={item.username}
+                                primaryTypographyProps={{variant: "caption"}}
                                 className="list-item-right"
                               />
                             </ListItem>
@@ -468,7 +470,7 @@ class Index extends React.Component {
                               </Grid>
                             </Grid>
                             <Grid item sm={10}>
-                              <Grid container>
+                              <Grid container className="padding-lr-5">
                                 <Grid item sm={3}>
                                   <Grid container>
                                     <Grid

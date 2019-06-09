@@ -23,10 +23,21 @@
     direction: rtl;
 }
 
-.level-2-items > span {
+.level-2-items>span {
     font-size: 0.8rem;
 }
 
 .MuiToolbar-gutters {
     padding: 0 !important;
+}
+
+.center-content {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.padding-lr-5 {
+    padding-left: 5px;
+    padding-right: 5px;
 }

@@ -132,7 +132,8 @@ class Sidebar extends Component {
     this.state = {
       queryUsername: "",
       menuOpen: false,
-      newQueryDialog: false
+      newQueryDialog: false,
+      isUsernameEntered: true
     };
 
     this.handleClickMenu = this.handleClickMenu.bind(this);
@@ -151,12 +152,21 @@ class Sidebar extends Component {
 
   handleChangeQueryUsername = event => {
     this.setState({queryUsername: event.target.value});
+    if (event.target.value == "") {
+      this.setState({isUsernameEntered: false});
+    } else {
+      this.setState({isUsernameEntered: true});
+    }
   };
 
   handleAddQuery = () => {
-    this.handleNewQueryDialog();
-    this.setState({queryUsername: ""});
-    this.props.addQuery(this.state.queryUsername);
+    if (this.state.queryUsername != "") {
+      this.handleNewQueryDialog();
+      this.setState({queryUsername: ""});
+      this.props.addQuery(this.state.queryUsername);
+    } else {
+      this.setState({isUsernameEntered: false});
+    }
   };
 
   render() {
@@ -223,6 +233,8 @@ class Sidebar extends Component {
                 fullWidth
                 value={this.state.queryUsername}
                 onChange={this.handleChangeQueryUsername}
+                error={!this.state.isUsernameEntered}
+                required
               />
             </DialogContent>
             <DialogActions>
