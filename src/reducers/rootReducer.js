@@ -19,21 +19,25 @@ const initState = {
   latestQueries: [
     {
       id: 1,
+      name: "query1",
       username: "user1",
       date: new Date(2019, 1, 2)
     },
     {
       id: 2,
+      name: "query2",
       username: "user2",
       date: new Date(2020, 10, 20)
     },
     {
       id: 3,
+      name: "query3",
       username: "user3",
       date: new Date(2018, 11, 24)
     },
     {
       id: 4,
+      name: "query4",
       username: "user4",
       date: new Date()
     }
@@ -89,7 +93,8 @@ const rootReducer = (state = initState, action) => {
           ...state.latestQueries,
           {
             id,
-            username: action.username,
+            name: action.data.name,
+            username: action.data.username,
             date: now
           }
         ]
@@ -98,6 +103,12 @@ const rootReducer = (state = initState, action) => {
       return {
         ...state,
         selectedQuery: action.queryId
+      };
+    case types.CHANGE_SNACKBAR_STATUS:
+      return {
+        ...state,
+        isSnackbarOpen: action.data.open,
+        snackbarMessage: action.data.msg
       };
     default:
       return state;

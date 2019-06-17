@@ -45,3 +45,16 @@
 .pointer:hover {
     cursor: pointer;
 }
+
+.MuiInputLabel-formControl {
+    left: unset !important;
+    right: 0;
+}
+
+.MuiSnackbarContent-message {
+    flex-grow: 1;
+}
+
+.MuiSnackbarContent-action {
+    padding-left: 0 !important;
+}
