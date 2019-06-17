@@ -10,6 +10,7 @@ import {connect} from "react-redux";
 import {withStyles} from "@material-ui/core/styles";
 import history from "./history";
 import authenticateChecked from "./actions/authenticateChecked";
+// import AddQuery from "./components/Dashboard/AddQuery";
 // import "./styles/fontawesome.css";
 
 const styles = theme => ({
@@ -47,19 +48,16 @@ class App extends Component {
               exact
               path="/"
               render={props =>
-                this.props.isAuthenticated ? (<Dashboard />) : (<Login />)
+                this.props.isAuthenticated ? <Dashboard /> : <Login />
               }
             />
             <Route exact path="/home" component={Home} />
             {/* <Route path="/dashboard" component={Dashboard} /> */}
             <Route
+              ecaxt
               path="/dashboard"
               render={props =>
-                this.props.isAuthenticated ? (
-                  <Dashboard />
-                ) : (
-                  <Login />
-                )
+                this.props.isAuthenticated ? <Dashboard /> : <Login />
               }
             />
             <Route path="/callback" component={Callback} />

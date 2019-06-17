@@ -28,6 +28,7 @@ import ExpandMore from "@material-ui/icons/ExpandMore";
 import InsertChart from "@material-ui/icons/InsertChart";
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import addQuery from "../../actions/addQuery";
+import history from "../../history";
 
 const drawerWidth = 240;
 
@@ -90,7 +91,7 @@ const styles = theme => ({
     alignItems: "center",
     padding: "0 8px",
     ...theme.mixins.toolbar,
-    justifyContent: "flex-start"
+    justifyContent: "flex-end"
   },
   content: {
     direction: "rtl",
@@ -147,7 +148,8 @@ class Sidebar extends Component {
   };
 
   handleNewQueryDialog = () => {
-    this.setState({newQueryDialog: !this.state.newQueryDialog});
+    history.push("/dashboard/add-query");
+    // this.setState({newQueryDialog: !this.state.newQueryDialog});
   };
 
   handleChangeQueryUsername = event => {
@@ -173,7 +175,7 @@ class Sidebar extends Component {
     const {classes, theme} = this.props;
     return (
       <Drawer
-        anchor="right"
+        // anchor="right"
         className={classNames(classes.drawer, {
           [classes.drawerOpen]: this.props.isDrawerOpen,
           [classes.drawerClose]: !this.props.isDrawerOpen
@@ -189,9 +191,9 @@ class Sidebar extends Component {
         <div className={classes.toolbar}>
           <IconButton onClick={this.props.triggerDrawer}>
             {theme.direction === "rtl" ? (
-              <ChevronLeftIcon />
-            ) : (
               <ChevronRightIcon />
+            ) : (
+              <ChevronLeftIcon />
             )}
           </IconButton>
         </div>
@@ -200,7 +202,9 @@ class Sidebar extends Component {
           <ListItem
             button
             className={classes.bgGreen}
-            onClick={() => this.handleNewQueryDialog()}
+            onClick={() => {
+              history.push("/dashboard/add-query");
+            }}
           >
             <ListItemIcon>
               <Icon>
@@ -252,7 +256,13 @@ class Sidebar extends Component {
         </List>
         <Divider />
         <List component="nav">
-          <ListItem button selected={true}>
+          <ListItem
+            button
+            selected={true}
+            onClick={() => {
+              history.push("/dashboard");
+            }}
+          >
             <ListItemIcon>
               <DashboardIcon />
             </ListItemIcon>

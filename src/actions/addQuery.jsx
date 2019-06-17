@@ -1,8 +1,8 @@
 import * as types from "../types/types";
 
-const addQuery = username => ({
+const addQuery = data => ({
   type: types.ADD_QUERY,
-  username
+  data
 });
 
 export default addQuery;
