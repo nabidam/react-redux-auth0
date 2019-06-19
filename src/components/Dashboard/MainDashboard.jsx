@@ -32,13 +32,14 @@ import Sidebar from "./Sidebar";
 import ReactEcharts from "echarts-for-react";
 import {
   ResponsiveContainer,
-  AreaChart,
-  Area,
+  BarChart,
+  Bar,
   Line,
   CartesianGrid,
   XAxis,
   YAxis,
-  Tooltip
+  Tooltip,
+  Cell
 } from "recharts";
 import {connect} from "react-redux";
 import changeSelectedQuery from "../../actions/changeSelectedQuery";
@@ -214,179 +215,209 @@ const data = [
     date: moment()
       .subtract(29, "days")
       .format("MMM Do"),
-    posts: 100
+    posts: 100,
+    color: "#a9da79"
   },
   {
     date: moment()
       .subtract(28, "days")
       .format("MMM Do"),
-    posts: 150
+    posts: 150,
+    color: "#95eb56"
   },
   {
     date: moment()
       .subtract(27, "days")
       .format("MMM Do"),
-    posts: 200
+    posts: 200,
+    color: "#91dde2"
   },
   {
     date: moment()
       .subtract(26, "days")
       .format("MMM Do"),
-    posts: 321
+    posts: 321,
+    color: "#0a1b35"
   },
   {
     date: moment()
       .subtract(25, "days")
       .format("MMM Do"),
-    posts: 100
+    posts: 100,
+    color: "#e9432f"
   },
   {
     date: moment()
       .subtract(24, "days")
       .format("MMM Do"),
-    posts: 533
+    posts: 533,
+    color: "#72e25f"
   },
   {
     date: moment()
       .subtract(23, "days")
       .format("MMM Do"),
-    posts: 423
+    posts: 423,
+    color: "#8b8bf6"
   },
   {
     date: moment()
       .subtract(22, "days")
       .format("MMM Do"),
-    posts: 324
+    posts: 324,
+    color: "#b2ab52"
   },
   {
     date: moment()
       .subtract(21, "days")
       .format("MMM Do"),
-    posts: 423
+    posts: 423,
+    color: "#c35fd5"
   },
   {
     date: moment()
       .subtract(20, "days")
       .format("MMM Do"),
-    posts: 312
+    posts: 312,
+    color: "#39c4e3"
   },
   {
     date: moment()
       .subtract(19, "days")
       .format("MMM Do"),
-    posts: 123
+    posts: 123,
+    color: "#e03673"
   },
   {
     date: moment()
       .subtract(18, "days")
       .format("MMM Do"),
-    posts: 253
+    posts: 253,
+    color: "#36fb59"
   },
   {
     date: moment()
       .subtract(17, "days")
       .format("MMM Do"),
-    posts: 397
+    posts: 397,
+    color: "#c80b8a"
   },
   {
     date: moment()
       .subtract(16, "days")
       .format("MMM Do"),
-    posts: 456
+    posts: 456,
+    color: "#67df60"
   },
   {
     date: moment()
       .subtract(15, "days")
       .format("MMM Do"),
-    posts: 575
+    posts: 575,
+    color: "#9bcc4c"
   },
   {
     date: moment()
       .subtract(14, "days")
       .format("MMM Do"),
-    posts: 423
+    posts: 423,
+    color: "#78bef0"
   },
   {
     date: moment()
       .subtract(13, "days")
       .format("MMM Do"),
-    posts: 100
+    posts: 100,
+    color: "#dcffaa"
   },
   {
     date: moment()
       .subtract(12, "days")
       .format("MMM Do"),
-    posts: 222
+    posts: 222,
+    color: "#a9da79"
   },
   {
     date: moment()
       .subtract(11, "days")
       .format("MMM Do"),
-    posts: 321
+    posts: 321,
+    color: "#91dde2"
   },
   {
     date: moment()
       .subtract(10, "days")
       .format("MMM Do"),
-    posts: 123
+    posts: 123,
+    color: "#0a1b35"
   },
   {
     date: moment()
       .subtract(9, "days")
       .format("MMM Do"),
-    posts: 99
+    posts: 99,
+    color: "#e9432f"
   },
   {
     date: moment()
       .subtract(8, "days")
       .format("MMM Do"),
-    posts: 654
+    posts: 654,
+    color: "#72e25f"
   },
   {
     date: moment()
       .subtract(7, "days")
       .format("MMM Do"),
-    posts: 122
+    posts: 122,
+    color: "#8b8bf6"
   },
   {
     date: moment()
       .subtract(6, "days")
       .format("MMM Do"),
-    posts: 344
+    posts: 344,
+    color: "#b2ab52"
   },
   {
     date: moment()
       .subtract(5, "days")
       .format("MMM Do"),
-    posts: 244
+    posts: 244,
+    color: "#c35fd5"
   },
   {
     date: moment()
       .subtract(4, "days")
       .format("MMM Do"),
-    posts: 354
+    posts: 354,
+    color: "#39c4e3"
   },
   {
     date: moment()
       .subtract(3, "days")
       .format("MMM Do"),
-    posts: 421
+    posts: 421,
+    color: "#e03673"
   },
   {
     date: moment()
       .subtract(2, "days")
       .format("MMM Do"),
-    posts: 124
+    posts: 124,
+    color: "#36fb59"
   },
   {
     date: moment()
       .subtract(1, "days")
       .format("MMM Do"),
-    posts: 123
+    posts: 123,
+    color: "#36fb59"
   },
   {
     date: moment().format("MMM Do"),
-    posts: 456
+    posts: 456,
+    color: "#36fb59"
   }
 ];
 
@@ -650,7 +681,7 @@ class MainDashboard extends React.Component {
                           height="100%"
                           className={classes.leftToRight}
                         >
-                          <AreaChart
+                          <BarChart
                             data={this.state.data}
                             margin={{top: 10, right: 20, left: 0, bottom: 0}}
                           >
@@ -667,20 +698,19 @@ class MainDashboard extends React.Component {
                             <XAxis
                               type="category"
                               dataKey="date"
-                              interval={4}
+                              interval="preserveEnd"
                             />
                             <CartesianGrid strokeDasharray="3 3" />
                             <YAxis />
                             <Tooltip />
-                            <Area
-                              type="monotone"
-                              dataKey="posts"
-                              stroke="#8884d8"
-                              fillOpacity={1}
-                              fill="#8884d8"
-                            />
+                            <Bar dataKey="posts" fill="#8884d8" barSize={5}>
+                              {data.map((item, index) => {
+                                const color = item.color;
+                                return <Cell fill={color} />;
+                              })}
+                            </Bar>
                             {/* <Area type="monotone" dataKey="pv" stroke="#82ca9d" fillOpacity={1} fill="url(#colorPv)" /> */}
-                          </AreaChart>
+                          </BarChart>
                         </ResponsiveContainer>
                       </Grid>
                     </Grid>
