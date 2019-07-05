@@ -19,6 +19,8 @@ import {
   Button,
   Tooltip as MTooltip
 } from "@material-ui/core";
+import Slider from "@material-ui/lab/Slider";
+// import {Slider} from "material-ui-slider";
 import ExcelDownload from "./ExcelDownload";
 import InboxIcon from "@material-ui/icons/Inbox";
 import DraftsIcon from "@material-ui/icons/Drafts";
@@ -33,6 +35,7 @@ import ReactEcharts from "echarts-for-react";
 import {
   ResponsiveContainer,
   BarChart,
+  Brush,
   Bar,
   Line,
   CartesianGrid,
@@ -207,6 +210,10 @@ const styles = theme => ({
   },
   textGreen: {
     color: "#207245"
+  },
+  sliderRoot: {
+    direction: "ltr",
+    width: "90%"
   }
 });
 
@@ -424,8 +431,41 @@ const data = [
 class MainDashboard extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {data};
+    this.state = {data, latestQueriesSliderValue: [10, 20]};
   }
+
+  brushChangeHandler = event => {
+    var new_data = this.state.data;
+    new_data.map(
+      (item, index) => (item.posts = Math.floor(Math.random() * (1000 + 1)))
+    );
+    this.setState({
+      data: new_data
+    });
+  };
+
+  latestQueriesSliderChangeHandler = (event, newValue) => {
+    this.setState({
+      latestQueriesSliderValue: newValue
+    });
+  };
+
+  latestQueriesSliderChangeCommittedHandler = (event, newValue) => {
+    var new_data = [];
+    for (var i = 30; i >= 1; i--) {
+      var d = {
+        date: moment()
+          .subtract(i, "days")
+          .format("MMM Do"),
+        posts: Math.floor(Math.random() * (1000 + 1)),
+        color: "#36fb59"
+      };
+      new_data.push(d);
+    }
+    this.setState({
+      data: new_data
+    });
+  };
 
   //   componentDidMount = () => {
   //     console.log(
@@ -678,7 +718,7 @@ class MainDashboard extends React.Component {
                       <Grid item sm={12}>
                         <ResponsiveContainer
                           width="100%"
-                          height="100%"
+                          height="80%"
                           className={classes.leftToRight}
                         >
                           <BarChart
@@ -703,6 +743,12 @@ class MainDashboard extends React.Component {
                             <CartesianGrid strokeDasharray="3 3" />
                             <YAxis />
                             <Tooltip />
+                            {/* <Brush
+                              dataKey="date"
+                              height={30}
+                              stroke="#8884d8"
+                              onChange={this.brushChangeHandler}
+                            /> */}
                             <Bar dataKey="posts" fill="#8884d8" barSize={5}>
                               {data.map((item, index) => {
                                 const color = item.color;
@@ -712,6 +758,19 @@ class MainDashboard extends React.Component {
                             {/* <Area type="monotone" dataKey="pv" stroke="#82ca9d" fillOpacity={1} fill="url(#colorPv)" /> */}
                           </BarChart>
                         </ResponsiveContainer>
+                        <div className={classes.sliderRoot}>
+                          <Slider
+                            range
+                            value={this.state.latestQueriesSliderValue}
+                            valueLabelDisplay="auto"
+                            onChange={this.latestQueriesSliderChangeHandler}
+                            onChangeCommitted={
+                              this.latestQueriesSliderChangeCommittedHandler
+                            }
+                            min={1}
+                            max={30}
+                          />
+                        </div>
                       </Grid>
                     </Grid>
                   </Grid>
