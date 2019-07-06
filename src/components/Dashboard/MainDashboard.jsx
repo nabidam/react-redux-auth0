@@ -211,8 +211,12 @@ const styles = theme => ({
   textGreen: {
     color: "#207245"
   },
-  sliderRoot: {
-    direction: "ltr",
+  center: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  slider: {
     width: "90%"
   }
 });
@@ -431,7 +435,12 @@ const data = [
 class MainDashboard extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {data, latestQueriesSliderValue: [10, 20]};
+    this.state = {
+      data,
+      latestQueriesSliderValue: [1, 30],
+      minSlider: 1,
+      maxSlider: 40
+    };
   }
 
   brushChangeHandler = event => {
@@ -451,6 +460,27 @@ class MainDashboard extends React.Component {
   };
 
   latestQueriesSliderChangeCommittedHandler = (event, newValue) => {
+    var newMin = newValue[0] - 10;
+    if (newMin < 1) {
+      newMin = 1;
+    }
+
+    var newMax = newValue[1] + 10;
+    if (newMax > 360) {
+      newMax = 360;
+    } else if (newMax < 30) {
+      newMax = 30;
+    }
+
+    console.log(newMin, newMax);
+
+    this.setState({
+      minSlider: newMin,
+      maxSlider: newMax
+    });
+  };
+
+  latestQuerySliderButtonHandler = event => {
     var new_data = [];
     for (var i = 30; i >= 1; i--) {
       var d = {
@@ -758,19 +788,31 @@ class MainDashboard extends React.Component {
                             {/* <Area type="monotone" dataKey="pv" stroke="#82ca9d" fillOpacity={1} fill="url(#colorPv)" /> */}
                           </BarChart>
                         </ResponsiveContainer>
-                        <div className={classes.sliderRoot}>
-                          <Slider
-                            range
-                            value={this.state.latestQueriesSliderValue}
-                            valueLabelDisplay="auto"
-                            onChange={this.latestQueriesSliderChangeHandler}
-                            onChangeCommitted={
-                              this.latestQueriesSliderChangeCommittedHandler
-                            }
-                            min={1}
-                            max={30}
-                          />
-                        </div>
+                        <Grid container className="padding-lr-5" spacing={2}>
+                          <Grid item sm={2}>
+                            <Button
+                              variant="outlined"
+                              color="primary"
+                              onClick={this.latestQuerySliderButtonHandler}
+                            >
+                              اعمال
+                            </Button>
+                          </Grid>
+                          <Grid item sm={10} className={classes.center}>
+                            <Slider
+                              className={classes.slider}
+                              range
+                              value={this.state.latestQueriesSliderValue}
+                              valueLabelDisplay="auto"
+                              onChange={this.latestQueriesSliderChangeHandler}
+                              onChangeCommitted={
+                                this.latestQueriesSliderChangeCommittedHandler
+                              }
+                              min={this.state.minSlider}
+                              max={this.state.maxSlider}
+                            />
+                          </Grid>
+                        </Grid>
                       </Grid>
                     </Grid>
                   </Grid>
