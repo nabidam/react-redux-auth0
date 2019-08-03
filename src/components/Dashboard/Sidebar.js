@@ -27,8 +27,11 @@ import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import InsertChart from "@material-ui/icons/InsertChart";
 import DashboardIcon from "@material-ui/icons/Dashboard";
+import InfoIcon from "@material-ui/icons/InfoOutlined";
+import BookIcon from "@material-ui/icons/BookOutlined";
 import addQuery from "../../actions/addQuery";
 import history from "../../history";
+import BootstrapTooltip from "./BSTooltip";
 
 const drawerWidth = 240;
 
@@ -36,86 +39,48 @@ const styles = theme => ({
   root: {
     display: "flex"
   },
+  button: {
+    margin: theme.spacing(1),
+    margin: 8,
+    width: "85%",
+    backgroundColor: "#3340ff",
+    color: "#fff",
+    height: 56,
+    borderRadius: 28,
+    "&:hover": {
+      backgroundColor: "#0500cb"
+    }
+  },
   nested: {
     paddingRight: theme.spacing(4),
     fontSize: "0.7em"
-  },
-  appBar: {
-    zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(["width", "margin"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
-    })
-  },
-  appBarShift: {
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(["width", "margin"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen
-    }),
-    marginRight: drawerWidth
-  },
-  menuButton: {
-    marginLeft: 12,
-    marginRight: 20,
-    float: "right"
   },
   hide: {
     display: "none"
   },
   drawer: {
+    position: "relative",
     width: drawerWidth,
-    flexShrink: 0,
-    whiteSpace: "nowrap"
+    flexShrink: 0
   },
-  drawerOpen: {
-    width: drawerWidth,
-    transition: theme.transitions.create("width", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen
-    })
-  },
-  drawerClose: {
-    transition: theme.transitions.create("width", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
-    }),
-    overflowX: "hidden",
-    width: theme.spacing(7) + 1
+  drawerPaper: {
+    width: drawerWidth
   },
   rtlToolBar: {
     direction: "rtl"
   },
   toolbar: {
     display: "flex",
+    justifyContent: "center",
     alignItems: "center",
-    padding: "0 8px",
-    ...theme.mixins.toolbar,
-    justifyContent: "flex-end"
-  },
-  content: {
-    direction: "rtl",
-    flexGrow: 1,
-    padding: theme.spacing(3),
-    marginRight: 0,
-    transition: theme.transitions.create("margin", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
-    })
-  },
-  contentShift: {
-    transition: theme.transitions.create("margin", {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen
-    }),
-    marginRight: drawerWidth
+    ...theme.mixins.toolbar
   },
   bgGreen: {
-    color: "#fff",
-    backgroundColor: "rgb(18, 222, 38)",
-    "&:hover": {
-      backgroundColor: "rgb(0, 179, 18)"
-    }
+    // color: "#fff",
+    // backgroundColor: "rgb(18, 222, 38)",
+    // "&:hover": {
+    //   backgroundColor: "rgb(0, 179, 18)"
+    // }
   },
   paper: {
     position: "absolute",
@@ -124,6 +89,38 @@ const styles = theme => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing(4),
     outline: "none"
+  },
+  listItem: {
+    "&:hover": {
+      color: "#4753ff",
+      cursor: "pointer"
+    }
+  },
+  selectedListItem: {
+    color: "#4753ff"
+  },
+  divider: {
+    display: "flex",
+    justifyContent: "center",
+    color: "#e2e6ea",
+    width: "75%",
+    margin: "0 auto"
+  },
+  footer: {
+    position: "absolute",
+    bottom: 0,
+    width: "100%"
+  },
+  footerIcon: {
+    fontSize: "1.5em",
+    "&:hover": {
+      backgroundColor: "unset",
+      color: "#4753ff"
+    }
+  },
+  leftIcon: {
+    position: "absolute",
+    right: "75%"
   }
 });
 
@@ -175,45 +172,33 @@ class Sidebar extends Component {
     const {classes, theme} = this.props;
     return (
       <Drawer
-        // anchor="right"
-        className={classNames(classes.drawer, {
-          [classes.drawerOpen]: this.props.isDrawerOpen,
-          [classes.drawerClose]: !this.props.isDrawerOpen
-        })}
+        className={classes.drawer}
+        variant="permanent"
         classes={{
-          paper: classNames({
-            [classes.drawerOpen]: this.props.isDrawerOpen,
-            [classes.drawerClose]: !this.props.isDrawerOpen
-          })
+          paper: classes.drawerPaper
         }}
-        open={this.props.isDrawerOpen}
+        // anchor="right"
       >
         <div className={classes.toolbar}>
-          <IconButton onClick={this.props.triggerDrawer}>
-            {theme.direction === "rtl" ? (
-              <ChevronRightIcon />
-            ) : (
-              <ChevronLeftIcon />
-            )}
-          </IconButton>
-        </div>
-        <Divider />
-        <List>
-          <ListItem
-            button
-            className={classes.bgGreen}
-            onClick={() => {
-              history.push("/dashboard/add-query");
-            }}
+          <Typography
+            variant="h5"
+            component="p"
+            className={classes.primaryText}
           >
-            <ListItemIcon>
-              <Icon>
-                <i className="fas fa-plus" />
-              </Icon>
-            </ListItemIcon>
-            <ListItemText className="list-item-right">
-              ایجاد کوئری جدید
-            </ListItemText>
+            ــدادهـــ ـکاویـــ
+          </Typography>
+        </div>
+        <List>
+          <ListItem>
+            <Button
+              color="primary"
+              className={classes.button}
+              onClick={() => {
+                history.push("/dashboard/add-query");
+              }}
+            >
+              ردیاب جدید
+            </Button>
           </ListItem>
           <Dialog
             open={this.state.newQueryDialog}
@@ -254,11 +239,10 @@ class Sidebar extends Component {
             </DialogActions>
           </Dialog>
         </List>
-        <Divider />
+        {/* <Divider /> */}
         <List component="nav">
           <ListItem
-            button
-            selected={true}
+            className={classNames(classes.listItem, classes.selectedListItem)}
             onClick={() => {
               history.push("/dashboard");
             }}
@@ -268,7 +252,10 @@ class Sidebar extends Component {
             </ListItemIcon>
             <ListItemText className="list-item-right">میز کار</ListItemText>
           </ListItem>
-          <ListItem button onClick={() => this.handleClickMenu()}>
+          <ListItem
+            className={classes.listItem}
+            onClick={() => this.handleClickMenu()}
+          >
             <ListItemIcon>
               <InsertChart />
             </ListItemIcon>
@@ -277,25 +264,33 @@ class Sidebar extends Component {
           </ListItem>
           <Collapse in={this.state.menuOpen} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-              <ListItem button className={classes.nested}>
+              <ListItem
+                className={classNames(classes.nested, classes.listItem)}
+              >
                 <ListItemText
                   primary="پست‌ها"
                   className="list-item-right level-2-items"
                 />
               </ListItem>
-              <ListItem button className={classes.nested}>
+              <ListItem
+                className={classNames(classes.nested, classes.listItem)}
+              >
                 <ListItemText
                   primary="کلمات کلیدی"
                   className="list-item-right level-2-items"
                 />
               </ListItem>
-              <ListItem button className={classes.nested}>
+              <ListItem
+                className={classNames(classes.nested, classes.listItem)}
+              >
                 <ListItemText
                   primary="اینفلوئنسرها"
                   className="list-item-right level-2-items"
                 />
               </ListItem>
-              <ListItem button className={classes.nested}>
+              <ListItem
+                className={classNames(classes.nested, classes.listItem)}
+              >
                 <ListItemText
                   primary="احساس‌سنج"
                   className="list-item-right level-2-items"
@@ -303,7 +298,7 @@ class Sidebar extends Component {
               </ListItem>
             </List>
           </Collapse>
-          <ListItem button>
+          <ListItem className={classes.listItem}>
             <ListItemIcon>
               <Icon>
                 <i className="fas fa-users fa-xs" />
@@ -315,7 +310,30 @@ class Sidebar extends Component {
             />
           </ListItem>
         </List>
-        <Divider />
+        <Divider className={classes.divider} />
+        <List className={classes.footer} component="nav">
+          <Divider className={classes.divider} />
+          <ListItem>
+            <BootstrapTooltip title="راهنمای سیستم">
+              <IconButton color="inherit" className={classes.footerIcon}>
+                <BookIcon />
+              </IconButton>
+            </BootstrapTooltip>
+            <BootstrapTooltip title="پرسش">
+              <IconButton color="inherit" className={classes.footerIcon}>
+                <i className="far fa-question-circle" />
+              </IconButton>
+            </BootstrapTooltip>
+            <BootstrapTooltip title="اطلاعات">
+              <IconButton
+                color="inherit"
+                className={classNames(classes.footerIcon, classes.leftIcon)}
+              >
+                <InfoIcon />
+              </IconButton>
+            </BootstrapTooltip>
+          </ListItem>
+        </List>
       </Drawer>
     );
   }

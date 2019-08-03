@@ -95,52 +95,6 @@ const styles = theme => ({
     marginBottom: 5,
     color: "#3c3c3c"
   },
-  appBar: {
-    zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(["width", "margin"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
-    })
-  },
-  appBarShift: {
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(["width", "margin"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen
-    }),
-    marginRight: drawerWidth
-  },
-  menuButton: {
-    marginLeft: 12,
-    marginRight: 20,
-    float: "right"
-  },
-  hide: {
-    display: "none"
-  },
-  drawer: {
-    width: drawerWidth,
-    flexShrink: 0,
-    whiteSpace: "nowrap"
-  },
-  drawerOpen: {
-    width: drawerWidth,
-    transition: theme.transitions.create("width", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen
-    })
-  },
-  drawerClose: {
-    transition: theme.transitions.create("width", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
-    }),
-    overflowX: "hidden",
-    width: theme.spacing(7) + 1
-  },
-  rtlToolBar: {
-    direction: "rtl"
-  },
   toolbar: {
     display: "flex",
     alignItems: "center",
@@ -149,7 +103,7 @@ const styles = theme => ({
     justifyContent: "flex-start"
   },
   content: {
-    direction: "rtl",
+    // direction: "rtl",
     flexGrow: 1,
     padding: theme.spacing(3),
     marginRight: 0,
@@ -157,13 +111,6 @@ const styles = theme => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen
     })
-  },
-  contentShift: {
-    transition: theme.transitions.create("margin", {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen
-    }),
-    marginRight: drawerWidth
   },
   paper: {
     display: "flex",

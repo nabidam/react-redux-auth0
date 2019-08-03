@@ -1,25 +1,61 @@
 import React, {Component} from "react";
-import NotificationsIcon from "@material-ui/icons/Notifications";
-import {IconButton, Menu, MenuItem, Badge} from "@material-ui/core";
+import NotificationsIcon from "@material-ui/icons/NotificationsOutlined";
+import {IconButton, Menu, MenuItem, Badge, Popover} from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
-import {withStyles} from "@material-ui/core/styles";
+import {withStyles, makeStyles} from "@material-ui/core/styles";
 
-// const classes = theme => ({});
-
-class Notifications extends Component {
-  render() {
-    // const {classes} = this.props;
-    return (
-      <div>
-        <IconButton color="inherit">
-          <Badge badgeContent={1} color="secondary">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-      </div>
-    );
+const useStyles = makeStyles(theme => ({
+  notificationIcon: {
+    padding: 4,
+    marginRight: 20
+    // width: 30,
+    // height: 30,
+    // marginRight: 15
   }
-}
+}));
+
+const Notifications = () => {
+  const classes = useStyles();
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleMenu = event => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  return (
+    <div>
+      <IconButton
+        color="inherit"
+        className={classes.notificationIcon}
+        onClick={handleMenu}
+      >
+        <Badge color="secondary" variant="dot">
+          <NotificationsIcon />
+        </Badge>
+      </IconButton>
+      <Popover
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "right"
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "right"
+        }}
+        id="menu-appbar"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+      >
+        <MenuItem onClick={handleClose} />
+      </Popover>
+    </div>
+  );
+};
 
 // export default withStyles(classes)(Notifications);
 export default Notifications;

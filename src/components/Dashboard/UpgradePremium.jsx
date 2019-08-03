@@ -16,27 +16,46 @@ import {makeStyles} from "@material-ui/core/styles";
 
 const useStyles = makeStyles(theme => ({
   grow: {
+    marginLeft: 10,
     flexGrow: 1,
-    textAlign: "right",
+    textAlign: "left",
     height: "100%",
-    display: "flex"
+    "&:hover": {}
   },
   card: {
     backgroundColor: "#fff",
-    borderRadius: 0
+    borderRadius: 0,
+    boxShadow: "none",
+    borderRight: "solid 1px #edf1f6"
     // minWidth: 275,
   },
   subtitle: {
     fontSize: "0.7em"
   },
   giftIcon: {
-    color: "#3c3c3c"
+    color: "#fff"
   },
   avatar: {
-    backgroundColor: "deepskyblue"
+    backgroundImage: "linear-gradient(315deg, #fc3832, #f2c314)"
   },
-  textSky: {
-    color: "deepskyblue"
+  cardText: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    textAlign: "right"
+  },
+  cardPlus: {
+    "&:h5": {
+      background: "linear-gradient(315deg, #fc3832, #f2c314)"
+    }
+  },
+  primaryText: {
+    fontWeitgh: "bold",
+    color: "#08080d"
+  },
+  secondaryText: {
+    fontSize: 8,
+    color: "#404040"
   }
 }));
 
@@ -53,22 +72,22 @@ const UpgradePremium = () => {
               <GiftIcon className={classes.giftIcon} />
             </Avatar>
           </Grid>
-          <Grid item xs zeroMinWidth>
+          <Grid item xs zeroMinWidth className={classes.cardText}>
             <Typography
               variant="body2"
               component="p"
-              className={classes.textSky}
+              className={classes.primaryText}
             >
               ارتقاء سرویس
             </Typography>
-            <Typography variant="subtitle2" className={classes.subtitle}>
+            <Typography variant="subtitle2" className={classes.secondaryText}>
               ۱۴ روز رایگان
             </Typography>
           </Grid>
-          <Grid item>
+          <Grid item className={classNames(classes.cardText, classes.cardPlus)}>
             <Typography
               variant="h5"
-              className={classNames(classes.plus, classes.textSky)}
+              className={classNames(classes.plus, "upgradePremium-icon")}
             >
               +
             </Typography>
