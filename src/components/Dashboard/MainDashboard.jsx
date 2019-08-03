@@ -729,7 +729,7 @@ class MainDashboard extends React.Component {
                             <Bar dataKey="posts" fill="#8884d8" barSize={5}>
                               {data.map((item, index) => {
                                 const color = item.color;
-                                return <Cell fill={color} />;
+                                return <Cell fill={color} key={index} />;
                               })}
                             </Bar>
                             {/* <Area type="monotone" dataKey="pv" stroke="#82ca9d" fillOpacity={1} fill="url(#colorPv)" /> */}
@@ -748,7 +748,6 @@ class MainDashboard extends React.Component {
                           <Grid item sm={10} className={classes.center}>
                             <Slider
                               className={classes.slider}
-                              range
                               value={this.state.latestQueriesSliderValue}
                               valueLabelDisplay="auto"
                               onChange={this.latestQueriesSliderChangeHandler}
