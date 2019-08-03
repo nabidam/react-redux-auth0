@@ -73,9 +73,9 @@ class Dashboard extends React.Component {
       <div className={classes.root}>
         <CssBaseline />
         <Header />
+        <Sidebar />
         <Route exact path="/dashboard/add-query" component={AddQuery} />
         <Route exact path="/dashboard" component={MainDashboard} />
-        <Sidebar />
         <Snackbar
           anchorOrigin={{
             vertical: "bottom",

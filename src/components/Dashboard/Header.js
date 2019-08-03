@@ -28,6 +28,8 @@ const styles = theme => ({
     textAlign: "right"
   },
   appBar: {
+    width: `calc(100% - ${drawerWidth}px)`,
+    marginRight: drawerWidth,
     backgroundColor: "#fff",
     color: "#3c3c3c",
     zIndex: theme.zIndex.drawer + 1,
@@ -35,69 +37,6 @@ const styles = theme => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen
     })
-  },
-  appBarShift: {
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(["width", "margin"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen
-    }),
-    marginRight: drawerWidth
-  },
-  menuButton: {
-    marginLeft: 12,
-    marginRight: 20,
-    float: "right"
-  },
-  hide: {
-    display: "none"
-  },
-  drawer: {
-    width: drawerWidth,
-    flexShrink: 0,
-    whiteSpace: "nowrap"
-  },
-  drawerOpen: {
-    width: drawerWidth,
-    transition: theme.transitions.create("width", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen
-    })
-  },
-  drawerClose: {
-    transition: theme.transitions.create("width", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
-    }),
-    overflowX: "hidden",
-    width: theme.spacing.unit * 7 + 1
-  },
-  rtlToolBar: {
-    direction: "rtl"
-  },
-  toolbar: {
-    display: "flex",
-    alignItems: "center",
-    padding: "0 8px",
-    ...theme.mixins.toolbar,
-    justifyContent: "flex-start"
-  },
-  content: {
-    direction: "rtl",
-    flexGrow: 1,
-    padding: theme.spacing.unit * 3,
-    marginRight: 0,
-    transition: theme.transitions.create("margin", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
-    })
-  },
-  contentShift: {
-    transition: theme.transitions.create("margin", {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen
-    }),
-    marginRight: drawerWidth - 10
   },
   logoutbtn: {
     marginLeft: 10,
@@ -135,30 +74,12 @@ class MiniDrawer extends React.Component {
     const {classes} = this.props;
 
     return (
-      <AppBar
-        position="fixed"
-        className={classNames(classes.appBar, {
-          [classes.appBarShift]: this.props.isDrawerOpen
-        })}
-      >
-        <Toolbar
-          disableGutters={!this.props.isDrawerOpen}
-          className={classes.rtlToolBar}
-        >
-          <IconButton
-            color="inherit"
-            aria-label="Open drawer"
-            onClick={this.props.triggerDrawer}
-            className={classNames(classes.menuButton, {
-              [classes.hide]: this.props.isDrawerOpen
-            })}
-          >
-            <MenuIcon />
-          </IconButton>
-          <UpgradePremium />
-          <Notifications />
+      <AppBar position="fixed" className={classes.appBar}>
+        <Toolbar className={classes.toolBar}>
           <Profile />
-          <Tooltip title="خروج" placement="bottom">
+          <Notifications />
+          <UpgradePremium />
+          {/* <Tooltip title="خروج" placement="bottom">
             <IconButton
               onClick={() => this.logout()}
               className={classes.logoutbtn}
@@ -166,7 +87,7 @@ class MiniDrawer extends React.Component {
             >
               <ExitIcon className={classes.textBlack} />
             </IconButton>
-          </Tooltip>
+          </Tooltip> */}
         </Toolbar>
       </AppBar>
     );
