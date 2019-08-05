@@ -40,6 +40,7 @@ const styles = theme => ({
     display: "flex"
   },
   button: {
+    fontSize: 14,
     margin: theme.spacing(1),
     margin: 8,
     width: "85%",
@@ -121,6 +122,9 @@ const styles = theme => ({
   leftIcon: {
     position: "absolute",
     right: "75%"
+  },
+  primaryText: {
+    fontSize: 18
   }
 });
 

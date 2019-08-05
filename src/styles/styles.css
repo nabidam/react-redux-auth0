@@ -7,6 +7,7 @@
 * {
     margin: 0;
     padding: 0;
+    font-size: 12px;
     font-family: "BYekan", "Lato", "Segoe UI", "Roboto", "Oxygen";
 }
 
@@ -67,4 +68,8 @@
     -moz-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
+}
+
+.MuiButton-label {
+    font-size: 14px;
 }
