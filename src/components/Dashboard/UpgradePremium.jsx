@@ -16,13 +16,16 @@ import {makeStyles} from "@material-ui/core/styles";
 
 const useStyles = makeStyles(theme => ({
   grow: {
+    display: "flex",
+    justifyContent: "flex-end",
     marginLeft: 10,
     flexGrow: 1,
     textAlign: "left",
-    height: "100%",
+    height: "32px",
     "&:hover": {}
   },
   card: {
+    padding: "0px 24px",
     backgroundColor: "#fff",
     borderRadius: 0,
     boxShadow: "none",
@@ -36,6 +39,8 @@ const useStyles = makeStyles(theme => ({
     color: "#fff"
   },
   avatar: {
+    height: 32,
+    width: 32,
     backgroundImage: "linear-gradient(315deg, #fc3832, #f2c314)"
   },
   cardText: {

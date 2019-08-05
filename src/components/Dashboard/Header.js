@@ -16,6 +16,7 @@ import triggerDrawer from "../../actions/triggerDrawer";
 import Profile from "./Profile";
 import Notifications from "./Notifications";
 import UpgradePremium from "./UpgradePremium";
+import {Divider} from "@material-ui/core";
 
 const drawerWidth = 240;
 
@@ -28,6 +29,7 @@ const styles = theme => ({
     textAlign: "right"
   },
   appBar: {
+    height: 60,
     width: `calc(100% - ${drawerWidth}px)`,
     marginRight: drawerWidth,
     backgroundColor: "#fff",
@@ -78,6 +80,7 @@ class MiniDrawer extends React.Component {
         <Toolbar className={classes.toolBar}>
           <Profile />
           <Notifications />
+          <Divider />
           <UpgradePremium />
           {/* <Tooltip title="خروج" placement="bottom">
             <IconButton

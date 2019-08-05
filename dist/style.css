@@ -36,3 +36,22 @@
 
 .pointer:hover {
   cursor: pointer; }
+
+.MuiInputLabel-formControl {
+  left: unset !important;
+  right: 0; }
+
+.MuiSnackbarContent-message {
+  flex-grow: 1; }
+
+.MuiSnackbarContent-action {
+  padding-left: 0 !important; }
+
+.upgradePremium-icon {
+  background-image: linear-gradient(315deg, #fc3832, #f2c314);
+  background: -moz-linear-gradient(315deg, #fc3832, #f2c314);
+  background: -webkit-linear-gradient(315deg, #fc3832, #f2c314);
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent; }
