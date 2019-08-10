@@ -34,7 +34,7 @@ const styles = theme => ({
     marginRight: drawerWidth,
     backgroundColor: "#fff",
     color: "#3c3c3c",
-    zIndex: theme.zIndex.drawer + 1,
+    zIndex: theme.zIndex.drawer,
     transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen

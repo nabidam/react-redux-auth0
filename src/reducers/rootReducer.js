@@ -19,31 +19,50 @@ const initState = {
   latestQueries: [
     {
       id: 1,
-      name: "query1",
+      name: "ترامپ",
       username: "user1",
+      created_at: "۵ ساعت پیش",
       date: new Date(2019, 1, 2)
     },
     {
       id: 2,
-      name: "query2",
-      username: "user2",
-      date: new Date(2020, 10, 20)
+      name: "نیکزی",
+      username: "user1",
+      created_at: "۸ ساعت پیش",
+      date: new Date(2018, 1, 2)
     },
     {
       id: 3,
-      name: "query3",
-      username: "user3",
-      date: new Date(2018, 11, 24)
+      name: "کاله",
+      username: "user1",
+      created_at: "۱ روز پیش",
+      date: new Date(2017, 1, 2)
     },
     {
       id: 4,
-      name: "query4",
-      username: "user4",
-      date: new Date()
+      name: "کافه لمیز",
+      username: "user1",
+      created_at: "۱ روز پیش",
+      date: new Date(2016, 1, 2)
+    },
+    {
+      id: 5,
+      name: "۱۴۰۰",
+      username: "user1",
+      created_at: "۵ روز پیش",
+      date: new Date(2015, 1, 2)
+    },
+    {
+      id: 6,
+      name: "نفتکش",
+      username: "user1",
+      created_at: "۸ روز پیش",
+      date: new Date(2014, 1, 2)
     }
   ],
-  lastQueryId: 4,
-  selectedQuery: 3,
+  lastQueryId: 6,
+  selectedQuery: 1,
+  selectedQueryMenu: null,
   auth
 };
 
@@ -95,6 +114,7 @@ const rootReducer = (state = initState, action) => {
             id,
             name: action.data.name,
             username: action.data.username,
+            created_at: "لحظاتی پیش",
             date: now
           }
         ]
@@ -103,6 +123,15 @@ const rootReducer = (state = initState, action) => {
       return {
         ...state,
         selectedQuery: action.queryId
+      };
+    case types.SELECT_QUERY_MENU:
+      return {
+        ...state,
+        selectedQuery: action.id,
+        selectedQueryMenu: {
+          id: action.id,
+          name: action.name
+        }
       };
     case types.CHANGE_SNACKBAR_STATUS:
       return {
