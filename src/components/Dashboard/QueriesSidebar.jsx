@@ -35,6 +35,7 @@ import ExpandMore from "@material-ui/icons/ExpandMore";
 import InsertChart from "@material-ui/icons/InsertChart";
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import InfoIcon from "@material-ui/icons/InfoOutlined";
+// import ChevronDown from "@material-ui/icons/ChevronDown";
 import BookIcon from "@material-ui/icons/BookOutlined";
 import ShowChartIcon from "@material-ui/icons/ShowChart";
 import TrafficIcon from "@material-ui/icons/Traffic";
@@ -45,7 +46,7 @@ import selectQueryMenu from "../../actions/selectQueryMenu";
 import history from "../../history";
 import BootstrapTooltip from "./BSTooltip";
 
-const drawerWidth = 240;
+const drawerWidth = 260;
 
 const styles = theme => ({
   root: {
@@ -96,7 +97,7 @@ const styles = theme => ({
     }
   },
   nested: {
-    paddingRight: theme.spacing(4),
+    paddingRight: theme.spacing(3),
     fontSize: 11,
     paddingTop: 0,
     paddingBot: 0
@@ -106,7 +107,7 @@ const styles = theme => ({
     "&::after": {
       content: `""`,
       position: "absolute",
-      left: 12,
+      left: 24,
       width: 6,
       height: 6,
       background: "#4753ff",
@@ -147,13 +148,19 @@ const styles = theme => ({
     justifyContent: "center",
     alignItems: "center"
   },
+  backBtn: {
+    padding: 0
+  },
   listItem: {
     heigth: 44,
-    width: 196,
+    width: 226,
     "&:hover": {
       color: "#4753ff",
       cursor: "pointer"
     }
+  },
+  backBtnItem: {
+    paddingBottom: 0
   },
   listItemx: {
     width: "unset",
@@ -190,6 +197,11 @@ const styles = theme => ({
   listItemIcon: {
     minWidth: 32
   },
+  backBtnIcon: {
+    minWidth: 16,
+    color: "#000",
+    marginLeft: 6
+  },
   listItemSelectQuery: {
     paddingLeft: 0,
     paddingRight: 0
@@ -197,12 +209,13 @@ const styles = theme => ({
   selectQuery: {
     fontSize: 12,
     margin: theme.spacing(1),
-    margin: 8,
-    width: 196,
+    // margin: 8,
+    paddingRight: 19,
+    width: 226,
     backgroundColor: "#edf1f6",
     color: "#08080d",
     height: 44,
-    borderRadius: 5,
+    borderRadius: 22,
     justifyContent: "right"
     // "&:hover": {
     //   backgroundColor: "#0500cb"
@@ -211,7 +224,7 @@ const styles = theme => ({
   selectQueryIcon: {
     display: "flex",
     position: "absolute",
-    left: "8px"
+    left: "19px"
   },
   selectQueryDialog: {
     position: "absolute",
@@ -260,7 +273,7 @@ const styles = theme => ({
   }
 });
 
-class Sidebar extends Component {
+class QueriesSidebar extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -385,85 +398,23 @@ class Sidebar extends Component {
         }}
         // anchor="right"
       >
-        <div className={classes.toolbar}>
-          <Typography
-            variant="h5"
-            component="p"
-            className={classes.primaryText}
-          >
-            ــدادهـــ ـکاویـــ
-          </Typography>
-        </div>
-        <List>
-          <ListItem>
-            <Button
-              color="primary"
-              className={classes.button}
-              onClick={() => {
-                history.push("/dashboard/add-query");
-              }}
-            >
-              ردیاب جدید
-            </Button>
-          </ListItem>
-          <Dialog
-            open={this.state.newQueryDialog}
-            onClose={() => this.handleNewQueryDialog()}
-            aria-labelledby="newQuery"
-            maxWidth="xs"
-          >
-            <DialogTitle className="list-item-right" id="newQuery">
-              ایجاد کوئری جدید
-            </DialogTitle>
-            <DialogContent>
-              <DialogContentText className="list-item-right">
-                نام کاربری مورد نظر را وارد کنید:
-              </DialogContentText>
-              <TextField
-                autoFocus
-                margin="dense"
-                id="username"
-                label="username"
-                type="text"
-                fullWidth
-                value={this.state.queryUsername}
-                onChange={this.handleChangeQueryUsername}
-                error={!this.state.isUsernameEntered}
-                required
-              />
-            </DialogContent>
-            <DialogActions>
-              <Button
-                onClick={() => this.handleNewQueryDialog()}
-                color="primary"
-              >
-                لغو
-              </Button>
-              <Button onClick={() => this.handleAddQuery()} color="primary">
-                ثبت
-              </Button>
-            </DialogActions>
-          </Dialog>
-        </List>
-        {/* <Divider /> */}
-        <List className={classes.list} component="nav">
+        <div className={classes.toolbar} />
+        <List
+          className={classNames(classes.list, classes.backBtn)}
+          component="nav"
+        >
           <ListItem
-            className={classNames(classes.listItem, classes.selectedListItem)}
-            onClick={() => {
-              history.push("/dashboard");
-            }}
+            className={classNames(classes.listItem, classes.backBtnItem)}
           >
-            <ListItemIcon className={classes.listItemIcon}>
-              <DashboardIcon />
-            </ListItemIcon>
-            <ListItemText className="list-item-right">میز کار</ListItemText>
+            <div className={classes.backBtnIcon}>
+              <i className="fas fa-arrow-right" />
+            </div>
+            <ListItemText className="list-item-right">
+              بازگشت به لیست ردیاب‌ها
+            </ListItemText>
           </ListItem>
-          <ListItem className={classes.listItem}>
-            <ListItemIcon className={classes.listItemIcon}>
-              <SearchIcon />
-            </ListItemIcon>
-            <ListItemText className="list-item-right">ردیاب‌ها</ListItemText>
-          </ListItem>
+        </List>
+        <List className={classes.list} component="nav">
           <ListItem
             className={classNames(
               classes.listItem,
@@ -480,7 +431,7 @@ class Sidebar extends Component {
                 ? this.props.selectedQueryMenu.name
                 : "انتخاب ردیاب"}
               <div className={classes.selectQueryIcon}>
-                <i className="fas fa-sort" />
+                <i className="fas fa-chevron-down" />
               </div>
             </Button>
             {/* <Dialog
@@ -610,6 +561,14 @@ class Sidebar extends Component {
                 )}
               >
                 <ListItemText
+                  primary="میز کار"
+                  className="list-item-right level-2-items"
+                />
+              </ListItem>
+              <ListItem
+                className={classNames(classes.nested, classes.listItem)}
+              >
+                <ListItemText
                   primary="پست‌ها"
                   className="list-item-right level-2-items"
                 />
@@ -658,42 +617,12 @@ class Sidebar extends Component {
                 className={classNames(classes.nested, classes.listItem)}
               >
                 <ListItemText
-                  primary="مکان"
+                  primary="مکان مرتبط"
                   className="list-item-right level-2-items"
                 />
               </ListItem>
             </List>
-            <Divider />
           </Collapse>
-          <ListItem className={classes.listItem}>
-            <ListItemIcon className={classes.listItemIcon}>
-              <ShowChartIcon />
-            </ListItemIcon>
-            <ListItemText primary="ترندها" className="list-item-right" />
-          </ListItem>
-          <ListItem className={classes.listItem}>
-            <ListItemIcon className={classes.listItemIcon}>
-              <TrafficIcon />
-            </ListItemIcon>
-            <ListItemText primary="تحلیل ترافیکی" className="list-item-right" />
-          </ListItem>
-          <ListItem className={classes.listItem}>
-            <ListItemIcon className={classes.listItemIcon}>
-              <PeopleIcon />
-            </ListItemIcon>
-            <ListItemText primary="افراد مؤثر" className="list-item-right" />
-          </ListItem>
-          <ListItem className={classes.listItem}>
-            <ListItemIcon className={classes.listItemIcon}>
-              <Icon>
-                <i className="fas fa-users fa-xs" />
-              </Icon>
-            </ListItemIcon>
-            <ListItemText
-              primary="مدیریت شبکه‌ اجتماعی"
-              className="list-item-right"
-            />
-          </ListItem>
         </List>
         <List className={classes.footer} component="nav">
           <Divider className={classes.divider} />
@@ -723,7 +652,7 @@ class Sidebar extends Component {
   }
 }
 
-Sidebar.propTypes = {
+QueriesSidebar.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
   isDrawerOpen: PropTypes.bool,
@@ -749,4 +678,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(styles, {withTheme: true})(Sidebar));
+)(withStyles(styles, {withTheme: true})(QueriesSidebar));

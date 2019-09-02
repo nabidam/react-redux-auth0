@@ -25,6 +25,9 @@ import changeSnackbarStatus from "../../actions/changeSnackbarStatus";
 import CloseIcon from "@material-ui/icons/Close";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import {green} from "@material-ui/core/colors";
+import SecondHeader from "./SecondHeader";
+import QueriesDashboard from "./QueriesDashboard";
+import QueriesSidebar from "./QueriesSidebar";
 
 const drawerWidth = 240;
 
@@ -72,9 +75,14 @@ class Dashboard extends React.Component {
     return (
       <div className={classes.root}>
         <CssBaseline />
-        <Header />
-        <Sidebar />
-        <Route exact path="/dashboard/add-query" component={AddQuery} />
+        <Route exact path="/dashboard/queries" component={SecondHeader} />
+        <Route exact path="/dashboard" component={Header} />
+        {/* <Header /> */}
+        <Route exact path="/dashboard/queries" component={QueriesSidebar} />
+        <Route exact path="/dashboard" component={Sidebar} />
+        {/* <Sidebar /> */}
+        {/* <Route exact path="/dashboard/add-query" component={AddQuery} /> */}
+        <Route exact path="/dashboard/queries" component={QueriesDashboard} />
         <Route exact path="/dashboard" component={MainDashboard} />
         <Snackbar
           anchorOrigin={{
