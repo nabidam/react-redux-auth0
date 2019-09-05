@@ -1,4 +1,4 @@
-import React from "react";
+import React, {unstable_Profiler} from "react";
 import PropTypes from "prop-types";
 import {withStyles} from "@material-ui/core/styles";
 import classNames from "classnames";
@@ -88,6 +88,15 @@ const styles = theme => ({
     display: "flex",
     flexGrow: 1
   },
+  topNavbar: {
+    marginTop: -3,
+    padding: 0,
+    marginBottom: 20
+  },
+  chartContainer: {
+    paddingRight: 50,
+    paddingLeft: 50
+  },
   avatar: {
     width: 30,
     height: 30,
@@ -105,7 +114,7 @@ const styles = theme => ({
   content: {
     // direction: "rtl",
     flexGrow: 1,
-    padding: theme.spacing(3),
+    // padding: theme.spacing(3),
     marginRight: 0,
     transition: theme.transitions.create("margin", {
       easing: theme.transitions.easing.sharp,
@@ -116,6 +125,17 @@ const styles = theme => ({
     display: "flex",
     height: "35vh"
     // width: "40%vw"
+  },
+  topNavbarPaper: {
+    display: "flex",
+    height: 94,
+    paddingRight: 36,
+    paddingLeft: 36
+    // width: "40%vw"
+  },
+  chartPaper: {
+    display: "flex",
+    padding: 25
   },
   leftToRight: {
     direction: "ltr"
@@ -458,6 +478,20 @@ class QueriesDashboard extends React.Component {
     return (
       <main className={classes.content}>
         <div className={classes.toolbar} />
+        <Container className={classes.topNavbar}>
+          <Grid container className={classes.root}>
+            <Grid item md={12} sm={12} xs={12}>
+              <Paper className={classes.topNavbarPaper}></Paper>
+            </Grid>
+          </Grid>
+        </Container>
+        <Container className={classes.chartContainer}>
+          <Grid container className={classes.root}>
+            <Grid item md={12} sm={12} xs={12}>
+              <Paper className={classes.chartPaper}></Paper>
+            </Grid>
+          </Grid>
+        </Container>
         <Container maxWidth="lg">
           <Grid container className={classes.root} spacing={4}>
             <Grid item md={6} sm={12} xs={12}>

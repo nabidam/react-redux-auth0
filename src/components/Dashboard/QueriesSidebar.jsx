@@ -270,6 +270,13 @@ const styles = theme => ({
   },
   primaryText: {
     fontSize: 18
+  },
+  postsBadge: {
+    padding: "5px 5px",
+    backgroundColor: "#edf1f6",
+    borderRadius: 3,
+    color: "#08080d",
+    marginRight: 11
   }
 });
 
@@ -568,10 +575,10 @@ class QueriesSidebar extends Component {
               <ListItem
                 className={classNames(classes.nested, classes.listItem)}
               >
-                <ListItemText
-                  primary="پست‌ها"
-                  className="list-item-right level-2-items"
-                />
+                <ListItemText className="list-item-right level-2-items">
+                  پست‌ها
+                  <span className={classes.postsBadge}>347</span>
+                </ListItemText>
               </ListItem>
               <ListItem
                 className={classNames(classes.nested, classes.listItem)}
