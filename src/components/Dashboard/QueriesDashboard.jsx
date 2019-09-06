@@ -93,6 +93,68 @@ const styles = theme => ({
     padding: 0,
     marginBottom: 20
   },
+  topNavbarTitleBox: {
+    display: "flex",
+    flexGrow: 1,
+    flexDirection: "column",
+    justifyContent: "center"
+  },
+  topNavbarTitleText: {
+    color: "#adb2b9",
+    fontSize: 10
+  },
+  topNavbarSelectedQuery: {
+    color: "#08080d",
+    fontSize: 32
+  },
+  topNavbarMeta: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center"
+  },
+  instagramIconBtn: {
+    color: "#fff",
+    backgroundColor: "#da2b72",
+    minWidth: 44,
+    height: 44,
+    borderRadius: 22,
+    margin: "0px "
+  },
+  twitterIconBtn: {
+    color: "#fff",
+    backgroundColor: "#1da1f2",
+    minWidth: 44,
+    height: 44,
+    borderRadius: 22,
+    margin: "0px 10px"
+  },
+  metaDivider: {
+    height: 20,
+    width: 1,
+    color: "#e4e8ed",
+    margin: "0px 17px"
+  },
+  selectDateRange: {
+    fontSize: 12,
+    margin: theme.spacing(1),
+    // margin: 8,
+    paddingRight: 19,
+    width: 156,
+    backgroundColor: "#edf1f6",
+    color: "#08080d",
+    height: 44,
+    borderRadius: 22,
+    justifyContent: "right"
+    // "&:hover": {
+    //   backgroundColor: "#0500cb"
+    // }
+  },
+  selectDateRangeIcon: {
+    display: "flex",
+    position: "absolute",
+    left: "19px"
+  },
+
   chartContainer: {
     paddingRight: 50,
     paddingLeft: 50
@@ -127,10 +189,13 @@ const styles = theme => ({
     // width: "40%vw"
   },
   topNavbarPaper: {
+    borderRadius: 3,
     display: "flex",
     height: 94,
     paddingRight: 36,
     paddingLeft: 36
+    // paddingTop: 18,
+
     // width: "40%vw"
   },
   chartPaper: {
@@ -481,7 +546,44 @@ class QueriesDashboard extends React.Component {
         <Container className={classes.topNavbar}>
           <Grid container className={classes.root}>
             <Grid item md={12} sm={12} xs={12}>
-              <Paper className={classes.topNavbarPaper}></Paper>
+              <Paper className={classes.topNavbarPaper}>
+                <div className={classes.topNavbarTitleBox}>
+                  <Typography
+                    variant="p"
+                    className={classes.topNavbarTitleText}
+                  >
+                    ردیاب:
+                  </Typography>
+                  <Typography
+                    variant="p"
+                    className={classes.topNavbarSelectedQuery}
+                  >
+                    {this.props.latestQueries.map((item, index) => {
+                      return item.id == this.props.selectedQuery
+                        ? item.name
+                        : "";
+                    })}
+                  </Typography>
+                </div>
+                <div className={classes.topNavbarMeta}>
+                  <Button className={classes.instagramIconBtn}>
+                    <i className="fab fa-instagram"></i>
+                  </Button>
+                  <Button className={classes.twitterIconBtn}>
+                    <i className="fab fa-twitter"></i>
+                  </Button>
+                  <Divider
+                    orientation="vertical"
+                    className={classes.metaDivider}
+                  />
+                  <Button color="primary" className={classes.selectDateRange}>
+                    ۱ مرداد - ۱۹ مرداد
+                    <div className={classes.selectDateRangeIcon}>
+                      <i className="fas fa-chevron-down" />
+                    </div>
+                  </Button>
+                </div>
+              </Paper>
             </Grid>
           </Grid>
         </Container>

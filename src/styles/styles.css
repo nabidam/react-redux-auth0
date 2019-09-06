@@ -1,7 +1,12 @@
-@font-face {
+/* @font-face {
     font-family: 'BYekan';
     src: url('../fonts/byekan/BYekan.eot');
     src: local('BYekan'), url('../fonts/byekan/BYekan.woff') format('woff'), url('../fonts/byekan/BYekan.ttf') format('truetype');
+} */
+
+@font-face {
+    font-family: 'BYekan';
+    src: url('../fonts/byekan/IRANYekanFaNum.woff') format('woff');
 }
 
 * {
@@ -9,6 +14,10 @@
     padding: 0;
     font-size: 12px;
     font-family: "BYekan", "Lato", "Segoe UI", "Roboto", "Oxygen";
+}
+
+body {
+    background-color: #edf1f6 !important;
 }
 
 .login-grid {
