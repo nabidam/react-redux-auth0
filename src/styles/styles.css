@@ -12,7 +12,7 @@
 * {
     margin: 0;
     padding: 0;
-    font-size: 12px;
+    /* font-size: 12px; */
     font-family: "BYekan", "Lato", "Segoe UI", "Roboto", "Oxygen";
 }
 
@@ -81,4 +81,12 @@ body {
 
 .MuiButton-label {
     font-size: 14px;
+}
+
+.MuiTooltip-tooltip {
+    font-size: 10px !important;
+}
+
+.MuiListItemText-primary {
+    font-size: 12px !important;
 }

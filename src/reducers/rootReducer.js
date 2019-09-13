@@ -16,6 +16,7 @@ const initState = {
   id_token: null,
   expires_at: null,
   isDrawerOpen: false,
+  selectedQueryDashboardItem: "dashboard",
   latestQueries: [
     {
       id: 1,
@@ -138,6 +139,11 @@ const rootReducer = (state = initState, action) => {
         ...state,
         isSnackbarOpen: action.data.open,
         snackbarMessage: action.data.msg
+      };
+    case types.SELECT_QUERY_DASHBOARD_LIST_ITEM:
+      return {
+        ...state,
+        selectedQueryDashboardItem: action.item
       };
     default:
       return state;

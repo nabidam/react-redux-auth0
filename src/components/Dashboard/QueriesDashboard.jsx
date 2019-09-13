@@ -49,6 +49,13 @@ import changeSelectedQuery from "../../actions/changeSelectedQuery";
 import ReactExport from "react-data-export";
 import LatestQueriesPDF from "./LatestQueriesPDF";
 import moment from "moment";
+import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
+import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
+import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
+import CommentIcon from "@material-ui/icons/Comment";
+import BootstrapTooltip from "./BSTooltip";
+import QueryDashboardContainer from "./QueryDashboardContainer";
+import QueryPostsContainer from "./QueryPostsContainer";
 
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
@@ -86,7 +93,8 @@ const dataSet1 = [
 const styles = theme => ({
   root: {
     display: "flex",
-    flexGrow: 1
+    flexGrow: 1,
+    marginBottom: 20
   },
   topNavbar: {
     marginTop: -3,
@@ -118,7 +126,11 @@ const styles = theme => ({
     minWidth: 44,
     height: 44,
     borderRadius: 22,
-    margin: "0px "
+    margin: "0px ",
+    "&:hover": {
+      opacity: 0.7,
+      backgroundColor: "#da2b72"
+    }
   },
   twitterIconBtn: {
     color: "#fff",
@@ -126,7 +138,11 @@ const styles = theme => ({
     minWidth: 44,
     height: 44,
     borderRadius: 22,
-    margin: "0px 10px"
+    margin: "0px 10px",
+    "&:hover": {
+      opacity: 0.7,
+      backgroundColor: "#1da1f2"
+    }
   },
   metaDivider: {
     height: 20,
@@ -157,7 +173,8 @@ const styles = theme => ({
 
   chartContainer: {
     paddingRight: 50,
-    paddingLeft: 50
+    paddingLeft: 50,
+    paddingBottom: 20
   },
   avatar: {
     width: 30,
@@ -185,9 +202,26 @@ const styles = theme => ({
   },
   paper: {
     display: "flex",
-    height: "35vh"
+    padding: 20
+    // height: "35vh"
     // width: "40%vw"
   },
+  columnPaper: {
+    flexDirection: "column"
+  },
+  paperHeader: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center"
+  },
+  paperHeaderGuideIcon: {
+    color: "#adb2b9",
+    "&:hover": {
+      color: "#f29132",
+      cursor: "pointer"
+    }
+  },
+
   topNavbarPaper: {
     borderRadius: 3,
     display: "flex",
@@ -202,6 +236,34 @@ const styles = theme => ({
     display: "flex",
     padding: 25
   },
+  chartStatusPaper: {
+    display: "flex",
+    padding: 25,
+    justifyContent: "center",
+    backgroundColor: "#f2f3fb",
+    borderRadius: 3,
+    boxShadow: "unset"
+  },
+  statusItem: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  statusIcon: {
+    color: "#fc4c81",
+    fontSize: 22,
+    margin: "0px 20px"
+  },
+  statusText: {
+    display: "flex",
+    flexDirection: "column",
+    fontSize: 22
+  },
+  statusTextMute: {
+    color: "#adb2b9",
+    fontSize: 10
+  },
+
   leftToRight: {
     direction: "ltr"
   },
@@ -539,411 +601,16 @@ class QueriesDashboard extends React.Component {
 
   render() {
     const {classes} = this.props;
-
-    return (
-      <main className={classes.content}>
-        <div className={classes.toolbar} />
-        <Container className={classes.topNavbar}>
-          <Grid container className={classes.root}>
-            <Grid item md={12} sm={12} xs={12}>
-              <Paper className={classes.topNavbarPaper}>
-                <div className={classes.topNavbarTitleBox}>
-                  <Typography
-                    variant="p"
-                    className={classes.topNavbarTitleText}
-                  >
-                    ردیاب:
-                  </Typography>
-                  <Typography
-                    variant="p"
-                    className={classes.topNavbarSelectedQuery}
-                  >
-                    {this.props.latestQueries.map((item, index) => {
-                      return item.id == this.props.selectedQuery
-                        ? item.name
-                        : "";
-                    })}
-                  </Typography>
-                </div>
-                <div className={classes.topNavbarMeta}>
-                  <Button className={classes.instagramIconBtn}>
-                    <i className="fab fa-instagram"></i>
-                  </Button>
-                  <Button className={classes.twitterIconBtn}>
-                    <i className="fab fa-twitter"></i>
-                  </Button>
-                  <Divider
-                    orientation="vertical"
-                    className={classes.metaDivider}
-                  />
-                  <Button color="primary" className={classes.selectDateRange}>
-                    ۱ مرداد - ۱۹ مرداد
-                    <div className={classes.selectDateRangeIcon}>
-                      <i className="fas fa-chevron-down" />
-                    </div>
-                  </Button>
-                </div>
-              </Paper>
-            </Grid>
-          </Grid>
-        </Container>
-        <Container className={classes.chartContainer}>
-          <Grid container className={classes.root}>
-            <Grid item md={12} sm={12} xs={12}>
-              <Paper className={classes.chartPaper}></Paper>
-            </Grid>
-          </Grid>
-        </Container>
-        <Container maxWidth="lg">
-          <Grid container className={classes.root} spacing={4}>
-            <Grid item md={6} sm={12} xs={12}>
-              <Grid container>
-                <Grid item>
-                  <Avatar className={classes.avatar}>
-                    <HistoryIcon />
-                  </Avatar>
-                </Grid>
-                <Grid item>
-                  <Typography variant="body1">آخرین کوئری ها</Typography>
-                </Grid>
-              </Grid>
-              <Paper className={classes.paper}>
-                <Grid container className={classes.chart}>
-                  <Grid item xs={2} sm={2} className={classes.lists}>
-                    <List component="nav">
-                      {this.props.latestQueries
-                        .sort((a, b) => {
-                          return new Date(b.date) - new Date(a.date);
-                        })
-                        .map((item, index) => (
-                          <ListItem
-                            button
-                            selected={this.props.selectedQuery == item.id}
-                            key={item.id}
-                            onClick={() =>
-                              this.props.changeSelectedQuery(item.id)
-                            }
-                          >
-                            <ListItemText
-                              primary={item.name}
-                              primaryTypographyProps={{variant: "caption"}}
-                              className="list-item-right"
-                            />
-                          </ListItem>
-                        ))}
-                    </List>
-                  </Grid>
-                  <Grid item xs={10} sm={10} className={classes.displayFlex}>
-                    <Grid container>
-                      <Grid item sm={12}>
-                        <Grid
-                          container
-                          justify="center"
-                          className={classes.aboveChartList}
-                        >
-                          <Grid item sm={2}>
-                            <Grid container>
-                              <Grid
-                                item
-                                sm={6}
-                                className={classNames(
-                                  classes.leftToRight,
-                                  classes.aboveChartIcon
-                                )}
-                              >
-                                <PDFDownloadLink
-                                  document={
-                                    <Document>
-                                      <Page wrap>
-                                        <Text>Date:number of Posts</Text>
-                                        {data.map((item, index) => (
-                                          <Text key={index}>
-                                            {item.date} => {item.posts}
-                                          </Text>
-                                        ))}
-                                      </Page>
-                                    </Document>
-                                  }
-                                  fileName={
-                                    this.props.latestQueries.find(
-                                      x => x.id == this.props.selectedQuery
-                                    ).name +
-                                    "_" +
-                                    moment().format("YYYY-MM-DD") +
-                                    ".pdf"
-                                  }
-                                >
-                                  <MTooltip title="دانلود">
-                                    <i
-                                      className={classNames(
-                                        classes.textRed,
-                                        "fas fa-file-pdf pointer"
-                                      )}
-                                    />
-                                  </MTooltip>
-                                </PDFDownloadLink>
-                              </Grid>
-                              <Grid
-                                item
-                                sm={6}
-                                className={classNames(
-                                  classes.aboveChartIcon,
-                                  classes.textGreen
-                                )}
-                              >
-                                <ExcelFile
-                                  filename={
-                                    this.props.latestQueries.find(
-                                      x => x.id == this.props.selectedQuery
-                                    ).name +
-                                    "_" +
-                                    moment().format("YYYY-MM-DD")
-                                  }
-                                  element={<ExcelDownload />}
-                                >
-                                  <ExcelSheet data={data} name="posts">
-                                    <ExcelColumn label="Date" value="date" />
-                                    <ExcelColumn
-                                      label="number of Posts"
-                                      value="posts"
-                                    />
-                                  </ExcelSheet>
-                                </ExcelFile>
-                              </Grid>
-                            </Grid>
-                          </Grid>
-                          <Grid item sm={10}>
-                            <Grid container className="padding-lr-5">
-                              <Grid item sm={3}>
-                                <Grid container>
-                                  <Grid
-                                    item
-                                    sm={8}
-                                    className={classes.leftToRight}
-                                  >
-                                    <Typography variant="body2">
-                                      8,377
-                                    </Typography>
-                                    <Typography
-                                      variant="caption"
-                                      display="block"
-                                      gutterBottom
-                                      className={classes.smallText}
-                                    >
-                                      IMPRESSIONS
-                                    </Typography>
-                                  </Grid>
-                                  <Grid
-                                    item
-                                    sm={4}
-                                    className={classes.aboveChartIcon}
-                                  >
-                                    <i className="fa fa-microphone" />
-                                  </Grid>
-                                </Grid>
-                              </Grid>
-                              <Grid item sm={3}>
-                                <Grid container>
-                                  <Grid
-                                    item
-                                    sm={8}
-                                    className={classes.leftToRight}
-                                  >
-                                    <Typography variant="body2">
-                                      79,098
-                                    </Typography>
-                                    <Typography
-                                      variant="caption"
-                                      display="block"
-                                      gutterBottom
-                                      className={classes.smallText}
-                                    >
-                                      REACH
-                                    </Typography>
-                                  </Grid>
-                                  <Grid
-                                    item
-                                    sm={4}
-                                    className={classes.aboveChartIcon}
-                                  >
-                                    <i className="fas fa-project-diagram" />
-                                  </Grid>
-                                </Grid>
-                              </Grid>
-                              <Grid item sm={3}>
-                                <Grid container>
-                                  <Grid
-                                    item
-                                    sm={8}
-                                    className={classes.leftToRight}
-                                  >
-                                    <Typography variant="body2">401</Typography>
-                                    <Typography
-                                      variant="caption"
-                                      display="block"
-                                      gutterBottom
-                                      className={classes.smallText}
-                                    >
-                                      USERS
-                                    </Typography>
-                                  </Grid>
-                                  <Grid
-                                    item
-                                    sm={4}
-                                    className={classes.aboveChartIcon}
-                                  >
-                                    <i className="fa fa-user" />
-                                  </Grid>
-                                </Grid>
-                              </Grid>
-                              <Grid item sm={3}>
-                                <Grid container>
-                                  <Grid
-                                    item
-                                    sm={8}
-                                    className={classes.leftToRight}
-                                  >
-                                    <Typography variant="body2">500</Typography>
-                                    <Typography
-                                      variant="caption"
-                                      display="block"
-                                      gutterBottom
-                                      className={classes.smallText}
-                                    >
-                                      POSTS
-                                    </Typography>
-                                  </Grid>
-                                  <Grid
-                                    item
-                                    sm={4}
-                                    className={classes.aboveChartIcon}
-                                  >
-                                    <i className="fas fa-comment" />
-                                  </Grid>
-                                </Grid>
-                              </Grid>
-                            </Grid>
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                    </Grid>
-                    <Grid container className={classes.chart}>
-                      <Grid item sm={12}>
-                        <ResponsiveContainer
-                          width="100%"
-                          height="80%"
-                          className={classes.leftToRight}
-                        >
-                          <BarChart
-                            data={this.state.data}
-                            margin={{top: 10, right: 20, left: 0, bottom: 0}}
-                          >
-                            {/* <defs>
-                                                              <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-                                                                  <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8}/>
-                                                                  <stop offset="95%" stopColor="#8884d8" stopOpacity={0}/>
-                                                              </linearGradient>
-                                                              <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">
-                                                                  <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.8}/>
-                                                                  <stop offset="95%" stopColor="#82ca9d" stopOpacity={0}/>
-                                                              </linearGradient>
-                                                          </defs> */}
-                            <XAxis
-                              type="category"
-                              dataKey="date"
-                              interval="preserveEnd"
-                            />
-                            <CartesianGrid strokeDasharray="3 3" />
-                            <YAxis />
-                            <Tooltip />
-                            {/* <Brush
-                              dataKey="date"
-                              height={30}
-                              stroke="#8884d8"
-                              onChange={this.brushChangeHandler}
-                            /> */}
-                            <Bar dataKey="posts" fill="#8884d8" barSize={5}>
-                              {data.map((item, index) => {
-                                const color = item.color;
-                                return <Cell fill={color} key={index} />;
-                              })}
-                            </Bar>
-                            {/* <Area type="monotone" dataKey="pv" stroke="#82ca9d" fillOpacity={1} fill="url(#colorPv)" /> */}
-                          </BarChart>
-                        </ResponsiveContainer>
-                        <Grid container className="padding-lr-5" spacing={2}>
-                          <Grid item sm={2}>
-                            <Button
-                              variant="outlined"
-                              color="primary"
-                              onClick={this.latestQuerySliderButtonHandler}
-                            >
-                              اعمال
-                            </Button>
-                          </Grid>
-                          <Grid item sm={10} className={classes.center}>
-                            <Slider
-                              className={classes.slider}
-                              value={this.state.latestQueriesSliderValue}
-                              valueLabelDisplay="auto"
-                              onChange={this.latestQueriesSliderChangeHandler}
-                              onChangeCommitted={
-                                this.latestQueriesSliderChangeCommittedHandler
-                              }
-                              min={this.state.minSlider}
-                              max={this.state.maxSlider}
-                            />
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                    </Grid>
-                  </Grid>
-                </Grid>
-              </Paper>
-            </Grid>
-            <Grid item md={6} sm={12} xs={12}>
-              <Grid container>
-                <Grid item>
-                  <Avatar className={classes.avatar}>
-                    <Traffic />
-                  </Avatar>
-                </Grid>
-                <Grid item>
-                  <Typography variant="body1">تحلیل ترافیکی</Typography>
-                </Grid>
-              </Grid>
-              <Paper className={classes.paper} />
-            </Grid>
-            <Grid item md={6} sm={12} xs={12}>
-              <Grid container>
-                <Grid item>
-                  <Avatar className={classes.avatar}>
-                    <Whatshot />
-                  </Avatar>
-                </Grid>
-                <Grid item>
-                  <Typography variant="body1">پر‌تکرارترین موضوعات</Typography>
-                </Grid>
-              </Grid>
-              <Paper className={classes.paper} />
-            </Grid>
-            <Grid item md={6} sm={12} xs={12}>
-              <Grid container>
-                <Grid item>
-                  <Avatar className={classes.avatar}>
-                    <People />
-                  </Avatar>
-                </Grid>
-                <Grid item>
-                  <Typography variant="body1">شبکه‌های احتماعی</Typography>
-                </Grid>
-              </Grid>
-              <Paper className={classes.paper} />
-            </Grid>
-          </Grid>
-        </Container>
-      </main>
-    );
+    switch (this.props.selectedQueryDashboardItem) {
+      case "dashboard":
+        return <QueryDashboardContainer />;
+        break;
+      case "posts":
+        return <QueryPostsContainer />;
+        break;
+      default:
+        break;
+    }
   }
 }
 
@@ -955,7 +622,8 @@ QueriesDashboard.propTypes = {
 const mapStateToProps = state => {
   return {
     latestQueries: state.latestQueries,
-    selectedQuery: state.selectedQuery
+    selectedQuery: state.selectedQuery,
+    selectedQueryDashboardItem: state.selectedQueryDashboardItem
   };
 };
 

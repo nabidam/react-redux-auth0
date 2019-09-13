@@ -150,6 +150,7 @@ const styles = theme => ({
   listItem: {
     heigth: 44,
     width: 196,
+    fontSize: 12,
     "&:hover": {
       color: "#4753ff",
       cursor: "pointer"
