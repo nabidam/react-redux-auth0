@@ -16,7 +16,74 @@ const initState = {
   id_token: null,
   expires_at: null,
   isDrawerOpen: false,
-  selectedQueryDashboardItem: "dashboard",
+  selectedQueryDashboardItem: "posts",
+  posts: [
+    {
+      id: 1,
+      username: "morteza",
+      name: "مرتضی محمدی",
+      post:
+        "نصیحت به غرض می‌شنود به نزدیک صاحب دیوان رفتم به سابقه معرفتی که در میان ما بود و صورت حالش بیان",
+      emotion: "negative",
+      sharable: 1,
+      likes: 8240,
+      comments: 4339,
+      date: "1398/05/21",
+      time: "16:42"
+    },
+    {
+      id: 2,
+      username: "moradi",
+      name: "سارا مرادی",
+      post:
+        "نصیحت به غرض می‌شنود به نزدیک صاحب دیوان رفتم به سابقه معرفتی که در میان ما بود و صورت حالش بیان",
+      emotion: "positive",
+      sharable: 1,
+      likes: 240,
+      comments: 39,
+      date: "1398/05/21",
+      time: "18:42"
+    },
+    {
+      id: 3,
+      username: "sirone",
+      name: "سیروان",
+      post:
+        "نصیحت به غرض می‌شنود به نزدیک صاحب دیوان رفتم به سابقه معرفتی که در میان ما بود و صورت حالش بیان",
+      emotion: "positive",
+      sharable: 1,
+      likes: 82,
+      comments: 43,
+      date: "1398/05/20",
+      time: "19:42"
+    },
+    {
+      id: 4,
+      username: "maryqueen",
+      name: "مریم قاسم",
+      post:
+        "نصیحت به غرض می‌شنود به نزدیک صاحب دیوان رفتم به سابقه معرفتی که در میان ما بود و صورت حالش بیان",
+      emotion: "positive",
+      sharable: 1,
+      likes: 248,
+      comments: 13,
+      date: "1398/05/19",
+      time: "20:42"
+    },
+    {
+      id: 5,
+      username: "vtalimar",
+      name: "وحید علیمردی",
+      post:
+        "نصیحت به غرض می‌شنود به نزدیک صاحب دیوان رفتم به سابقه معرفتی که در میان ما بود و صورت حالش بیان",
+      emotion: "negative",
+      sharable: 1,
+      likes: 120,
+      comments: 19,
+      date: "1398/05/19",
+      time: "22:02"
+    }
+  ],
   latestQueries: [
     {
       id: 1,

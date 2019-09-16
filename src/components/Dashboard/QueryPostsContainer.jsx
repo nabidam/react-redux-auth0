@@ -54,6 +54,13 @@ import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import CommentIcon from "@material-ui/icons/Comment";
 import BootstrapTooltip from "./BSTooltip";
+import ViewStreamOutlinedIcon from "@material-ui/icons/ViewStreamOutlined";
+import ViewModuleOutlinedIcon from "@material-ui/icons/ViewModuleOutlined";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
 
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
@@ -98,6 +105,7 @@ const styles = theme => ({
     height: 44,
     borderRadius: 22,
     margin: "0px ",
+    border: "solid 5px rgba(255, 255, 255, 0.85)",
     "&:hover": {
       opacity: 0.7,
       backgroundColor: "#da2b72"
@@ -110,10 +118,25 @@ const styles = theme => ({
     height: 44,
     borderRadius: 22,
     margin: "0px 10px",
+    border: "solid 5px rgba(255, 255, 255, 0.85)",
     "&:hover": {
       opacity: 0.7,
       backgroundColor: "#1da1f2"
     }
+  },
+
+  twtterIconAvatar: {
+    color: "#fff",
+    backgroundColor: "#1da1f2",
+    width: 16,
+    height: 16,
+    borderRadius: 22,
+    position: "absolute",
+    top: 2,
+    left: 2,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
   },
   metaDivider: {
     height: 20,
@@ -148,11 +171,9 @@ const styles = theme => ({
     paddingBottom: 20
   },
   avatar: {
-    width: 30,
-    height: 30,
-    marginLeft: 10,
-    marginBottom: 5,
-    color: "#3c3c3c"
+    width: 44,
+    height: 44,
+    borderRadius: "50%"
   },
   toolbar: {
     display: "flex",
@@ -321,6 +342,9 @@ const styles = theme => ({
     color: "#e4e8ed",
     margin: "0px 10px"
   },
+  sortBtnContainer: {
+    flexGrow: 1
+  },
   sortBtn: {
     fontSize: 14,
     color: "#08080d",
@@ -340,6 +364,130 @@ const styles = theme => ({
     display: "flex",
     position: "absolute",
     left: "10px"
+  },
+
+  selectTableView: {
+    display: "flex",
+    flexDirection: "row",
+    fontSize: 12,
+    width: 91,
+    justifyContent: "center",
+    backgroundColor: "#edf1f6",
+    color: "#08080d",
+    margin: theme.spacing(1),
+    height: 44,
+    borderRadius: 22
+  },
+  selectTableViewIcon: {
+    display: "flex",
+    minWidth: "unset",
+    borderRadius: 22,
+    width: "30%",
+    "&:hover": {
+      backgroundColor: "#edf1f6"
+    },
+    "&:active": {
+      backgroundColor: "#edf1f6"
+    }
+  },
+  selectedView: {
+    color: "#3340ff"
+  },
+
+  dividerFW: {
+    width: "100%",
+    height: 1,
+    backgroundColor: "#e4e8ed"
+  },
+
+  table: {
+    width: "100%"
+  },
+  tableHeader: {
+    fontSize: 12,
+    color: "#08080d"
+  },
+
+  negativeEmotion: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    position: "relative",
+    "&::after": {
+      content: `""`,
+      position: "absolute",
+      width: 16,
+      height: 16,
+      background: "#ec373c",
+      border: "solid 5px rgba(255, 255, 255, 0.85)",
+      borderRadius: "50%"
+    }
+  },
+  positiveEmotion: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    position: "relative",
+    "&::after": {
+      content: `""`,
+      position: "absolute",
+      width: 16,
+      height: 16,
+      background: "#03d588",
+      border: "solid 5px rgba(255, 255, 255, 0.85)",
+      borderRadius: "50%"
+    }
+  },
+  textMute: {
+    color: "#adb2b9"
+  },
+
+  paginationBox: {
+    marginBottom: 40
+  },
+  paginationLinks: {
+    width: 250,
+    height: 44,
+    border: "solid 2px #e4e8ed",
+    marginTop: 30,
+    borderRadius: 22,
+    marginBottom: 20,
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  paginationLink: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 6,
+    marginBottom: 8,
+    width: 28,
+    height: 28,
+    borderRadius: "50%",
+    "&:hover": {
+      cursor: "pointer"
+    }
+  },
+  activePaginationLink: {
+    border: "solid 2px #3340ff",
+    backgroundColor: "#d7d9ff"
+  },
+  paginationText: {
+    textAlign: "center",
+    color: "#adb2b9"
+  },
+  textNormal: {
+    color: "#08080d",
+    padding: "0 3px"
+  },
+
+  tableUsernamePart: {
+    position: "relative",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center"
   }
 });
 
@@ -349,9 +497,18 @@ class QueryPostsContainer extends React.Component {
     this.state = {
       latestQueriesSliderValue: [1, 30],
       minSlider: 1,
-      maxSlider: 40
+      maxSlider: 40,
+      selectedView: "row"
     };
+
+    this.handleSelectView = this.handleSelectView.bind(this);
   }
+
+  handleSelectView = view => {
+    this.setState({
+      selectedView: view
+    });
+  };
 
   latestQueriesSliderChangeHandler = (event, newValue) => {
     this.setState({
@@ -367,7 +524,7 @@ class QueryPostsContainer extends React.Component {
         <Container className={classes.topNavbar}>
           <Grid container className={classes.root}>
             <Grid item md={12} sm={12} xs={12}>
-              <Paper className={classes.topNavbarPaper}>
+              <Paper className={classes.topNavbarPaper} square={true}>
                 <div className={classes.topNavbarTitleBox}>
                   <Typography
                     variant="p"
@@ -409,7 +566,7 @@ class QueryPostsContainer extends React.Component {
           </Grid>
           <Grid container className={classes.root}>
             <Grid item md={12} sm={12} xs={12}>
-              <Paper className={classes.postsPaper}>
+              <Paper className={classes.postsPaper} square={true}>
                 <Grid container className={classes.root}>
                   <Grid item md={12} className={classes.actions}>
                     <input
@@ -425,12 +582,226 @@ class QueryPostsContainer extends React.Component {
                       orientation="vertical"
                       className={classes.searchDivider}
                     />
-                    <Button color="primary" className={classes.sortBtn}>
-                      مرتب‌سازی
-                      <div className={classes.sortIcon}>
-                        <i className="fas fa-chevron-down" />
+                    <div className={classes.sortBtnContainer}>
+                      <Button color="primary" className={classes.sortBtn}>
+                        مرتب‌سازی
+                        <div className={classes.sortIcon}>
+                          <i className="fas fa-chevron-down" />
+                        </div>
+                      </Button>
+                    </div>
+                    <div color="primary" className={classes.selectTableView}>
+                      <Button
+                        className={classNames(
+                          classes.selectTableViewIcon,
+                          "" +
+                            (this.state.selectedView == "row"
+                              ? classes.selectedView
+                              : "")
+                        )}
+                        onClick={() => this.handleSelectView("row")}
+                      >
+                        <ViewStreamOutlinedIcon />
+                      </Button>
+                      <Button
+                        className={classNames(
+                          classes.selectTableViewIcon,
+                          "" +
+                            (this.state.selectedView == "grid"
+                              ? classes.selectedView
+                              : "")
+                        )}
+                        onClick={() => this.handleSelectView("grid")}
+                      >
+                        <ViewModuleOutlinedIcon />
+                      </Button>
+                    </div>
+                  </Grid>
+                  <Divider variant="fullWidth" className={classes.dividerFW} />
+                  <Grid item md={12} className={classes.tableGrid}>
+                    <Table className={classes.table}>
+                      <TableHead>
+                        <TableRow>
+                          <TableCell
+                            align="right"
+                            className={classes.tableHeader}
+                            style={{width: "10%"}}
+                          >
+                            کاربری
+                          </TableCell>
+                          <TableCell
+                            align="right"
+                            className={classes.tableHeader}
+                            style={{width: "42%"}}
+                          >
+                            پست
+                          </TableCell>
+                          <TableCell
+                            align="center"
+                            className={classes.tableHeader}
+                            style={{width: "12%"}}
+                          >
+                            حس متن
+                          </TableCell>
+                          <TableCell
+                            align="center"
+                            className={classes.tableHeader}
+                            style={{width: "14%"}}
+                          >
+                            قابلیت اشتراک
+                          </TableCell>
+                          <TableCell
+                            align="center"
+                            className={classes.tableHeader}
+                            style={{width: "5%"}}
+                          >
+                            لایک
+                          </TableCell>
+                          <TableCell
+                            align="center"
+                            className={classes.tableHeader}
+                            style={{width: "5%"}}
+                          >
+                            کامنت
+                          </TableCell>
+                          <TableCell
+                            className={classes.tableHeader}
+                            style={{width: "10%"}}
+                          >
+                            تاریخ
+                          </TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {this.props.posts.map(row => (
+                          <TableRow key={row.id}>
+                            <TableCell
+                              style={{width: "25%"}}
+                              className={classes.flex}
+                              // padding="none"
+                              align="right"
+                            >
+                              <Grid
+                                container
+                                className={classes.root}
+                                spacing={1}
+                              >
+                                <Grid
+                                  item
+                                  md={4}
+                                  sm={4}
+                                  xs={4}
+                                  className={classes.tableUsernamePart}
+                                >
+                                  <Avatar
+                                    alt="Remy Sharp"
+                                    src="https://material-ui.com/static/images/avatar/1.jpg"
+                                    className={classes.avatar}
+                                  />
+                                  <span className={classes.twtterIconAvatar}>
+                                    <i className="fab fa-twitter fa-sm"></i>
+                                  </span>
+                                </Grid>
+                                <Grid
+                                  item
+                                  md={8}
+                                  sm={8}
+                                  xs={8}
+                                  className={classes.tableUsernamePart}
+                                >
+                                  <span>{row.name}</span>
+                                  <span className={classes.textMute}>
+                                    @{row.username}
+                                  </span>
+                                </Grid>
+                              </Grid>
+                            </TableCell>
+                            <TableCell align="right" style={{width: "50%"}}>
+                              {row.post}...
+                            </TableCell>
+                            <TableCell align="center" style={{width: "5%"}}>
+                              {row.emotion == "negative" ? (
+                                <div className={classes.negativeEmotion}></div>
+                              ) : (
+                                <div className={classes.positiveEmotion}></div>
+                              )}
+                            </TableCell>
+                            <TableCell
+                              className={classes.textMute}
+                              align="center"
+                              style={{width: "5%"}}
+                            >
+                              {row.sharable == 0 ? "ندارد" : "دارد"}
+                            </TableCell>
+                            <TableCell
+                              className={classes.textMute}
+                              align="center"
+                              style={{width: "5%"}}
+                            >
+                              {row.likes}
+                            </TableCell>
+                            <TableCell
+                              className={classes.textMute}
+                              align="center"
+                              style={{width: "5%"}}
+                            >
+                              {row.comments}
+                            </TableCell>
+                            <TableCell
+                              className={classes.textMute}
+                              align="left"
+                              style={{width: "5%"}}
+                            >
+                              {row.date}
+                              <br />
+                              {row.time}
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </Grid>
+                  <Grid
+                    item
+                    md={12}
+                    className={classes.pagination}
+                    align="center"
+                  >
+                    <div className={classes.paginationBox}>
+                      <div className={classes.paginationLinks}>
+                        <div
+                          className={classNames(
+                            classes.paginationLink,
+                            classes.activePaginationLink
+                          )}
+                        >
+                          1
+                        </div>
+                        <div className={classNames(classes.paginationLink)}>
+                          2
+                        </div>
+                        <div className={classNames(classes.paginationLink)}>
+                          3
+                        </div>
+                        <div className={classNames(classes.paginationLink)}>
+                          4
+                        </div>
+                        <div className={classNames(classes.paginationLink)}>
+                          5
+                        </div>
+                        <div className={classNames(classes.paginationLink)}>
+                          <i className="fa fa-angle-left"></i>
+                        </div>
+                        <div className={classNames(classes.paginationLink)}>
+                          <i className="fa fa-angle-double-left"></i>
+                        </div>
                       </div>
-                    </Button>
+                      <div className={classes.paginationText}>
+                        نمایش <span className={classes.textNormal}>1</span> از{" "}
+                        <span className={classes.textNormal}>20</span> برای{" "}
+                        <span className={classes.textNormal}>3343</span> پست
+                      </div>
+                    </div>
                   </Grid>
                 </Grid>
               </Paper>
@@ -451,7 +822,8 @@ const mapStateToProps = state => {
   return {
     latestQueries: state.latestQueries,
     selectedQuery: state.selectedQuery,
-    selectedQueryDashboardItem: state.selectedQueryDashboardItem
+    selectedQueryDashboardItem: state.selectedQueryDashboardItem,
+    posts: state.posts
   };
 };
 
