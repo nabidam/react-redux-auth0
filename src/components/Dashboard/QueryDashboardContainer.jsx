@@ -1207,7 +1207,10 @@ class QueryDashboardContainer extends React.Component {
                     موضوعات مربوط
                   </Typography>
                   <div className={classes.paperHeaderGuideIcon}>
-                    <BootstrapTooltip title="موضوعات مرتبط با ردیاب انتخابی که نشان دهنده تاثیرپذیری یک متن تستی برای نمایش این قابلیت است و باید توضیحات هر سکشن در این قسمت نمایش داده شود.">
+                    <BootstrapTooltip
+                      placement="top"
+                      title="موضوعات مرتبط با ردیاب انتخابی که نشان دهنده تاثیرپذیری یک متن تستی برای نمایش این قابلیت است و باید توضیحات هر سکشن در این قسمت نمایش داده شود."
+                    >
                       <i className="far fa-lightbulb fa-lg"></i>
                     </BootstrapTooltip>
                   </div>
@@ -1278,7 +1281,7 @@ class QueryDashboardContainer extends React.Component {
                     احساس‌سنج
                   </Typography>
                   <div className={classes.paperHeaderGuideIcon}>
-                    <BootstrapTooltip title="احساس‌سنج">
+                    <BootstrapTooltip placement="top" title="احساس‌سنج">
                       <i className="far fa-lightbulb fa-lg"></i>
                     </BootstrapTooltip>
                   </div>
