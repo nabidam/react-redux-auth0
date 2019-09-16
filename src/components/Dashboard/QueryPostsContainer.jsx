@@ -488,6 +488,13 @@ const styles = theme => ({
     display: "flex",
     flexDirection: "column",
     justifyContent: "center"
+  },
+
+  tableRow: {
+    "&:hover": {
+      cursor: "pointer",
+      backgroundColor: "#f2f3fb"
+    }
   }
 });
 
@@ -498,15 +505,30 @@ class QueryPostsContainer extends React.Component {
       latestQueriesSliderValue: [1, 30],
       minSlider: 1,
       maxSlider: 40,
-      selectedView: "row"
+      selectedView: "row",
+      rowHover: 0
     };
 
     this.handleSelectView = this.handleSelectView.bind(this);
+    this.handleHoverRow = this.handleHoverRow.bind(this);
+    this.handleUnHoverRow = this.handleUnHoverRow.bind(this);
   }
 
   handleSelectView = view => {
     this.setState({
       selectedView: view
+    });
+  };
+
+  handleHoverRow = id => {
+    this.setState({
+      rowHover: id
+    });
+  };
+
+  handleUnHoverRow = () => {
+    this.setState({
+      rowHover: 0
     });
   };
 
@@ -674,7 +696,12 @@ class QueryPostsContainer extends React.Component {
                       </TableHead>
                       <TableBody>
                         {this.props.posts.map(row => (
-                          <TableRow key={row.id}>
+                          <TableRow
+                            key={row.id}
+                            className={classes.tableRow}
+                            onMouseEnter={() => this.handleHoverRow(row.id)}
+                            onMouseLeave={() => this.handleUnHoverRow()}
+                          >
                             <TableCell
                               style={{width: "25%"}}
                               className={classes.flex}
@@ -727,28 +754,44 @@ class QueryPostsContainer extends React.Component {
                               )}
                             </TableCell>
                             <TableCell
-                              className={classes.textMute}
+                              className={
+                                this.state.rowHover != row.id
+                                  ? classes.textMute
+                                  : ""
+                              }
                               align="center"
                               style={{width: "5%"}}
                             >
                               {row.sharable == 0 ? "ندارد" : "دارد"}
                             </TableCell>
                             <TableCell
-                              className={classes.textMute}
+                              className={
+                                this.state.rowHover != row.id
+                                  ? classes.textMute
+                                  : ""
+                              }
                               align="center"
                               style={{width: "5%"}}
                             >
                               {row.likes}
                             </TableCell>
                             <TableCell
-                              className={classes.textMute}
+                              className={
+                                this.state.rowHover != row.id
+                                  ? classes.textMute
+                                  : ""
+                              }
                               align="center"
                               style={{width: "5%"}}
                             >
                               {row.comments}
                             </TableCell>
                             <TableCell
-                              className={classes.textMute}
+                              className={
+                                this.state.rowHover != row.id
+                                  ? classes.textMute
+                                  : ""
+                              }
                               align="left"
                               style={{width: "5%"}}
                             >
