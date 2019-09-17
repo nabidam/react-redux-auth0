@@ -16,7 +16,112 @@ const initState = {
   id_token: null,
   expires_at: null,
   isDrawerOpen: false,
-  selectedQueryDashboardItem: "posts",
+  selectedQueryDashboardItem: "keywords",
+  selectedKeyword: "",
+  keywords: [
+    {
+      text: "گرینلند",
+      value: 1345
+    },
+    {
+      text: "پمپئو",
+      value: 922
+    },
+    {
+      text: "فلورانس",
+      value: 876
+    },
+    {
+      text: "تغییر",
+      value: 562
+    },
+    {
+      text: "بیکاری",
+      value: 561
+    },
+    {
+      text: "آسایش",
+      value: 428
+    },
+    {
+      text: "آمریکا",
+      value: 386
+    },
+    {
+      text: "اقتصاد",
+      value: 209
+    },
+    {
+      text: "رشد",
+      value: 87
+    }
+  ],
+  words: [
+    {
+      text: "دونالد",
+      value: 20
+    },
+    {
+      text: "تحریم",
+      value: 10
+    },
+    {
+      text: "ظریف",
+      value: 10
+    },
+    {
+      text: "مردم",
+      value: 13
+    },
+    {
+      text: "آمریکا",
+      value: 13
+    },
+    {
+      text: "چین",
+      value: 10
+    },
+    {
+      text: "ایران",
+      value: 8
+    },
+    {
+      text: "تغییر",
+      value: 13
+    },
+    {
+      text: "خرید",
+      value: 13
+    },
+    {
+      text: "ما",
+      value: 10
+    },
+    {
+      text: "کاخ",
+      value: 10
+    },
+    {
+      text: "تعرفه",
+      value: 10
+    },
+    {
+      text: "جدید",
+      value: 8
+    },
+    {
+      text: "گفت",
+      value: 10
+    },
+    {
+      text: "رسانه",
+      value: 10
+    },
+    {
+      text: "گرینلند",
+      value: 13
+    }
+  ],
   posts: [
     {
       id: 1,

@@ -90,3 +90,7 @@ body {
 .MuiListItemText-primary {
     font-size: 12px !important;
 }
+
+.selected-word {
+    color: #f2c314;
+}
