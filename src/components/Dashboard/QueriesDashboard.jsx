@@ -6,6 +6,7 @@ import changeSelectedQuery from "../../actions/changeSelectedQuery";
 import QueryDashboardContainer from "./QueryDashboardContainer";
 import QueryPostsContainer from "./QueryPostsContainer";
 import QueryKeywordsContainer from "./QueryKeywordsContainer";
+import QueryMarginsContainer from "./QueryMarginsContainer";
 
 class QueriesDashboard extends React.Component {
   constructor(props) {
@@ -32,6 +33,9 @@ class QueriesDashboard extends React.Component {
         break;
       case "keywords":
         return <QueryKeywordsContainer />;
+        break;
+      case "margins":
+        return <QueryMarginsContainer />;
         break;
       default:
         break;
