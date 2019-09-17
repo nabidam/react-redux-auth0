@@ -74,6 +74,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import ListPosts from "./ListPosts";
 import GridPosts from "./GridPosts";
+import ListInfluencers from "./ListInfluencers";
 
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
@@ -706,6 +707,9 @@ const styles = theme => ({
   },
   marginsPaper: {
     height: "100%"
+  },
+  influencersPaper: {
+    height: 420
   }
 });
 
@@ -1108,7 +1112,7 @@ const data01 = [
 //   onWordMouseOver: getCallback("onWordMouseOver")
 // };
 
-class QueryMarginsContainer extends React.Component {
+class QueryInfluencersContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -1333,39 +1337,16 @@ class QueryMarginsContainer extends React.Component {
         </Container>
         <Container className={classes.chartContainer}>
           <Grid container className={classes.root} spacing={2}>
-            <Grid item md={8} sm={12} xs={12}>
-              <Paper
-                className={classNames(classes.chartPaper, classes.marginsPaper)}
-              >
-                <div className={classes.paperHeader}>
-                  <Typography variant="h6" className={classes.headerText}>
-                    نمودار کنارش‌ها
-                  </Typography>
-                  <div className={classes.paperHeaderGuideIcon}>
-                    <BootstrapTooltip
-                      placement="top"
-                      title="موضوعات مرتبط با ردیاب انتخابی که نشان دهنده تاثیرپذیری یک متن تستی برای نمایش این قابلیت است و باید توضیحات هر سکشن در این قسمت نمایش داده شود."
-                    >
-                      <i className="far fa-lightbulb fa-lg"></i>
-                    </BootstrapTooltip>
-                  </div>
-                </div>
-                <Divider variant="fullWidth" className={classes.dividerM} />
-              </Paper>
-            </Grid>
-            <Grid item md={4} sm={12} xs={12}>
+            <Grid item md={12} sm={12} xs={12}>
               <Paper
                 className={classNames(
-                  classes.relatedsPaper,
-                  classes.chartPaper
+                  classes.chartPaper,
+                  classes.influencersPaper
                 )}
               >
                 <div className={classes.paperHeader}>
                   <Typography variant="h6" className={classes.headerText}>
-                    لفظ‌های مرتبط با{" "}
-                    <span className={classes.selectedKeyword}>
-                      {this.state.selectedKeyword}
-                    </span>
+                    نمودار ارتباط افراد مؤثر
                   </Typography>
                   <div className={classes.paperHeaderGuideIcon}>
                     <BootstrapTooltip
@@ -1377,63 +1358,6 @@ class QueryMarginsContainer extends React.Component {
                   </div>
                 </div>
                 <Divider variant="fullWidth" className={classes.dividerM} />
-                <div className={classes.fieldsContent}>
-                  <List component="div" disablePadding className={classes.tabs}>
-                    <ListItem
-                      className={classNames(
-                        classes.listItem,
-                        "" +
-                          (this.state.selectedTab == "keyWords"
-                            ? classes.selectedTab
-                            : "")
-                      )}
-                      onClick={() => this.handleSelectTab("keyWords")}
-                    >
-                      <ListItemText
-                        primary="کلمات کلیدی"
-                        className={classNames(classes.textCenter)}
-                      />
-                    </ListItem>
-                    <ListItem
-                      className={classNames(
-                        classes.listItem,
-                        "" +
-                          (this.state.selectedTab == "hashtags"
-                            ? classes.selectedTab
-                            : "")
-                      )}
-                      onClick={() => this.handleSelectTab("hashtags")}
-                    >
-                      <ListItemText
-                        primary="هشتگ‌ها"
-                        className={classNames(classes.textCenter)}
-                      />
-                    </ListItem>
-                  </List>
-                  <List
-                    component="div"
-                    disablePadding
-                    className={classes.relateds}
-                  >
-                    {this.props.keywords.map((item, index) => {
-                      return (
-                        <ListItem className={classes.listItem} key={index}>
-                          <ListItemText
-                            primary={item.text}
-                            className={classNames(classes.textRight)}
-                          />
-                          <ListItemText
-                            primary={item.value}
-                            className={classNames(
-                              classes.textMute,
-                              classes.textLeft
-                            )}
-                          />
-                        </ListItem>
-                      );
-                    })}
-                  </List>
-                </div>
               </Paper>
             </Grid>
           </Grid>
@@ -1448,7 +1372,7 @@ class QueryMarginsContainer extends React.Component {
               >
                 <div className={classes.paperHeader}>
                   <Typography variant="h6" className={classes.headerText}>
-                    پست‌های مرتبط با{" "}
+                    افراد مؤثر روی ردیاب{" "}
                     <span className={classes.selectedKeyword}>
                       {this.state.selectedKeyword}
                     </span>
@@ -1464,61 +1388,7 @@ class QueryMarginsContainer extends React.Component {
                 </div>
                 <Divider variant="fullWidth" className={classes.dividerM} />
                 <Grid container className={classes.root}>
-                  <Grid item md={12} className={classes.actions}>
-                    <input
-                      type="text"
-                      className={classes.searchInput}
-                      placeholder="هشتگ و کلمات کلیدی"
-                    />
-                    <Button className={classes.searchIconBtn}>
-                      <i className="fa fa-search fa-lg"></i>
-                    </Button>
-
-                    <Divider
-                      orientation="vertical"
-                      className={classes.searchDivider}
-                    />
-                    <div className={classes.sortBtnContainer}>
-                      <Button color="primary" className={classes.sortBtn}>
-                        مرتب‌سازی
-                        <div className={classes.sortIcon}>
-                          <i className="fas fa-chevron-down" />
-                        </div>
-                      </Button>
-                    </div>
-                    <div color="primary" className={classes.selectTableView}>
-                      <Button
-                        className={classNames(
-                          classes.selectTableViewIcon,
-                          "" +
-                            (this.state.selectedView == "row"
-                              ? classes.selectedView
-                              : "")
-                        )}
-                        onClick={() => this.handleSelectView("row")}
-                      >
-                        <ViewStreamOutlinedIcon />
-                      </Button>
-                      <Button
-                        className={classNames(
-                          classes.selectTableViewIcon,
-                          "" +
-                            (this.state.selectedView == "grid"
-                              ? classes.selectedView
-                              : "")
-                        )}
-                        onClick={() => this.handleSelectView("grid")}
-                      >
-                        <ViewModuleOutlinedIcon />
-                      </Button>
-                    </div>
-                  </Grid>
-                  <Divider variant="fullWidth" className={classes.dividerFW} />
-                  {this.state.selectedView == "row" ? (
-                    <ListPosts />
-                  ) : (
-                    <GridPosts />
-                  )}
+                  <ListInfluencers />
                 </Grid>
               </Paper>
             </Grid>
@@ -1529,7 +1399,7 @@ class QueryMarginsContainer extends React.Component {
   }
 }
 
-QueryMarginsContainer.propTypes = {
+QueryInfluencersContainer.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired
 };
@@ -1555,4 +1425,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(styles, {withTheme: true})(QueryMarginsContainer));
+)(withStyles(styles, {withTheme: true})(QueryInfluencersContainer));

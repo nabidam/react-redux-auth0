@@ -7,6 +7,7 @@ import QueryDashboardContainer from "./QueryDashboardContainer";
 import QueryPostsContainer from "./QueryPostsContainer";
 import QueryKeywordsContainer from "./QueryKeywordsContainer";
 import QueryMarginsContainer from "./QueryMarginsContainer";
+import QueryInfluencersContainer from "./QueryInfluencersContainer";
 
 class QueriesDashboard extends React.Component {
   constructor(props) {
@@ -36,6 +37,9 @@ class QueriesDashboard extends React.Component {
         break;
       case "margins":
         return <QueryMarginsContainer />;
+        break;
+      case "influencers":
+        return <QueryInfluencersContainer />;
         break;
       default:
         break;

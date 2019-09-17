@@ -16,8 +16,75 @@ const initState = {
   id_token: null,
   expires_at: null,
   isDrawerOpen: false,
-  selectedQueryDashboardItem: "keywords",
+  selectedQueryDashboardItem: "influencers",
   selectedKeyword: "",
+  influencers: [
+    {
+      id: 1,
+      name: "مرتضی محمدی",
+      username: "morteza",
+      posts: 8240,
+      overall_likes: 4339,
+      average_likes: 1455,
+      overall_comments: 4339,
+      average_comments: 1897,
+      motivation: 66,
+      content_emotion: -1,
+      comment_emotion: -1
+    },
+    {
+      id: 2,
+      username: "moradi",
+      name: "سارا مرادی",
+      posts: 6557,
+      overall_likes: 4339,
+      average_likes: 4339,
+      overall_comments: 4339,
+      average_comments: 2890,
+      motivation: 58,
+      content_emotion: +1,
+      comment_emotion: +1
+    },
+    {
+      id: 3,
+      username: "sirone",
+      name: "سیروان",
+      posts: 4455,
+      overall_likes: 4339,
+      average_likes: 1455,
+      overall_comments: 4339,
+      average_comments: 1897,
+      motivation: 45,
+      content_emotion: +1,
+      comment_emotion: -1
+    },
+    {
+      id: 4,
+      username: "maryqueen",
+      name: "مریم قاسم",
+      posts: 3897,
+      overall_likes: 4339,
+      average_likes: 1455,
+      overall_comments: 4339,
+      average_comments: 1897,
+      motivation: 42,
+      content_emotion: +1,
+      comment_emotion: +1
+    },
+    {
+      id: 5,
+      username: "vtalimar",
+      name: "وحید علیمردی",
+      posts: 2890,
+      overall_likes: 4339,
+      average_likes: 966,
+      overall_comments: 4339,
+      average_comments: 2890,
+      motivation: 41,
+      content_emotion: +1,
+      comment_emotion: -1
+    }
+  ],
   keywords: [
     {
       text: "گرینلند",
