@@ -10,6 +10,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import ExitIcon from "@material-ui/icons/ExitToAppRounded";
 import Tooltip from "@material-ui/core/Tooltip";
 import requestLogout from "../../actions/requestLogout";
+import selectPage from "../../actions/selectPage";
 import history from "../../history";
 import {connect} from "react-redux";
 import triggerDrawer from "../../actions/triggerDrawer";
@@ -164,9 +165,12 @@ class SecondHeader extends React.Component {
           <Paper
             className={classNames(
               classes.headerPaper,
-              classes.selectedHeaderPaper
+              this.props.selectedPage == "queries"
+                ? classes.selectedHeaderPaper
+                : ""
             )}
             component={Button}
+            onClick={() => this.props.selectPage("queries")}
             variant="contained"
           >
             <Grid container wrap="nowrap">
@@ -183,26 +187,14 @@ class SecondHeader extends React.Component {
             </Grid>
           </Paper>
           <Paper
-            className={classes.headerPaper}
+            className={classNames(
+              classes.headerPaper,
+              this.props.selectedPage == "traffic-analysis"
+                ? classes.selectedHeaderPaper
+                : ""
+            )}
             component={Button}
-            variant="contained"
-          >
-            <Grid container wrap="nowrap">
-              <Grid item xs zeroMinWidth className={classes.headerItem}>
-                <ShowChartIcon className={classes.headerItemIcon} />
-                <Typography
-                  variant="p"
-                  component="p"
-                  className={classes.headerItemText}
-                >
-                  ترند‌ها و افراد مؤثر
-                </Typography>
-              </Grid>
-            </Grid>
-          </Paper>
-          <Paper
-            className={classes.headerPaper}
-            component={Button}
+            onClick={() => this.props.selectPage("traffic-analysis")}
             variant="contained"
           >
             <Grid container wrap="nowrap">
@@ -219,31 +211,14 @@ class SecondHeader extends React.Component {
             </Grid>
           </Paper>
           <Paper
-            className={classes.headerPaper}
+            className={classNames(
+              classes.headerPaper,
+              this.props.selectedPage == "projects"
+                ? classes.selectedHeaderPaper
+                : ""
+            )}
             component={Button}
-            variant="contained"
-          >
-            <Grid container wrap="nowrap">
-              <Grid item xs zeroMinWidth className={classes.headerItem}>
-                <i
-                  className={classNames(
-                    classes.headerItemIcon,
-                    "fas fa-users fa-xs"
-                  )}
-                />
-                <Typography
-                  variant="p"
-                  component="p"
-                  className={classes.headerItemText}
-                >
-                  مدیریت شبکه اجتماعی
-                </Typography>
-              </Grid>
-            </Grid>
-          </Paper>
-          <Paper
-            className={classes.headerPaper}
-            component={Button}
+            onClick={() => this.props.selectPage("projects")}
             variant="contained"
           >
             <Grid container wrap="nowrap">
@@ -260,6 +235,83 @@ class SecondHeader extends React.Component {
                   className={classes.headerItemText}
                 >
                   پروژه‌ها
+                </Typography>
+              </Grid>
+            </Grid>
+          </Paper>
+          <Paper
+            className={classNames(
+              classes.headerPaper,
+              this.props.selectedPage == "trends"
+                ? classes.selectedHeaderPaper
+                : ""
+            )}
+            component={Button}
+            onClick={() => this.props.selectPage("trends")}
+            variant="contained"
+          >
+            <Grid container wrap="nowrap">
+              <Grid item xs zeroMinWidth className={classes.headerItem}>
+                <ShowChartIcon className={classes.headerItemIcon} />
+                <Typography
+                  variant="p"
+                  component="p"
+                  className={classes.headerItemText}
+                >
+                  ترند‌ها
+                </Typography>
+              </Grid>
+            </Grid>
+          </Paper>
+          <Paper
+            className={classNames(
+              classes.headerPaper,
+              this.props.selectedPage == "effective-accounts"
+                ? classes.selectedHeaderPaper
+                : ""
+            )}
+            component={Button}
+            onClick={() => this.props.selectPage("effective-accounts")}
+            variant="contained"
+          >
+            <Grid container wrap="nowrap">
+              <Grid item xs zeroMinWidth className={classes.headerItem}>
+                <ShowChartIcon className={classes.headerItemIcon} />
+                <Typography
+                  variant="p"
+                  component="p"
+                  className={classes.headerItemText}
+                >
+                  افراد مؤثر
+                </Typography>
+              </Grid>
+            </Grid>
+          </Paper>
+          <Paper
+            className={classNames(
+              classes.headerPaper,
+              this.props.selectedPage == "management"
+                ? classes.selectedHeaderPaper
+                : ""
+            )}
+            component={Button}
+            onClick={() => this.props.selectPage("management")}
+            variant="contained"
+          >
+            <Grid container wrap="nowrap">
+              <Grid item xs zeroMinWidth className={classes.headerItem}>
+                <i
+                  className={classNames(
+                    classes.headerItemIcon,
+                    "fas fa-users fa-xs"
+                  )}
+                />
+                <Typography
+                  variant="p"
+                  component="p"
+                  className={classes.headerItemText}
+                >
+                  مدیریت شبکه اجتماعی
                 </Typography>
               </Grid>
             </Grid>
@@ -295,14 +347,16 @@ const mapStateToProps = state => {
   return {
     auth: state.auth,
     isAuthenticated: state.isAuthenticated,
-    isDrawerOpen: state.isDrawerOpen
+    isDrawerOpen: state.isDrawerOpen,
+    selectedPage: state.selectedPage
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     requestLogout: () => dispatch(requestLogout()),
-    triggerDrawer: () => dispatch(triggerDrawer())
+    triggerDrawer: () => dispatch(triggerDrawer()),
+    selectPage: page => dispatch(selectPage(page))
   };
 };
 

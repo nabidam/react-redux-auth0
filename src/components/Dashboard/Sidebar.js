@@ -42,6 +42,7 @@ import PeopleIcon from "@material-ui/icons/People";
 import PublicIcon from "@material-ui/icons/Public";
 import addQuery from "../../actions/addQuery";
 import selectQueryMenu from "../../actions/selectQueryMenu";
+import selectPage from "../../actions/selectPage";
 import history from "../../history";
 import BootstrapTooltip from "./BSTooltip";
 
@@ -342,6 +343,7 @@ class Sidebar extends Component {
     });
 
     history.push("/dashboard/queries");
+    this.props.selectPage("queries");
   };
 
   handleNewQueryDialog = () => {
@@ -393,6 +395,7 @@ class Sidebar extends Component {
             className={classes.primaryText}
           >
             ــدادهـــ ـکاویـــ
+            {this.props.selectedPage}
           </Typography>
         </div>
         <List>
@@ -666,25 +669,46 @@ class Sidebar extends Component {
             </List>
             <Divider />
           </Collapse>
-          <ListItem className={classes.listItem}>
-            <ListItemIcon className={classes.listItemIcon}>
-              <ShowChartIcon />
-            </ListItemIcon>
-            <ListItemText primary="ترندها" className="list-item-right" />
-          </ListItem>
-          <ListItem className={classes.listItem}>
+          <ListItem
+            className={classes.listItem}
+            onClick={() => this.props.selectPage("traffic-analysis")}
+          >
             <ListItemIcon className={classes.listItemIcon}>
               <TrafficIcon />
             </ListItemIcon>
             <ListItemText primary="تحلیل ترافیکی" className="list-item-right" />
           </ListItem>
-          <ListItem className={classes.listItem}>
+          <ListItem
+            className={classes.listItem}
+            onClick={() => this.props.selectPage("projects")}
+          >
+            <ListItemIcon className={classes.listItemIcon}>
+              <ShowChartIcon />
+            </ListItemIcon>
+            <ListItemText primary="پروژه‌ها" className="list-item-right" />
+          </ListItem>
+          <ListItem
+            className={classes.listItem}
+            onClick={() => this.props.selectPage("trends")}
+          >
+            <ListItemIcon className={classes.listItemIcon}>
+              <ShowChartIcon />
+            </ListItemIcon>
+            <ListItemText primary="ترندها" className="list-item-right" />
+          </ListItem>
+          <ListItem
+            className={classes.listItem}
+            onClick={() => this.props.selectPage("effective-accounts")}
+          >
             <ListItemIcon className={classes.listItemIcon}>
               <PeopleIcon />
             </ListItemIcon>
             <ListItemText primary="افراد مؤثر" className="list-item-right" />
           </ListItem>
-          <ListItem className={classes.listItem}>
+          <ListItem
+            className={classes.listItem}
+            onClick={() => this.props.selectPage("management")}
+          >
             <ListItemIcon className={classes.listItemIcon}>
               <Icon>
                 <i className="fas fa-users fa-xs" />
@@ -735,7 +759,8 @@ const mapStateToProps = state => {
   return {
     isDrawerOpen: state.isDrawerOpen,
     latestQueries: state.latestQueries,
-    selectedQueryMenu: state.selectedQueryMenu
+    selectedQueryMenu: state.selectedQueryMenu,
+    selectedPage: state.selectedPage
   };
 };
 
@@ -743,7 +768,8 @@ const mapDispatchToProps = dispatch => {
   return {
     triggerDrawer: () => dispatch(triggerDrawer()),
     addQuery: username => dispatch(addQuery(username)),
-    selectQueryMenu: (id, name) => dispatch(selectQueryMenu(id, name))
+    selectQueryMenu: (id, name) => dispatch(selectQueryMenu(id, name)),
+    selectPage: page => dispatch(selectPage(page))
   };
 };
 

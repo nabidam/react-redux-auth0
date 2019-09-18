@@ -28,6 +28,7 @@ import {green} from "@material-ui/core/colors";
 import SecondHeader from "./SecondHeader";
 import QueriesDashboard from "./QueriesDashboard";
 import QueriesSidebar from "./QueriesSidebar";
+import TrafficAnalysis from "./TrafficAnalysis";
 
 const drawerWidth = 240;
 
@@ -75,14 +76,20 @@ class Dashboard extends React.Component {
     return (
       <div className={classes.root}>
         <CssBaseline />
-        <Route exact path="/dashboard/queries" component={SecondHeader} />
-        <Route exact path="/dashboard" component={Header} />
+        {this.props.selectedPage == "" ? <Header /> : <SecondHeader />}
+        {/* <Route exact path="/dashboard" component={Header} />
+        <Route path="/dashboard/" component={SecondHeader} /> */}
         {/* <Header /> */}
         <Route exact path="/dashboard/queries" component={QueriesSidebar} />
         <Route exact path="/dashboard" component={Sidebar} />
         {/* <Sidebar /> */}
         {/* <Route exact path="/dashboard/add-query" component={AddQuery} /> */}
         <Route exact path="/dashboard/queries" component={QueriesDashboard} />
+        <Route
+          exact
+          path="/dashboard/traffic-analysis"
+          component={TrafficAnalysis}
+        />
         <Route exact path="/dashboard" component={MainDashboard} />
         <Snackbar
           anchorOrigin={{
@@ -129,7 +136,8 @@ Dashboard.propTypes = {
 const mapStateToProps = state => {
   return {
     isSnackbarOpen: state.isSnackbarOpen,
-    snackbarMessage: state.snackbarMessage
+    snackbarMessage: state.snackbarMessage,
+    selectedPage: state.selectedPage
   };
 };
 

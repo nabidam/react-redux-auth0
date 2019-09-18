@@ -57,7 +57,7 @@ class QueriesDashboard extends React.Component {
 }
 
 QueriesDashboard.propTypes = {
-  classes: PropTypes.object.isRequired,
+  // classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired
 };
 

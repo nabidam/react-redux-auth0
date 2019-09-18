@@ -1,5 +1,6 @@
 import auth0 from "auth0-js";
 import * as types from "../types/types";
+import history from "../history";
 
 const auth = new auth0.WebAuth({
   domain: "dev-hukqki79.auth0.com",
@@ -17,9 +18,34 @@ const initState = {
   expires_at: null,
   isDrawerOpen: false,
   selectedQueryDashboardItem: "groups",
+  selectedPage: "",
   selectedKeyword: "",
   selectedEmotion: "",
   selectedGroup: 0,
+  selectedAnalysisType: 1,
+  analysis: [
+    {
+      id: 1,
+      name: "رز میرداماد",
+      active: 1,
+      date: "12 خرداد 98",
+      time: "16:43"
+    },
+    {
+      id: 2,
+      name: "آزادی",
+      active: 1,
+      date: "18 خرداد 98",
+      time: "16:43"
+    },
+    {
+      id: 3,
+      name: "تیراژه",
+      active: 0,
+      date: "10 خرداد 98",
+      time: "16:43"
+    }
+  ],
   groups: [
     {
       id: 1,
@@ -486,6 +512,26 @@ const rootReducer = (state = initState, action) => {
       return {
         ...state,
         selectedGroup: action.id
+      };
+    case types.SELECT_PAGE:
+      history.push("/dashboard" + (action.page != "" ? "/" + action.page : ""));
+      return {
+        ...state,
+        selectedPage: action.page
+      };
+    case types.SELECT_ANALYSIS_TYPE:
+      return {
+        ...state,
+        selectedAnalysisType: action.t
+      };
+    case types.CHANGE_ANALYSIS_STATUS:
+      console.log(action);
+
+      return {
+        ...state,
+        analysis: state.analysis.map(el =>
+          el.id == action.analysis ? {...el, active: !el.active} : el
+        )
       };
     default:
       return state;

@@ -43,6 +43,7 @@ import PeopleIcon from "@material-ui/icons/People";
 import PublicIcon from "@material-ui/icons/Public";
 import addQuery from "../../actions/addQuery";
 import selectQueryMenu from "../../actions/selectQueryMenu";
+import selectPage from "../../actions/selectPage";
 import selectQueryDashboardListItem from "../../actions/selectQueryDashboardListItem";
 import history from "../../history";
 import BootstrapTooltip from "./BSTooltip";
@@ -311,7 +312,13 @@ class QueriesSidebar extends Component {
     this.handleChangeQueryUsername = this.handleChangeQueryUsername.bind(this);
     this.handleAddQuery = this.handleAddQuery.bind(this);
     this.handleClickListItem = this.handleClickListItem.bind(this);
+    this.handleBack = this.handleBack.bind(this);
   }
+
+  handleBack = () => {
+    this.props.selectPage("");
+    history.push("/dashboard");
+  };
 
   handleChangeSearchQueryString = event => {
     var searched_query = event.target.value.toUpperCase();
@@ -418,6 +425,7 @@ class QueriesSidebar extends Component {
         >
           <ListItem
             className={classNames(classes.listItem, classes.backBtnItem)}
+            onClick={() => this.handleBack()}
           >
             <div className={classes.backBtnIcon}>
               <i className="fas fa-arrow-right" />
@@ -747,7 +755,8 @@ const mapDispatchToProps = dispatch => {
     addQuery: username => dispatch(addQuery(username)),
     selectQueryMenu: (id, name) => dispatch(selectQueryMenu(id, name)),
     selectQueryDashboardListItem: item =>
-      dispatch(selectQueryDashboardListItem(item))
+      dispatch(selectQueryDashboardListItem(item)),
+    selectPage: page => dispatch(selectPage(page))
   };
 };
 
