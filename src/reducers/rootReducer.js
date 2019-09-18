@@ -16,7 +16,7 @@ const initState = {
   id_token: null,
   expires_at: null,
   isDrawerOpen: false,
-  selectedQueryDashboardItem: "influencers",
+  selectedQueryDashboardItem: "emotions",
   selectedKeyword: "",
   influencers: [
     {
