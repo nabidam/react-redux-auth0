@@ -209,7 +209,7 @@ const styles = theme => ({
   }
 });
 
-class ListPosts extends React.Component {
+class ListEmotionPosts extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -265,7 +265,7 @@ class ListPosts extends React.Component {
                   className={classes.tableHeader}
                   style={{width: "14%"}}
                 >
-                  قابلیت اشتراک
+                  حس کامنت
                 </TableCell>
                 <TableCell
                   align="center"
@@ -356,14 +356,24 @@ class ListPosts extends React.Component {
                       ></div>
                     )}
                   </TableCell>
-                  <TableCell
-                    className={
-                      this.state.rowHover != row.id ? classes.textMute : ""
-                    }
-                    align="center"
-                    style={{width: "5%"}}
-                  >
-                    {row.sharable == 0 ? "ندارد" : "دارد"}
+                  <TableCell align="center" style={{width: "5%"}}>
+                    {row.comment_emotion == "negative" ? (
+                      <div
+                        className={
+                          this.props.selectedEmotion == "negative"
+                            ? classes.selectedNegativeEmotion
+                            : classes.negativeEmotion
+                        }
+                      ></div>
+                    ) : (
+                      <div
+                        className={
+                          this.props.selectedEmotion == "positive"
+                            ? classes.selectedPositiveEmotion
+                            : classes.positiveEmotion
+                        }
+                      ></div>
+                    )}
                   </TableCell>
                   <TableCell
                     className={
@@ -433,7 +443,7 @@ class ListPosts extends React.Component {
   }
 }
 
-ListPosts.propTypes = {
+ListEmotionPosts.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired
 };
@@ -462,4 +472,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(styles, {withTheme: true})(ListPosts));
+)(withStyles(styles, {withTheme: true})(ListEmotionPosts));

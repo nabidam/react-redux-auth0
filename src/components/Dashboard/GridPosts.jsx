@@ -46,6 +46,7 @@ import {
 } from "recharts";
 import {connect} from "react-redux";
 import changeSelectedQuery from "../../actions/changeSelectedQuery";
+import selectEmotion from "../../actions/selectEmotion";
 import ReactExport from "react-data-export";
 import LatestQueriesPDF from "./LatestQueriesPDF";
 import moment from "moment";
@@ -102,6 +103,17 @@ const styles = theme => ({
       borderRadius: "50%"
     }
   },
+  selectedNegativeEmotion: {
+    position: "absolute",
+    "&::after": {
+      content: `""`,
+      position: "absolute",
+      width: 16,
+      height: 16,
+      background: "#ec373c",
+      borderRadius: "50%"
+    }
+  },
   positiveEmotion: {
     position: "absolute",
     "&::after": {
@@ -111,6 +123,17 @@ const styles = theme => ({
       height: 16,
       background: "#03d588",
       border: "solid 5px rgba(255, 255, 255, 0.85)",
+      borderRadius: "50%"
+    }
+  },
+  selectedPositiveEmotion: {
+    position: "absolute",
+    "&::after": {
+      content: `""`,
+      position: "absolute",
+      width: 16,
+      height: 16,
+      background: "#03d588",
       borderRadius: "50%"
     }
   },
@@ -365,9 +388,21 @@ class GridPosts extends React.Component {
                           >
                             حس متن
                             {row.emotion == "negative" ? (
-                              <div className={classes.negativeEmotion}></div>
+                              <div
+                                className={
+                                  this.props.selectedEmotion == "negative"
+                                    ? classes.selectedNegativeEmotion
+                                    : classes.negativeEmotion
+                                }
+                              ></div>
                             ) : (
-                              <div className={classes.positiveEmotion}></div>
+                              <div
+                                className={
+                                  this.props.selectedEmotion == "positive"
+                                    ? classes.selectedPositiveEmotion
+                                    : classes.positiveEmotion
+                                }
+                              ></div>
                             )}
                           </div>
                         </div>
@@ -422,7 +457,8 @@ const mapStateToProps = state => {
     latestQueries: state.latestQueries,
     selectedQuery: state.selectedQuery,
     selectedQueryDashboardItem: state.selectedQueryDashboardItem,
-    posts: state.posts
+    posts: state.posts,
+    selectedEmotion: state.selectedEmotion
   };
 };
 
@@ -430,6 +466,9 @@ const mapDispatchToProps = dispatch => {
   return {
     changeSelectedQuery: id => {
       dispatch(changeSelectedQuery(id));
+    },
+    selectEmotion: emotion => {
+      dispatch(selectEmotion(emotion));
     }
   };
 };

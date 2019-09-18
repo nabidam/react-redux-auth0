@@ -1356,18 +1356,7 @@ class QueryKeywordsContainer extends React.Component {
                   }}
                   words={this.state.words}
                   callbacks={{
-                    onWordClick: (word, event) => {
-                      this.setState({
-                        ...this.state,
-                        selectedKeyword: word.text
-                      });
-                      // console.log(word);
-                      // console.log(event);
-
-                      const element = event.target;
-                      console.log(element);
-                      element.setAttribute("fill", "#f2c314");
-                    }
+                    onWordClick: this.handleWordClick
                     // {
                     //   console.log(word);
                     // }

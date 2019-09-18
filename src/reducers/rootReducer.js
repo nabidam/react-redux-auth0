@@ -18,6 +18,7 @@ const initState = {
   isDrawerOpen: false,
   selectedQueryDashboardItem: "emotions",
   selectedKeyword: "",
+  selectedEmotion: "",
   influencers: [
     {
       id: 1,
@@ -197,6 +198,7 @@ const initState = {
       post:
         "نصیحت به غرض می‌شنود به نزدیک صاحب دیوان رفتم به سابقه معرفتی که در میان ما بود و صورت حالش بیان",
       emotion: "negative",
+      comment_emotion: "negative",
       sharable: 1,
       likes: 8240,
       comments: 4339,
@@ -210,6 +212,7 @@ const initState = {
       post:
         "نصیحت به غرض می‌شنود به نزدیک صاحب دیوان رفتم به سابقه معرفتی که در میان ما بود و صورت حالش بیان",
       emotion: "positive",
+      comment_emotion: "negative",
       sharable: 1,
       likes: 240,
       comments: 39,
@@ -223,6 +226,7 @@ const initState = {
       post:
         "نصیحت به غرض می‌شنود به نزدیک صاحب دیوان رفتم به سابقه معرفتی که در میان ما بود و صورت حالش بیان",
       emotion: "positive",
+      comment_emotion: "positive",
       sharable: 1,
       likes: 82,
       comments: 43,
@@ -236,6 +240,7 @@ const initState = {
       post:
         "نصیحت به غرض می‌شنود به نزدیک صاحب دیوان رفتم به سابقه معرفتی که در میان ما بود و صورت حالش بیان",
       emotion: "positive",
+      comment_emotion: "positive",
       sharable: 1,
       likes: 248,
       comments: 13,
@@ -249,6 +254,7 @@ const initState = {
       post:
         "نصیحت به غرض می‌شنود به نزدیک صاحب دیوان رفتم به سابقه معرفتی که در میان ما بود و صورت حالش بیان",
       emotion: "negative",
+      comment_emotion: "positive",
       sharable: 1,
       likes: 120,
       comments: 19,
@@ -383,6 +389,11 @@ const rootReducer = (state = initState, action) => {
       return {
         ...state,
         selectedQueryDashboardItem: action.item
+      };
+    case types.SELECT_EMOTION:
+      return {
+        ...state,
+        selectedEmotion: action.emotion
       };
     default:
       return state;

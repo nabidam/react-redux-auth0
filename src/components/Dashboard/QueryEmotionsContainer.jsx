@@ -52,6 +52,7 @@ import {
 } from "recharts";
 import {connect} from "react-redux";
 import changeSelectedQuery from "../../actions/changeSelectedQuery";
+import selectEmotion from "../../actions/selectEmotion";
 import ReactExport from "react-data-export";
 import LatestQueriesPDF from "./LatestQueriesPDF";
 import moment from "moment";
@@ -72,7 +73,7 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import ListPosts from "./ListPosts";
+import ListEmotionPosts from "./ListEmotionPosts";
 import GridPosts from "./GridPosts";
 
 const ExcelFile = ReactExport.ExcelFile;
@@ -447,6 +448,21 @@ const styles = theme => ({
       border: "solid 5px rgba(255, 255, 255, 0.85)"
     }
   },
+  selectedNegativePercent: {
+    position: "relative",
+    width: 45,
+    fontWeight: "bold",
+    textAlign: "left",
+    "&::after": {
+      content: `""`,
+      position: "absolute",
+      right: 0,
+      width: 16,
+      height: 16,
+      background: "#ec373c",
+      borderRadius: "50%"
+    }
+  },
   negativeText: {
     fontSize: 10
   },
@@ -469,6 +485,21 @@ const styles = theme => ({
       background: "#03d588",
       borderRadius: "50%",
       border: "solid 5px rgba(255, 255, 255, 0.85)"
+    }
+  },
+  selectedPositivePercent: {
+    position: "relative",
+    width: 45,
+    fontWeight: "bold",
+    textAlign: "right",
+    "&::after": {
+      content: `""`,
+      position: "absolute",
+      left: 0,
+      width: 16,
+      height: 16,
+      background: "#03d588",
+      borderRadius: "50%"
     }
   },
   positiveText: {
@@ -614,6 +645,20 @@ const styles = theme => ({
       borderRadius: "50%"
     }
   },
+  selectedNegativeEmotion: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    position: "relative",
+    "&::after": {
+      content: `""`,
+      position: "absolute",
+      width: 16,
+      height: 16,
+      background: "#ec373c",
+      borderRadius: "50%"
+    }
+  },
   positiveEmotion: {
     display: "flex",
     justifyContent: "center",
@@ -626,6 +671,20 @@ const styles = theme => ({
       height: 16,
       background: "#03d588",
       border: "solid 5px rgba(255, 255, 255, 0.85)",
+      borderRadius: "50%"
+    }
+  },
+  selectedPositiveEmotion: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    position: "relative",
+    "&::after": {
+      content: `""`,
+      position: "absolute",
+      width: 16,
+      height: 16,
+      background: "#03d588",
       borderRadius: "50%"
     }
   },
@@ -708,6 +767,11 @@ const styles = theme => ({
   },
   emotionPaper: {
     height: "100%"
+  },
+  pie: {
+    "&:hover": {
+      cursor: "pointer"
+    }
   }
 });
 
@@ -739,12 +803,14 @@ const emotionDatas = [
   {
     name: "حس مثبت",
     value: 58,
-    color: "#03d588"
+    color: "#03d588",
+    emotion: "positive"
   },
   {
     name: "حس منفی",
     value: 42,
-    color: "#ec373c"
+    color: "#ec373c",
+    emotion: "negative"
   }
 ];
 
@@ -1121,7 +1187,7 @@ class QueryEmotionsContainer extends React.Component {
       latestQueriesSliderValue: [1, 30],
       minSlider: 1,
       maxSlider: 40,
-      selectedTab: "keyWords",
+      selectedTab: "positive",
       selectedChartAction: "day",
       selectedView: "row",
       rowHover: 0,
@@ -1134,7 +1200,6 @@ class QueryEmotionsContainer extends React.Component {
     this.handleSelectView = this.handleSelectView.bind(this);
     this.handleHoverRow = this.handleHoverRow.bind(this);
     this.handleUnHoverRow = this.handleUnHoverRow.bind(this);
-    this.handleWordClick = this.handleWordClick.bind(this);
   }
 
   handleSelectView = view => {
@@ -1153,61 +1218,6 @@ class QueryEmotionsContainer extends React.Component {
     this.setState({
       rowHover: 0
     });
-  };
-
-  getCallback = callback => {
-    (word, event) => {
-      const isActive = callback !== "onWordMouseOut";
-      const element = event.target;
-      const text = select(element);
-      text.on("click", () => {
-        this.setState({
-          selectedKeyword: word.text
-        });
-      });
-      // .transition()
-      // .attr("background", "white")
-      // .attr("font-size", isActive ? "300%" : "100%")
-      // .attr("text-decoration", isActive ? "underline" : "none");
-    };
-  };
-
-  componentDidMount = () => {
-    this.setState({
-      callbacks: {
-        getWordTooltip: word =>
-          `The word "${word.text}" appears ${word.value} times.`,
-        onWordClick: this.getCallback("onWordClick"),
-        onWordMouseOut: this.getCallback("onWordMouseOut"),
-        onWordMouseOver: this.getCallback("onWordMouseOver")
-      }
-    });
-  };
-
-  handleWordClick = (word, event) => {
-    this.setState({
-      selectedKeyword: word.text
-    });
-    // console.log(word);
-    // console.log(event);
-
-    const element = event.target;
-    console.log(element);
-    element.setAttribute("fill", "#f2c314");
-
-    // const text = element.select();
-    // console.log("x");
-
-    // text
-    //   .on("click", () => {
-    //     this.setState({
-    //       selectedKeyword: word.text
-    //     });
-    //   })
-    //   .transition()
-    //   .attr("background", "white")
-    //   .attr("font-size", isActive ? "300%" : "100%")
-    //   .attr("text-decoration", isActive ? "underline" : "none");
   };
 
   brushChangeHandler = event => {
@@ -1403,7 +1413,14 @@ class QueryEmotionsContainer extends React.Component {
                       {emotionDatas.map((item, index) => {
                         const color = item.color;
                         return (
-                          <Cell fill={"url(#color" + index + ")"} key={index} />
+                          <Cell
+                            className={classes.pie}
+                            fill={"url(#color" + index + ")"}
+                            key={index}
+                            onClick={emotion =>
+                              this.props.selectEmotion(item.emotion)
+                            }
+                          />
                         );
                       })}
                     </Pie>
@@ -1414,7 +1431,11 @@ class QueryEmotionsContainer extends React.Component {
                     <div className={classes.negativeEmotionBox}>
                       <Typography
                         variant="p"
-                        className={classes.negativePercent}
+                        className={
+                          this.props.selectedEmotion == "negative"
+                            ? classes.selectedNegativePercent
+                            : classes.negativePercent
+                        }
                       >
                         {this.state.emotionDatas[1].value}%
                       </Typography>
@@ -1425,7 +1446,11 @@ class QueryEmotionsContainer extends React.Component {
                     <div className={classes.positiveEmotionBox}>
                       <Typography
                         variant="p"
-                        className={classes.positivePercent}
+                        className={
+                          this.props.selectedEmotion == "positive"
+                            ? classes.selectedPositivePercent
+                            : classes.positivePercent
+                        }
                       >
                         {this.state.emotionDatas[0].value}%
                       </Typography>
@@ -1464,11 +1489,11 @@ class QueryEmotionsContainer extends React.Component {
                       className={classNames(
                         classes.listItem,
                         "" +
-                          (this.state.selectedTab == "keyWords"
+                          (this.state.selectedTab == "positive"
                             ? classes.selectedTab
                             : "")
                       )}
-                      onClick={() => this.handleSelectTab("keyWords")}
+                      onClick={() => this.handleSelectTab("positive")}
                     >
                       <ListItemText
                         primary="مثبت"
@@ -1479,11 +1504,11 @@ class QueryEmotionsContainer extends React.Component {
                       className={classNames(
                         classes.listItem,
                         "" +
-                          (this.state.selectedTab == "hashtags"
+                          (this.state.selectedTab == "negative"
                             ? classes.selectedTab
                             : "")
                       )}
-                      onClick={() => this.handleSelectTab("hashtags")}
+                      onClick={() => this.handleSelectTab("negative")}
                     >
                       <ListItemText
                         primary="منفی"
@@ -1593,7 +1618,7 @@ class QueryEmotionsContainer extends React.Component {
                   </Grid>
                   <Divider variant="fullWidth" className={classes.dividerFW} />
                   {this.state.selectedView == "row" ? (
-                    <ListPosts />
+                    <ListEmotionPosts />
                   ) : (
                     <GridPosts />
                   )}
@@ -1618,7 +1643,8 @@ const mapStateToProps = state => {
     selectedQuery: state.selectedQuery,
     selectedQueryDashboardItem: state.selectedQueryDashboardItem,
     posts: state.posts,
-    keywords: state.keywords
+    keywords: state.keywords,
+    selectedEmotion: state.selectedEmotion
   };
 };
 
@@ -1626,6 +1652,9 @@ const mapDispatchToProps = dispatch => {
   return {
     changeSelectedQuery: id => {
       dispatch(changeSelectedQuery(id));
+    },
+    selectEmotion: emotion => {
+      dispatch(selectEmotion(emotion));
     }
   };
 };
