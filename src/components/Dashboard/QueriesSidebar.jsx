@@ -667,11 +667,11 @@ class QueriesSidebar extends Component {
                   classes.nested,
                   classes.listItem,
                   "" +
-                    (this.props.selectedQueryDashboardItem == "classifications"
+                    (this.props.selectedQueryDashboardItem == "groups"
                       ? classes.selectedNested
                       : "")
                 )}
-                onClick={() => this.handleClickListItem("classifications")}
+                onClick={() => this.handleClickListItem("groups")}
               >
                 <ListItemText
                   primary="دسته‌بندی‌ها"

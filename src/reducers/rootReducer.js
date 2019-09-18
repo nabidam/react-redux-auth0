@@ -16,9 +16,96 @@ const initState = {
   id_token: null,
   expires_at: null,
   isDrawerOpen: false,
-  selectedQueryDashboardItem: "emotions",
+  selectedQueryDashboardItem: "groups",
   selectedKeyword: "",
   selectedEmotion: "",
+  selectedGroup: 0,
+  groups: [
+    {
+      id: 1,
+      name: "سیاست",
+      posts: 8240,
+      overall_likes: 4339,
+      average_likes: 1455,
+      overall_comments: 4339,
+      average_comments: 1897,
+      effective_accounts: 156,
+      content_emotion: -1,
+      comment_emotion: -1
+    },
+    {
+      id: 2,
+      name: "آمریکا",
+      posts: 8240,
+      overall_likes: 4339,
+      average_likes: 1455,
+      overall_comments: 4339,
+      average_comments: 1897,
+      effective_accounts: 156,
+      content_emotion: -1,
+      comment_emotion: +1
+    },
+    {
+      id: 3,
+      name: "کاخ سفید",
+      posts: 8240,
+      overall_likes: 4339,
+      average_likes: 1455,
+      overall_comments: 4339,
+      average_comments: 1897,
+      effective_accounts: 156,
+      content_emotion: -1,
+      comment_emotion: -1
+    },
+    {
+      id: 4,
+      name: "امور خارجه",
+      posts: 8240,
+      overall_likes: 4339,
+      average_likes: 1455,
+      overall_comments: 4339,
+      average_comments: 1897,
+      effective_accounts: 156,
+      content_emotion: +1,
+      comment_emotion: +1
+    },
+    {
+      id: 5,
+      name: "واردات",
+      posts: 8240,
+      overall_likes: 4339,
+      average_likes: 1455,
+      overall_comments: 4339,
+      average_comments: 1897,
+      effective_accounts: 156,
+      content_emotion: +1,
+      comment_emotion: -1
+    },
+    {
+      id: 6,
+      name: "برجام",
+      posts: 8240,
+      overall_likes: 4339,
+      average_likes: 1455,
+      overall_comments: 4339,
+      average_comments: 1897,
+      effective_accounts: 156,
+      content_emotion: +1,
+      comment_emotion: +1
+    },
+    {
+      id: 7,
+      name: "تحریم",
+      posts: 8240,
+      overall_likes: 4339,
+      average_likes: 1455,
+      overall_comments: 4339,
+      average_comments: 1897,
+      effective_accounts: 156,
+      content_emotion: -1,
+      comment_emotion: +1
+    }
+  ],
   influencers: [
     {
       id: 1,
@@ -394,6 +481,11 @@ const rootReducer = (state = initState, action) => {
       return {
         ...state,
         selectedEmotion: action.emotion
+      };
+    case types.SELECT_GROUP:
+      return {
+        ...state,
+        selectedGroup: action.id
       };
     default:
       return state;
