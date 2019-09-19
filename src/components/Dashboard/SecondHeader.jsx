@@ -290,12 +290,12 @@ class SecondHeader extends React.Component {
           <Paper
             className={classNames(
               classes.headerPaper,
-              this.props.selectedPage == "management"
+              this.props.selectedPage == "accounts"
                 ? classes.selectedHeaderPaper
                 : ""
             )}
             component={Button}
-            onClick={() => this.props.selectPage("management")}
+            onClick={() => this.props.selectPage("accounts")}
             variant="contained"
           >
             <Grid container wrap="nowrap">

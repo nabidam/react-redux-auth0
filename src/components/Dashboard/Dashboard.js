@@ -30,6 +30,7 @@ import QueriesDashboard from "./QueriesDashboard";
 import QueriesSidebar from "./QueriesSidebar";
 import TrafficAnalysis from "./TrafficAnalysis";
 import Influencers from "./Influencers";
+import Accounts from "./Accounts";
 
 const drawerWidth = 240;
 
@@ -92,6 +93,7 @@ class Dashboard extends React.Component {
           component={TrafficAnalysis}
         />
         <Route exact path="/dashboard/influencers" component={Influencers} />
+        <Route exact path="/dashboard/accounts" component={Accounts} />
         <Route exact path="/dashboard" component={MainDashboard} />
         <Snackbar
           anchorOrigin={{

@@ -199,6 +199,55 @@ const initState = {
       comment_emotion: -1
     }
   ],
+  accounts: [
+    {
+      id: 1,
+      social_media: "twitter",
+      name: "سیروان",
+      username: "sirone",
+      followers: 1998,
+      followings: 134,
+      posts: 7333
+    },
+    {
+      id: 2,
+      social_media: "instagram",
+      name: "میلاد",
+      username: "milad",
+      followers: 1998,
+      followings: 134,
+      posts: 7333
+    }
+  ],
+  myPosts: [
+    {
+      id: 1,
+      post:
+        "نصیحت به غرض می‌شنود به نزدیک صاحب دیوان رفتم به سابقه معرفتی که در میان ما بود و صورت حالش بیان کردم و اهلیت و استحقاقش بگفتم تا به کاری مختصرش نصب کردن",
+      date: "24 مهر 1398",
+      time: "14:30",
+      sent_network: [{network: "twitter"}, {network: "instagram"}],
+      hashtags: [{tag: "گرینلند"}, {tag: "پمپئو"}, {tag: "فلورانس"}]
+    },
+    {
+      id: 2,
+      post:
+        "نصیحت به غرض می‌شنود به نزدیک صاحب دیوان رفتم به سابقه معرفتی که در میان ما بود و صورت حالش بیان کردم و اهلیت و استحقاقش بگفتم تا به کاری مختصرش نصب کردن",
+      date: "24 مهر 1398",
+      time: "14:30",
+      sent_network: [{network: "twitter"}, {network: "instagram"}],
+      hashtags: [{tag: "گرینلند"}, {tag: "پمپئو"}, {tag: "فلورانس"}]
+    },
+    {
+      id: 3,
+      post:
+        "نصیحت به غرض می‌شنود به نزدیک صاحب دیوان رفتم به سابقه معرفتی که در میان ما بود و صورت حالش بیان کردم و اهلیت و استحقاقش بگفتم تا به کاری مختصرش نصب کردن",
+      date: "24 مهر 1398",
+      time: "14:30",
+      sent_network: [{network: "twitter"}, {network: "instagram"}],
+      hashtags: [{tag: "گرینلند"}, {tag: "پمپئو"}, {tag: "فلورانس"}]
+    }
+  ],
   influencers: [
     {
       id: 1,
