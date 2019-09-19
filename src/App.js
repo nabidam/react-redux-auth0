@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import {Router, Route, Switch} from "react-router-dom";
 import Home from "./components/Home";
 import Dashboard from "./components/Dashboard/Dashboard";
+import WordsCloud from "./components/Dashboard/WordsCloud";
 import Callback from "./components/Callback";
 import About from "./components/About";
 import Login from "./components/Login";
@@ -62,6 +63,7 @@ class App extends Component {
             />
             <Route path="/callback" component={Callback} />
             <Route path="/about" component={About} />
+            <Route path="/cloud" component={WordsCloud} />
           </Switch>
         </div>
       </Router>

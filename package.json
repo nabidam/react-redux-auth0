@@ -19,6 +19,7 @@
     "json-loader": "^0.5.7",
     "material-ui-slider": "^3.0.3",
     "moment": "^2.24.0",
+    "randomcolor": "^0.5.4",
     "react": "^16.8.6",
     "react-d3-cloud": "^0.7.0",
     "react-data-export": "^0.5.0",

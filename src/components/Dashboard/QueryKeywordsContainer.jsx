@@ -74,6 +74,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import ListPosts from "./ListPosts";
 import GridPosts from "./GridPosts";
+import WordsCloud from "./WordsCloud";
 
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
@@ -703,6 +704,9 @@ const styles = theme => ({
   },
   relatedsPaper: {
     height: "100%"
+  },
+  wordsPaper: {
+    height: "100%"
   }
 });
 
@@ -1078,38 +1082,36 @@ const data01 = [
   }
 ];
 
-// function getCallback(callback) {
-//   return function(word, event) {
-//     const isActive = callback !== "onWordMouseOut";
-//     const element = event.target;
-//     // console.log(element);
+function getCallback(callback) {
+  return function(word, event) {
+    const isActive = callback !== "onWordMouseOut";
+    const element = event.target;
+    const text = select(element);
+    console.log(mapStateToProps);
+    // text.setAttribute("fill", "#f2c314");
+    // console.log("x");
+    // console.log(element);
 
-//     // const text = element.select();
-//     // console.log("x");
+    // const text = element.select();
+    // console.log("x");
 
-//     element
-//       .on("click", () => {
-//         this.setState({
-//           selectedKeyword: word.text
-//         });
-//       })
-//       .transition()
-//       .attr("background", "white")
-//       .attr("font-size", isActive ? "300%" : "100%")
-//       .attr("text-decoration", isActive ? "underline" : "none");
-//   };
-// }
-// const callbacks = {
-//   onWordClick: getCallback("onWordClick"),
-//   onWordMouseOut: getCallback("onWordMouseOut"),
-//   onWordMouseOver: getCallback("onWordMouseOver")
-// };
+    text.on("click", () => {
+      window.keywordsContainer.setState({
+        selectedKeyword: word.text
+      });
+    });
+  };
+}
+const callbacks = {
+  onWordClick: getCallback("onWordClick"),
+  onWordMouseOut: getCallback("onWordMouseOut"),
+  onWordMouseOver: getCallback("onWordMouseOver")
+};
 
 class QueryKeywordsContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      words,
       data,
       data01,
       emotionDatas,
@@ -1165,18 +1167,6 @@ class QueryKeywordsContainer extends React.Component {
       // .attr("font-size", isActive ? "300%" : "100%")
       // .attr("text-decoration", isActive ? "underline" : "none");
     };
-  };
-
-  componentDidMount = () => {
-    this.setState({
-      callbacks: {
-        getWordTooltip: word =>
-          `The word "${word.text}" appears ${word.value} times.`,
-        onWordClick: this.getCallback("onWordClick"),
-        onWordMouseOut: this.getCallback("onWordMouseOut"),
-        onWordMouseOver: this.getCallback("onWordMouseOver")
-      }
-    });
   };
 
   handleWordClick = (word, event) => {
@@ -1331,7 +1321,9 @@ class QueryKeywordsContainer extends React.Component {
         <Container className={classes.chartContainer}>
           <Grid container className={classes.root} spacing={2}>
             <Grid item md={8} sm={12} xs={12}>
-              <Paper className={classes.chartPaper}>
+              <Paper
+                className={classNames(classes.chartPaper, classes.wordsPaper)}
+              >
                 <div className={classes.paperHeader}>
                   <Typography variant="h6" className={classes.headerText}>
                     عبارات خاص
@@ -1346,23 +1338,7 @@ class QueryKeywordsContainer extends React.Component {
                   </div>
                 </div>
                 <Divider variant="fullWidth" className={classes.dividerM} />
-                <ReactWordcloud
-                  options={{
-                    colors: ["#3340ff"],
-                    rotations: 0,
-                    rotationAngles: [0],
-                    fontSizes: [10, 20],
-                    fontWeight: "bold"
-                  }}
-                  words={this.state.words}
-                  callbacks={{
-                    onWordClick: this.handleWordClick
-                    // {
-                    //   console.log(word);
-                    // }
-                  }}
-                  // callbacks={this.state.callbacks}
-                />
+                <WordsCloud />
               </Paper>
             </Grid>
             <Grid item md={4} sm={12} xs={12}>
@@ -1376,7 +1352,7 @@ class QueryKeywordsContainer extends React.Component {
                   <Typography variant="h6" className={classes.headerText}>
                     لفظ‌های مرتبط با{" "}
                     <span className={classes.selectedKeyword}>
-                      {this.state.selectedKeyword}
+                      {this.props.selectedKeyword}
                     </span>
                   </Typography>
                   <div className={classes.paperHeaderGuideIcon}>
@@ -1462,7 +1438,7 @@ class QueryKeywordsContainer extends React.Component {
                   <Typography variant="h6" className={classes.headerText}>
                     پست‌های مرتبط با{" "}
                     <span className={classes.selectedKeyword}>
-                      {this.state.selectedKeyword}
+                      {this.props.selectedKeyword}
                     </span>
                   </Typography>
                   <div className={classes.paperHeaderGuideIcon}>
@@ -1552,7 +1528,9 @@ const mapStateToProps = state => {
     selectedQuery: state.selectedQuery,
     selectedQueryDashboardItem: state.selectedQueryDashboardItem,
     posts: state.posts,
-    keywords: state.keywords
+    keywords: state.keywords,
+    words: state.words,
+    selectedKeyword: state.selectedKeyword
   };
 };
 

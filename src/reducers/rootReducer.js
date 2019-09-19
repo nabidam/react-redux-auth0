@@ -525,13 +525,16 @@ const rootReducer = (state = initState, action) => {
         selectedAnalysisType: action.t
       };
     case types.CHANGE_ANALYSIS_STATUS:
-      console.log(action);
-
       return {
         ...state,
         analysis: state.analysis.map(el =>
           el.id == action.analysis ? {...el, active: !el.active} : el
         )
+      };
+    case types.SELECT_KEYWORD:
+      return {
+        ...state,
+        selectedKeyword: action.word.text
       };
     default:
       return state;
