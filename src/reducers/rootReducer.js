@@ -199,6 +199,43 @@ const initState = {
       comment_emotion: -1
     }
   ],
+  influencers: [
+    {
+      id: 1,
+      name: "مرتضی محمدی",
+      username: "morteza"
+    },
+    {
+      id: 2,
+      name: "سارا مرادی",
+      username: "moradi"
+    },
+    {
+      id: 3,
+      name: "سیروان",
+      username: "sirone"
+    },
+    {
+      id: 4,
+      name: "سالار",
+      username: "salaria"
+    },
+    {
+      id: 5,
+      name: "بابک",
+      username: "bobbluee"
+    },
+    {
+      id: 6,
+      name: "ملودی",
+      username: "melooody"
+    },
+    {
+      id: 7,
+      name: "کامی",
+      username: "kami"
+    }
+  ],
   keywords: [
     {
       text: "گرینلند",

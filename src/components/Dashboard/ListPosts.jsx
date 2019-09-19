@@ -206,6 +206,10 @@ const styles = theme => ({
       cursor: "pointer",
       backgroundColor: "#f2f3fb"
     }
+  },
+  cellLowPadding: {
+    paddingRight: 4,
+    paddingLeft: 4
   }
 });
 
@@ -241,7 +245,10 @@ class ListPosts extends React.Component {
               <TableRow>
                 <TableCell
                   align="right"
-                  className={classes.tableHeader}
+                  className={classNames(
+                    classes.tableHeader,
+                    classes.cellLowPadding
+                  )}
                   style={{width: "10%"}}
                 >
                   کاربری
@@ -299,7 +306,7 @@ class ListPosts extends React.Component {
                 >
                   <TableCell
                     style={{width: "25%"}}
-                    className={classes.flex}
+                    className={classNames(classes.flex, classes.cellLowPadding)}
                     // padding="none"
                     align="right"
                   >

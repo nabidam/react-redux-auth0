@@ -698,7 +698,7 @@ class Sidebar extends Component {
           </ListItem>
           <ListItem
             className={classes.listItem}
-            onClick={() => this.props.selectPage("effective-accounts")}
+            onClick={() => this.props.selectPage("influencers")}
           >
             <ListItemIcon className={classes.listItemIcon}>
               <PeopleIcon />
