@@ -219,6 +219,144 @@ const initState = {
       posts: 7333
     }
   ],
+  projects: [
+    {
+      id: 1,
+      name: "کاله",
+      date: "12 خرداد 1398",
+      time: "16:43",
+      queries: [
+        {
+          id: 1,
+          name: "ماست",
+          date: "12 خرداد 1398",
+          time: "16:43",
+          retrieved_posts: 682,
+          active: 1
+        },
+        {
+          id: 2,
+          name: "صبحانه",
+          date: "12 خرداد 1398",
+          time: "16:43",
+          retrieved_posts: 682,
+          active: 1
+        },
+        {
+          id: 3,
+          name: "سفر",
+          date: "12 خرداد 1398",
+          time: "16:43",
+          retrieved_posts: 682,
+          active: 1
+        }
+      ]
+    },
+    {
+      id: 2,
+      name: "بازتاب",
+      date: "12 خرداد 1398",
+      time: "16:43",
+      queries: [
+        {
+          id: 1,
+          name: "ماست",
+          date: "12 خرداد 1398",
+          time: "16:43",
+          retrieved_posts: 682,
+          active: 1
+        },
+        {
+          id: 2,
+          name: "صبحانه",
+          date: "12 خرداد 1398",
+          time: "16:43",
+          retrieved_posts: 682,
+          active: 1
+        },
+        {
+          id: 3,
+          name: "سفر",
+          date: "12 خرداد 1398",
+          time: "16:43",
+          retrieved_posts: 682,
+          active: 1
+        },
+        {
+          id: 4,
+          name: "پیکنیک",
+          date: "12 خرداد 1398",
+          time: "16:43",
+          retrieved_posts: 682,
+          active: 1
+        },
+        {
+          id: 5,
+          name: "خبر",
+          date: "12 خرداد 1398",
+          time: "16:43",
+          retrieved_posts: 682,
+          active: 1
+        }
+      ]
+    },
+    {
+      id: 3,
+      name: "مطالعه",
+      date: "12 خرداد 1398",
+      time: "16:43",
+      queries: [
+        {
+          id: 1,
+          name: "ماست",
+          date: "12 خرداد 1398",
+          time: "16:43",
+          retrieved_posts: 682,
+          active: 1
+        },
+        {
+          id: 2,
+          name: "صبحانه",
+          date: "12 خرداد 1398",
+          time: "16:43",
+          retrieved_posts: 682,
+          active: 1
+        },
+        {
+          id: 3,
+          name: "سفر",
+          date: "12 خرداد 1398",
+          time: "16:43",
+          retrieved_posts: 682,
+          active: 1
+        },
+        {
+          id: 4,
+          name: "کتاب",
+          date: "12 خرداد 1398",
+          time: "16:43",
+          retrieved_posts: 682,
+          active: 1
+        },
+        {
+          id: 5,
+          name: "انتشار",
+          date: "12 خرداد 1398",
+          time: "16:43",
+          retrieved_posts: 682,
+          active: 1
+        },
+        {
+          id: 6,
+          name: "نویسنده",
+          date: "12 خرداد 1398",
+          time: "16:43",
+          retrieved_posts: 682,
+          active: 1
+        }
+      ]
+    }
+  ],
   myPosts: [
     {
       id: 1,
