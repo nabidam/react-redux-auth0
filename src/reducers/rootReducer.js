@@ -199,6 +199,233 @@ const initState = {
       comment_emotion: -1
     }
   ],
+  trends: [
+    {
+      id: 1,
+      name: "مروارید",
+      posts: 8240,
+      accounts: 8240,
+      likes: 4339,
+      comments: 1455,
+      initiators: [
+        {
+          id: 1,
+          name: "مرتضی محمدی",
+          username: "morteza"
+        },
+        {
+          id: 2,
+          name: "سارا مرادی",
+          username: "moradi"
+        },
+        {
+          id: 3,
+          name: "سیروان",
+          username: "sirone"
+        }
+      ],
+      influencers: [
+        {
+          id: 1,
+          name: "مرتضی محمدی",
+          username: "morteza"
+        },
+        {
+          id: 2,
+          name: "سارا مرادی",
+          username: "moradi"
+        },
+        {
+          id: 3,
+          name: "سیروان",
+          username: "sirone"
+        }
+      ],
+      content_emotion: -1,
+      comment_emotion: 1,
+      related_words: ["گرینلند", "پمپئو", "فلورانس", "تغییرات", "بیکاری"]
+    },
+    {
+      id: 2,
+      name: "خزر",
+      posts: 8240,
+      accounts: 8240,
+      likes: 4339,
+      comments: 1455,
+      initiators: [
+        {
+          id: 1,
+          name: "مرتضی محمدی",
+          username: "morteza"
+        },
+        {
+          id: 2,
+          name: "سارا مرادی",
+          username: "moradi"
+        },
+        {
+          id: 3,
+          name: "سیروان",
+          username: "sirone"
+        }
+      ],
+      influencers: [
+        {
+          id: 1,
+          name: "مرتضی محمدی",
+          username: "morteza"
+        },
+        {
+          id: 2,
+          name: "سارا مرادی",
+          username: "moradi"
+        },
+        {
+          id: 3,
+          name: "سیروان",
+          username: "sirone"
+        }
+      ],
+      content_emotion: -1,
+      comment_emotion: -1,
+      related_words: ["گرینلند", "پمپئو", "فلورانس", "تغییرات", "بیکاری"]
+    },
+    {
+      id: 3,
+      name: "محمودیه",
+      posts: 8240,
+      accounts: 8240,
+      likes: 4339,
+      comments: 1455,
+      initiators: [
+        {
+          id: 1,
+          name: "مرتضی محمدی",
+          username: "morteza"
+        },
+        {
+          id: 2,
+          name: "سارا مرادی",
+          username: "moradi"
+        },
+        {
+          id: 3,
+          name: "سیروان",
+          username: "sirone"
+        }
+      ],
+      influencers: [
+        {
+          id: 1,
+          name: "مرتضی محمدی",
+          username: "morteza"
+        },
+        {
+          id: 2,
+          name: "سارا مرادی",
+          username: "moradi"
+        },
+        {
+          id: 3,
+          name: "سیروان",
+          username: "sirone"
+        }
+      ],
+      content_emotion: 1,
+      comment_emotion: 1,
+      related_words: ["گرینلند", "پمپئو", "فلورانس", "تغییرات", "بیکاری"]
+    },
+    {
+      id: 4,
+      name: "پلیکان",
+      posts: 8240,
+      accounts: 8240,
+      likes: 4339,
+      comments: 1455,
+      initiators: [
+        {
+          id: 1,
+          name: "مرتضی محمدی",
+          username: "morteza"
+        },
+        {
+          id: 2,
+          name: "سارا مرادی",
+          username: "moradi"
+        },
+        {
+          id: 3,
+          name: "سیروان",
+          username: "sirone"
+        }
+      ],
+      influencers: [
+        {
+          id: 1,
+          name: "مرتضی محمدی",
+          username: "morteza"
+        },
+        {
+          id: 2,
+          name: "سارا مرادی",
+          username: "moradi"
+        },
+        {
+          id: 3,
+          name: "سیروان",
+          username: "sirone"
+        }
+      ],
+      content_emotion: +1,
+      comment_emotion: -1,
+      related_words: ["گرینلند", "پمپئو", "فلورانس", "تغییرات", "بیکاری"]
+    },
+    {
+      id: 5,
+      name: "دریانورد",
+      posts: 8240,
+      accounts: 8240,
+      likes: 4339,
+      comments: 1455,
+      initiators: [
+        {
+          id: 1,
+          name: "مرتضی محمدی",
+          username: "morteza"
+        },
+        {
+          id: 2,
+          name: "سارا مرادی",
+          username: "moradi"
+        },
+        {
+          id: 3,
+          name: "سیروان",
+          username: "sirone"
+        }
+      ],
+      influencers: [
+        {
+          id: 1,
+          name: "مرتضی محمدی",
+          username: "morteza"
+        },
+        {
+          id: 2,
+          name: "سارا مرادی",
+          username: "moradi"
+        },
+        {
+          id: 3,
+          name: "سیروان",
+          username: "sirone"
+        }
+      ],
+      content_emotion: -1,
+      comment_emotion: 1,
+      related_words: ["گرینلند", "پمپئو", "فلورانس", "تغییرات", "بیکاری"]
+    }
+  ],
   accounts: [
     {
       id: 1,
