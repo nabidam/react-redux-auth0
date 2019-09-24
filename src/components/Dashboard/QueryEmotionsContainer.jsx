@@ -75,6 +75,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import ListEmotionPosts from "./ListEmotionPosts";
 import GridPosts from "./GridPosts";
+import CheckIcon from "@material-ui/icons/Check";
 
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
@@ -145,7 +146,7 @@ const styles = theme => ({
     minWidth: 44,
     height: 44,
     borderRadius: 22,
-    margin: "0px ",
+    margin: "0px 10px",
     border: "solid 5px rgba(255, 255, 255, 0.85)",
     "&:hover": {
       opacity: 0.7,
@@ -772,6 +773,35 @@ const styles = theme => ({
     "&:hover": {
       cursor: "pointer"
     }
+  },
+
+  metaIcon: {
+    position: "relative"
+  },
+  checkIconTiny: {
+    color: "#fff",
+    backgroundColor: "#03d588",
+    width: 14,
+    height: 14,
+    borderRadius: 22,
+    position: "absolute",
+    top: 2,
+    right: 10,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  defaultIconBtn: {
+    color: "#fff",
+    backgroundColor: "#adb2b9",
+    minWidth: 44,
+    height: 44,
+    borderRadius: 22,
+    margin: "0px 10px",
+    border: "solid 5px rgba(255, 255, 255, 0.85)",
+    "&:hover": {
+      opacity: 0.7
+    }
   }
 });
 
@@ -1192,7 +1222,9 @@ class QueryEmotionsContainer extends React.Component {
       selectedView: "row",
       rowHover: 0,
       selectedKeyword: "",
-      callbacks: {}
+      callbacks: {},
+      twitter: 1,
+      instagram: 0
     };
 
     this.handleSelectTab = this.handleSelectTab.bind(this);
@@ -1200,6 +1232,8 @@ class QueryEmotionsContainer extends React.Component {
     this.handleSelectView = this.handleSelectView.bind(this);
     this.handleHoverRow = this.handleHoverRow.bind(this);
     this.handleUnHoverRow = this.handleUnHoverRow.bind(this);
+    this.handleTwitterClick = this.handleTwitterClick.bind(this);
+    this.handleInstagramClick = this.handleInstagramClick.bind(this);
   }
 
   handleSelectView = view => {
@@ -1286,6 +1320,18 @@ class QueryEmotionsContainer extends React.Component {
     });
   };
 
+  handleTwitterClick = () => {
+    this.setState({
+      twitter: !this.state.twitter
+    });
+  };
+
+  handleInstagramClick = () => {
+    this.setState({
+      instagram: !this.state.instagram
+    });
+  };
+
   //   componentDidMount = () => {
   //     console.log(
   //       moment()
@@ -1322,12 +1368,44 @@ class QueryEmotionsContainer extends React.Component {
                   </Typography>
                 </div>
                 <div className={classes.topNavbarMeta}>
-                  <Button className={classes.instagramIconBtn}>
-                    <i className="fab fa-instagram"></i>
-                  </Button>
-                  <Button className={classes.twitterIconBtn}>
-                    <i className="fab fa-twitter"></i>
-                  </Button>
+                  <div className={classes.metaIcon}>
+                    <Button
+                      className={
+                        this.state.instagram
+                          ? classes.instagramIconBtn
+                          : classes.defaultIconBtn
+                      }
+                      onClick={() => this.handleInstagramClick()}
+                    >
+                      <i className="fab fa-instagram"></i>
+                    </Button>
+                    {this.state.instagram ? (
+                      <span className={classes.checkIconTiny}>
+                        <CheckIcon style={{fontSize: "0.9rem"}} />
+                      </span>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                  <div className={classes.metaIcon}>
+                    <Button
+                      className={
+                        this.state.twitter
+                          ? classes.twitterIconBtn
+                          : classes.defaultIconBtn
+                      }
+                      onClick={() => this.handleTwitterClick()}
+                    >
+                      <i className="fab fa-twitter"></i>
+                    </Button>
+                    {this.state.twitter ? (
+                      <span className={classes.checkIconTiny}>
+                        <CheckIcon style={{fontSize: "0.9rem"}} />
+                      </span>
+                    ) : (
+                      ""
+                    )}
+                  </div>
                   <Divider
                     orientation="vertical"
                     className={classes.metaDivider}

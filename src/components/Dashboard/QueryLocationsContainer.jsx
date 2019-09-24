@@ -52,7 +52,6 @@ import {
 } from "recharts";
 import {connect} from "react-redux";
 import changeSelectedQuery from "../../actions/changeSelectedQuery";
-import selectGroup from "../../actions/selectGroup";
 import ReactExport from "react-data-export";
 import LatestQueriesPDF from "./LatestQueriesPDF";
 import moment from "moment";
@@ -62,20 +61,13 @@ import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import CommentIcon from "@material-ui/icons/Comment";
 import BootstrapTooltip from "./BSTooltip";
 import ReactWordcloud from "react-wordcloud";
-import "d3-transition";
-import {select} from "d3-selection";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
+import CheckIcon from "@material-ui/icons/Check";
 import ViewStreamOutlinedIcon from "@material-ui/icons/ViewStreamOutlined";
 import ViewModuleOutlinedIcon from "@material-ui/icons/ViewModuleOutlined";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
 import ListPosts from "./ListPosts";
 import GridPosts from "./GridPosts";
-import CheckIcon from "@material-ui/icons/Check";
 
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
@@ -139,32 +131,6 @@ const styles = theme => ({
     display: "flex",
     flexDirection: "row",
     alignItems: "center"
-  },
-  instagramIconBtn: {
-    color: "#fff",
-    backgroundColor: "#da2b72",
-    minWidth: 44,
-    height: 44,
-    borderRadius: 22,
-    margin: "0px 10px",
-    border: "solid 5px rgba(255, 255, 255, 0.85)",
-    "&:hover": {
-      opacity: 0.7,
-      backgroundColor: "#da2b72"
-    }
-  },
-  twitterIconBtn: {
-    color: "#fff",
-    backgroundColor: "#1da1f2",
-    minWidth: 44,
-    height: 44,
-    borderRadius: 22,
-    margin: "0px 10px",
-    border: "solid 5px rgba(255, 255, 255, 0.85)",
-    "&:hover": {
-      opacity: 0.7,
-      backgroundColor: "#1da1f2"
-    }
   },
   metaDivider: {
     height: 20,
@@ -368,17 +334,16 @@ const styles = theme => ({
   fieldsContent: {
     display: "flex",
     flexDirection: "column",
-    alignItems: "right"
+    alignItems: "center"
   },
   tabs: {
     display: "flex",
-    width: "100%",
+    width: "75%",
     margin: "0px auto"
   },
   listItem: {
-    paddingTop: 0,
-    paddingBottom: 0,
-    width: "100%",
+    heigth: 44,
+    width: 226,
     "&:hover": {
       color: "#4753ff",
       cursor: "pointer"
@@ -390,7 +355,16 @@ const styles = theme => ({
   },
   selectedTab: {
     color: "#3340ff",
-    borderBottom: "3px solid #4753ff"
+    "&::after": {
+      content: `""`,
+      position: "absolute",
+      bottom: 0,
+      left: "50%",
+      width: 6,
+      height: 6,
+      background: "#4753ff",
+      borderRadius: "50%"
+    }
   },
   showMoreFields: {
     fontSize: 12,
@@ -444,6 +418,7 @@ const styles = theme => ({
       right: 0,
       width: 16,
       height: 16,
+      border: "solid 5px rgba(255, 255, 255, 0.85)",
       background: "#ec373c",
       borderRadius: "50%"
     }
@@ -467,6 +442,7 @@ const styles = theme => ({
       left: 0,
       width: 16,
       height: 16,
+      border: "solid 5px rgba(255, 255, 255, 0.85)",
       background: "#03d588",
       borderRadius: "50%"
     }
@@ -497,6 +473,68 @@ const styles = theme => ({
     left: "19px"
   },
 
+  metaIcon: {
+    position: "relative"
+  },
+  checkIconTiny: {
+    color: "#fff",
+    backgroundColor: "#03d588",
+    width: 14,
+    height: 14,
+    borderRadius: 22,
+    position: "absolute",
+    top: 2,
+    right: 10,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  defaultIconBtn: {
+    color: "#fff",
+    backgroundColor: "#adb2b9",
+    minWidth: 44,
+    height: 44,
+    borderRadius: 22,
+    margin: "0px 10px",
+    border: "solid 5px rgba(255, 255, 255, 0.85)",
+    "&:hover": {
+      opacity: 0.7
+    }
+  },
+  instagramIconBtn: {
+    color: "#fff",
+    backgroundColor: "#da2b72",
+    minWidth: 44,
+    height: 44,
+    borderRadius: 22,
+    margin: "0px 10px",
+    border: "solid 5px rgba(255, 255, 255, 0.85)",
+    "&:hover": {
+      opacity: 0.7,
+      backgroundColor: "#da2b72"
+    }
+  },
+  twitterIconBtn: {
+    color: "#fff",
+    backgroundColor: "#1da1f2",
+    minWidth: 44,
+    height: 44,
+    borderRadius: 22,
+    margin: "0px 10px",
+    border: "solid 5px rgba(255, 255, 255, 0.85)",
+    "&:hover": {
+      opacity: 0.7,
+      backgroundColor: "#1da1f2"
+    }
+  },
+
+  postsPaper: {
+    display: "flex",
+    padding: "16px 36px"
+  },
+  dividerM: {
+    margin: "15px 0px"
+  },
   actions: {
     display: "flex",
     alignItems: "center"
@@ -591,160 +629,8 @@ const styles = theme => ({
     backgroundColor: "#e4e8ed"
   },
 
-  table: {
-    width: 605
-  },
-  tableHeader: {
-    fontSize: 12,
-    color: "#08080d"
-  },
-
-  negativeEmotion: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    position: "relative",
-    "&::after": {
-      content: `""`,
-      position: "absolute",
-      width: 16,
-      height: 16,
-      background: "#ec373c",
-      border: "solid 5px rgba(255, 255, 255, 0.85)",
-      borderRadius: "50%"
-    }
-  },
-  positiveEmotion: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    position: "relative",
-    "&::after": {
-      content: `""`,
-      position: "absolute",
-      width: 16,
-      height: 16,
-      background: "#03d588",
-      border: "solid 5px rgba(255, 255, 255, 0.85)",
-      borderRadius: "50%"
-    }
-  },
-  textMute: {
-    color: "#adb2b9"
-  },
-
-  paginationBox: {
-    marginBottom: 40
-  },
-  paginationLinks: {
-    width: 250,
-    height: 44,
-    border: "solid 2px #e4e8ed",
-    marginTop: 30,
-    borderRadius: 22,
-    marginBottom: 20,
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  paginationLink: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 6,
-    marginBottom: 8,
-    width: 28,
-    height: 28,
-    borderRadius: "50%",
-    "&:hover": {
-      cursor: "pointer"
-    }
-  },
-  activePaginationLink: {
-    border: "solid 2px #3340ff",
-    backgroundColor: "#d7d9ff"
-  },
-  paginationText: {
-    textAlign: "center",
-    color: "#adb2b9"
-  },
-  textNormal: {
-    color: "#08080d",
-    padding: "0 3px"
-  },
-
-  tableUsernamePart: {
-    position: "relative",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center"
-  },
-
-  tableRow: {
-    "&:hover": {
-      cursor: "pointer",
-      backgroundColor: "#f2f3fb"
-    }
-  },
-  postsPaper: {
-    display: "flex",
-    padding: "16px 36px"
-  },
-  dividerM: {
-    margin: "15px 0px"
-  },
-  selectedKeyword: {
-    color: "#4753ff"
-  },
-  textRight: {
-    textAlign: "right"
-  },
-  textLeft: {
-    textLeft: "left"
-  },
-  relatedsPaper: {
-    height: "100%"
-  },
-  groupsPaper: {
-    height: 420
-  },
-  tableCellLowPadding: {
-    padding: 6
-  },
-  selectedGroup: {
-    backgroundColor: "#dbddff",
-    borderRadius: 3,
-    border: "solid 2px #3340ff"
-  },
-
-  metaIcon: {
-    position: "relative"
-  },
-  checkIconTiny: {
-    color: "#fff",
-    backgroundColor: "#03d588",
-    width: 14,
-    height: 14,
-    borderRadius: 22,
-    position: "absolute",
-    top: 2,
-    right: 10,
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  defaultIconBtn: {
-    color: "#fff",
-    backgroundColor: "#adb2b9",
-    minWidth: 44,
-    height: 44,
-    borderRadius: 22,
-    margin: "0px 10px",
-    border: "solid 5px rgba(255, 255, 255, 0.85)",
-    "&:hover": {
-      opacity: 0.7
-    }
+  locationsPaper: {
+    height: 475
   }
 });
 
@@ -1120,34 +1006,7 @@ const data01 = [
   }
 ];
 
-// function getCallback(callback) {
-//   return function(word, event) {
-//     const isActive = callback !== "onWordMouseOut";
-//     const element = event.target;
-//     // console.log(element);
-
-//     // const text = element.select();
-//     // console.log("x");
-
-//     element
-//       .on("click", () => {
-//         this.setState({
-//           selectedKeyword: word.text
-//         });
-//       })
-//       .transition()
-//       .attr("background", "white")
-//       .attr("font-size", isActive ? "300%" : "100%")
-//       .attr("text-decoration", isActive ? "underline" : "none");
-//   };
-// }
-// const callbacks = {
-//   onWordClick: getCallback("onWordClick"),
-//   onWordMouseOut: getCallback("onWordMouseOut"),
-//   onWordMouseOver: getCallback("onWordMouseOver")
-// };
-
-class QueryGroupsContainer extends React.Component {
+class QueryLocationsContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -1159,39 +1018,22 @@ class QueryGroupsContainer extends React.Component {
       minSlider: 1,
       maxSlider: 40,
       selectedTab: "keyWords",
-      selectedChartAction: "day",
       selectedView: "row",
-      rowHover: 0,
-      selectedKeyword: "",
-      callbacks: {},
+      selectedChartAction: "day",
       twitter: 1,
       instagram: 0
     };
 
     this.handleSelectTab = this.handleSelectTab.bind(this);
     this.handleSelectChartAction = this.handleSelectChartAction.bind(this);
-    this.handleSelectView = this.handleSelectView.bind(this);
-    this.handleHoverRow = this.handleHoverRow.bind(this);
-    this.handleUnHoverRow = this.handleUnHoverRow.bind(this);
     this.handleTwitterClick = this.handleTwitterClick.bind(this);
     this.handleInstagramClick = this.handleInstagramClick.bind(this);
+    this.handleSelectView = this.handleSelectView.bind(this);
   }
 
   handleSelectView = view => {
     this.setState({
       selectedView: view
-    });
-  };
-
-  handleHoverRow = id => {
-    this.setState({
-      rowHover: id
-    });
-  };
-
-  handleUnHoverRow = () => {
-    this.setState({
-      rowHover: 0
     });
   };
 
@@ -1364,290 +1206,16 @@ class QueryGroupsContainer extends React.Component {
         </Container>
         <Container className={classes.chartContainer}>
           <Grid container className={classes.root} spacing={2}>
-            <Grid item md={8} sm={12} xs={12}>
-              <Paper className={classes.chartPaper}>
-                <div className={classes.paperHeader}>
-                  <Typography variant="h6" className={classes.headerText}>
-                    عبارات خاص
-                  </Typography>
-                  <div className={classes.paperHeaderGuideIcon}>
-                    <BootstrapTooltip
-                      placement="top"
-                      title="موضوعات مرتبط با ردیاب انتخابی که نشان دهنده تاثیرپذیری یک متن تستی برای نمایش این قابلیت است و باید توضیحات هر سکشن در این قسمت نمایش داده شود."
-                    >
-                      <i className="far fa-lightbulb fa-lg"></i>
-                    </BootstrapTooltip>
-                  </div>
-                </div>
-                <Divider variant="fullWidth" className={classes.dividerM} />
-                <Grid container className={classes.root}>
-                  <Grid item md={8} sm={12} xs={12}>
-                    <Table className={classes.table} stickyHeader>
-                      <TableHead>
-                        <TableRow>
-                          <TableCell
-                            align="right"
-                            className={classNames(
-                              classes.tableCellLowPadding,
-                              classes.tableHeader
-                            )}
-                            style={{width: "20%"}}
-                          >
-                            نام دسته
-                          </TableCell>
-                          <TableCell
-                            align="center"
-                            className={classNames(
-                              classes.tableCellLowPadding,
-                              classes.tableHeader
-                            )}
-                            style={{width: "10%"}}
-                          >
-                            پست‌ها
-                          </TableCell>
-                          <TableCell
-                            align="center"
-                            className={classNames(
-                              classes.tableCellLowPadding,
-                              classes.tableHeader
-                            )}
-                            style={{width: "10%"}}
-                          >
-                            مجموع لایک
-                          </TableCell>
-                          <TableCell
-                            align="center"
-                            className={classNames(
-                              classes.tableCellLowPadding,
-                              classes.tableHeader
-                            )}
-                            style={{width: "10%"}}
-                          >
-                            متوسط لایک
-                          </TableCell>
-                          <TableCell
-                            align="center"
-                            className={classNames(
-                              classes.tableCellLowPadding,
-                              classes.tableHeader
-                            )}
-                            style={{width: "10%"}}
-                          >
-                            مجموع کامنت
-                          </TableCell>
-                          <TableCell
-                            align="center"
-                            className={classNames(
-                              classes.tableCellLowPadding,
-                              classes.tableHeader
-                            )}
-                            style={{width: "10%"}}
-                          >
-                            متوسط کامنت
-                          </TableCell>
-                          <TableCell
-                            align="center"
-                            className={classNames(
-                              classes.tableCellLowPadding,
-                              classes.tableHeader
-                            )}
-                            style={{width: "10%"}}
-                          >
-                            حساب‌های مؤثر
-                          </TableCell>
-                          <TableCell
-                            align="center"
-                            className={classNames(
-                              classes.tableCellLowPadding,
-                              classes.tableHeader
-                            )}
-                            style={{width: "10%"}}
-                          >
-                            حس متن
-                          </TableCell>
-                          <TableCell
-                            align="center"
-                            className={classNames(
-                              classes.tableCellLowPadding,
-                              classes.tableHeader
-                            )}
-                            style={{width: "10%"}}
-                          >
-                            حس کامنت
-                          </TableCell>
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                        {this.props.groups.map(row => (
-                          <TableRow
-                            key={row.id}
-                            className={classNames(
-                              classes.tableCellLowPadding,
-                              classes.tableRow,
-                              this.props.selectedGroup == row.id
-                                ? classes.selectedGroup
-                                : ""
-                            )}
-                            onMouseEnter={() => this.handleHoverRow(row.id)}
-                            onMouseLeave={() => this.handleUnHoverRow()}
-                            onClick={id => this.props.selectGroup(row.id)}
-                          >
-                            <TableCell
-                              style={{width: "20%"}}
-                              className={classNames(
-                                classes.tableCellLowPadding,
-                                classes.flex
-                              )}
-                              // padding="none"
-                              align="right"
-                            >
-                              {row.name}
-                            </TableCell>
-                            <TableCell
-                              align="center"
-                              style={{width: "10%"}}
-                              className={classNames(
-                                classes.tableCellLowPadding,
-                                this.state.rowHover != row.id &&
-                                  this.props.selectedGroup != row.id
-                                  ? classes.textMute
-                                  : ""
-                              )}
-                            >
-                              {row.posts}
-                            </TableCell>
-                            <TableCell
-                              align="center"
-                              style={{width: "10%"}}
-                              className={classNames(
-                                classes.tableCellLowPadding,
-                                this.state.rowHover != row.id &&
-                                  this.props.selectedGroup != row.id
-                                  ? classes.textMute
-                                  : ""
-                              )}
-                            >
-                              {row.overall_likes}
-                            </TableCell>
-                            <TableCell
-                              align="center"
-                              style={{width: "10%"}}
-                              className={classNames(
-                                classes.tableCellLowPadding,
-                                this.state.rowHover != row.id &&
-                                  this.props.selectedGroup != row.id
-                                  ? classes.textMute
-                                  : ""
-                              )}
-                            >
-                              {row.average_likes}
-                            </TableCell>
-                            <TableCell
-                              align="center"
-                              style={{width: "10%"}}
-                              className={classNames(
-                                classes.tableCellLowPadding,
-                                this.state.rowHover != row.id &&
-                                  this.props.selectedGroup != row.id
-                                  ? classes.textMute
-                                  : ""
-                              )}
-                            >
-                              {row.overall_comments}
-                            </TableCell>
-                            <TableCell
-                              align="center"
-                              style={{width: "10%"}}
-                              className={classNames(
-                                classes.tableCellLowPadding,
-                                this.state.rowHover != row.id &&
-                                  this.props.selectedGroup != row.id
-                                  ? classes.textMute
-                                  : ""
-                              )}
-                            >
-                              {row.average_comments}
-                            </TableCell>
-                            <TableCell
-                              align="center"
-                              style={{width: "10%"}}
-                              className={classNames(
-                                classes.tableCellLowPadding,
-                                this.state.rowHover != row.id &&
-                                  this.props.selectedGroup != row.id
-                                  ? classes.textMute
-                                  : ""
-                              )}
-                            >
-                              {row.effective_accounts}
-                            </TableCell>
-                            <TableCell align="center" style={{width: "10%"}}>
-                              {row.content_emotion == -1 ? (
-                                <div
-                                  className={classNames(
-                                    classes.tableCellLowPadding,
-                                    this.props.selectedEmotion == "negative"
-                                      ? classes.selectedNegativeEmotion
-                                      : classes.negativeEmotion
-                                  )}
-                                ></div>
-                              ) : (
-                                <div
-                                  className={classNames(
-                                    classes.tableCellLowPadding,
-                                    this.props.selectedEmotion == "positive"
-                                      ? classes.selectedPositiveEmotion
-                                      : classes.positiveEmotion
-                                  )}
-                                ></div>
-                              )}
-                            </TableCell>
-                            <TableCell align="center" style={{width: "10%"}}>
-                              {row.comment_emotion == -1 ? (
-                                <div
-                                  className={classNames(
-                                    classes.tableCellLowPadding,
-                                    this.props.selectedEmotion == "negative"
-                                      ? classes.selectedNegativeEmotion
-                                      : classes.negativeEmotion
-                                  )}
-                                ></div>
-                              ) : (
-                                <div
-                                  className={classNames(
-                                    classes.tableCellLowPadding,
-                                    this.props.selectedEmotion == "positive"
-                                      ? classes.selectedPositiveEmotion
-                                      : classes.positiveEmotion
-                                  )}
-                                ></div>
-                              )}
-                            </TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </Grid>
-                </Grid>
-              </Paper>
-            </Grid>
-            <Grid item md={4} sm={12} xs={12}>
+            <Grid item md={12} sm={12} xs={12}>
               <Paper
                 className={classNames(
-                  classes.relatedsPaper,
-                  classes.chartPaper
+                  classes.chartPaper,
+                  classes.locationsPaper
                 )}
               >
                 <div className={classes.paperHeader}>
                   <Typography variant="h6" className={classes.headerText}>
-                    لفظ‌های مرتبط با{" "}
-                    <span className={classes.selectedKeyword}>
-                      {this.props.groups.map(item => {
-                        if (item.id == this.props.selectedGroup) {
-                          return "" + item.name;
-                        }
-                      })}
-                    </span>
+                    نمودار مکان‌های مرتبط با ردیاب
                   </Typography>
                   <div className={classes.paperHeaderGuideIcon}>
                     <BootstrapTooltip
@@ -1659,62 +1227,141 @@ class QueryGroupsContainer extends React.Component {
                   </div>
                 </div>
                 <Divider variant="fullWidth" className={classes.dividerM} />
-                <div className={classes.fieldsContent}>
-                  <List component="div" disablePadding className={classes.tabs}>
-                    <ListItem
-                      className={classNames(
-                        classes.listItem,
-                        "" +
-                          (this.state.selectedTab == "keyWords"
-                            ? classes.selectedTab
-                            : "")
-                      )}
-                      onClick={() => this.handleSelectTab("keyWords")}
+              </Paper>
+            </Grid>
+          </Grid>
+          <Grid container className={classes.root} spacing={2}>
+            <Grid item md={6} sm={12} xs={12}>
+              <Paper
+                className={classNames(
+                  classes.paper,
+                  classes.columnPaper,
+                  classes.botPaper
+                )}
+              >
+                <div className={classes.paperHeader}>
+                  <Typography variant="h6" className={classes.headerText}>
+                    نمودار ارتباط افراد مؤثر
+                  </Typography>
+                  <div className={classes.paperHeaderGuideIcon}>
+                    <BootstrapTooltip
+                      placement="top"
+                      title="موضوعات مرتبط با ردیاب انتخابی که نشان دهنده تاثیرپذیری یک متن تستی برای نمایش این قابلیت است و باید توضیحات هر سکشن در این قسمت نمایش داده شود."
                     >
-                      <ListItemText
-                        primary="کلمات کلیدی"
-                        className={classNames(classes.textCenter)}
-                      />
-                    </ListItem>
-                    <ListItem
-                      className={classNames(
-                        classes.listItem,
-                        "" +
-                          (this.state.selectedTab == "hashtags"
-                            ? classes.selectedTab
-                            : "")
-                      )}
-                      onClick={() => this.handleSelectTab("hashtags")}
-                    >
-                      <ListItemText
-                        primary="هشتگ‌ها"
-                        className={classNames(classes.textCenter)}
-                      />
-                    </ListItem>
-                  </List>
-                  <List
-                    component="div"
-                    disablePadding
-                    className={classes.relateds}
-                  >
-                    {this.props.keywords.map((item, index) => {
+                      <i className="far fa-lightbulb fa-lg"></i>
+                    </BootstrapTooltip>
+                  </div>
+                </div>
+                <Divider variant="fullWidth" />
+                
+              </Paper>
+            </Grid>
+            <Grid item md={6} sm={12} xs={12}>
+              <Paper
+                className={classNames(
+                  classes.paper,
+                  classes.columnPaper,
+                  classes.botPaper
+                )}
+              >
+                <div className={classes.paperHeader}>
+                  <Typography variant="h6" className={classes.headerText}>
+                    احساس‌سنج
+                  </Typography>
+                  <div className={classes.paperHeaderGuideIcon}>
+                    <BootstrapTooltip placement="top" title="احساس‌سنج">
+                      <i className="far fa-lightbulb fa-lg"></i>
+                    </BootstrapTooltip>
+                  </div>
+                </div>
+                <Divider variant="fullWidth" />
+                <ResponsiveContainer
+                  width="100%"
+                  className={classes.leftToRight}
+                >
+                  <PieChart width={150}>
+                    {emotionDatas.map((item, index) => {
+                      const color = item.color;
                       return (
-                        <ListItem className={classes.listItem} key={index}>
-                          <ListItemText
-                            primary={item.text}
-                            className={classNames(classes.textRight)}
-                          />
-                          <ListItemText
-                            primary={item.value}
-                            className={classNames(
-                              classes.textMute,
-                              classes.textLeft
-                            )}
-                          />
-                        </ListItem>
+                        <defs key={index}>
+                          <radialGradient
+                            id={"color" + index}
+                            x1="10"
+                            y1="10"
+                            x2="1"
+                            y2="1"
+                          >
+                            <stop
+                              offset="0%"
+                              stopColor={color}
+                              stopOpacity={0.5}
+                            />
+                            <stop
+                              offset="10%"
+                              stopColor={color}
+                              stopOpacity={0.75}
+                            />
+                            <stop
+                              offset="20%"
+                              stopColor={color}
+                              stopOpacity={1}
+                            />
+                          </radialGradient>
+                        </defs>
                       );
                     })}
-                  </List>
+                    <Pie
+                      data={this.state.emotionDatas}
+                      dataKey="value"
+                      nameKey="name"
+                      cx="50%"
+                      cy="50%"
+                      innerRadius={60}
+                      outerRadius={74}
+                      fill="#82ca9d"
+                      startAngle={90}
+                      endAngle={450}
+                    >
+                      {emotionDatas.map((item, index) => {
+                        const color = item.color;
+                        return (
+                          <Cell fill={"url(#color" + index + ")"} key={index} />
+                        );
+                      })}
+                    </Pie>
+                  </PieChart>
+                </ResponsiveContainer>
+                <div className={classes.emotionsContent}>
+                  <div className={classes.emotionStats}>
+                    <div className={classes.negativeEmotion}>
+                      <Typography
+                        variant="p"
+                        className={classes.negativePercent}
+                      >
+                        {this.state.emotionDatas[1].value}%
+                      </Typography>
+                      <Typography variant="p" className={classes.negativeText}>
+                        {this.state.emotionDatas[1].name}
+                      </Typography>
+                    </div>
+                    <div className={classes.positiveEmotion}>
+                      <Typography
+                        variant="p"
+                        className={classes.positivePercent}
+                      >
+                        {this.state.emotionDatas[0].value}%
+                      </Typography>
+                      <Typography variant="p" className={classes.positiceText}>
+                        {this.state.emotionDatas[0].name}
+                      </Typography>
+                    </div>
+                  </div>
+                  <Button color="primary" className={classes.showTextEmotion}>
+                    مشاهده احساس موجود در متن
+                    <div className={classes.showTextEmotionIcon}>
+                      <i className="fas fa-chevron-left" />
+                    </div>
+                  </Button>
                 </div>
               </Paper>
             </Grid>
@@ -1732,11 +1379,7 @@ class QueryGroupsContainer extends React.Component {
                   <Typography variant="h6" className={classes.headerText}>
                     پست‌های مرتبط با{" "}
                     <span className={classes.selectedKeyword}>
-                      {this.props.groups.map(item => {
-                        if (item.id == this.props.selectedGroup) {
-                          return "" + item.name;
-                        }
-                      })}
+                      {this.props.selectedKeyword}
                     </span>
                   </Typography>
                   <div className={classes.paperHeaderGuideIcon}>
@@ -1815,7 +1458,7 @@ class QueryGroupsContainer extends React.Component {
   }
 }
 
-QueryGroupsContainer.propTypes = {
+QueryLocationsContainer.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired
 };
@@ -1824,10 +1467,7 @@ const mapStateToProps = state => {
   return {
     queries: state.queries,
     selectedQuery: state.selectedQuery,
-    selectedQueryDashboardItem: state.selectedQueryDashboardItem,
-    keywords: state.keywords,
-    groups: state.groups,
-    selectedGroup: state.selectedGroup
+    selectedQueryDashboardItem: state.selectedQueryDashboardItem
   };
 };
 
@@ -1835,9 +1475,6 @@ const mapDispatchToProps = dispatch => {
   return {
     changeSelectedQuery: id => {
       dispatch(changeSelectedQuery(id));
-    },
-    selectGroup: id => {
-      dispatch(selectGroup(id));
     }
   };
 };
@@ -1845,4 +1482,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(styles, {withTheme: true})(QueryGroupsContainer));
+)(withStyles(styles, {withTheme: true})(QueryLocationsContainer));

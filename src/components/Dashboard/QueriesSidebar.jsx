@@ -111,8 +111,9 @@ const styles = theme => ({
       content: `""`,
       position: "absolute",
       left: 24,
-      width: 6,
-      height: 6,
+      width: 16,
+      height: 16,
+      border: "solid 5px rgba(255, 255, 255, 0.85)",
       background: "#4753ff",
       borderRadius: "50%"
     }

@@ -10,6 +10,7 @@ import QueryMarginsContainer from "./QueryMarginsContainer";
 import QueryInfluencersContainer from "./QueryInfluencersContainer";
 import QueryEmotionsContainer from "./QueryEmotionsContainer";
 import QueryGroupsContainer from "./QueryGroupsContainer";
+import QueryLocationsContainer from "./QueryLocationsContainer";
 
 class QueriesDashboard extends React.Component {
   constructor(props) {
@@ -48,6 +49,9 @@ class QueriesDashboard extends React.Component {
         break;
       case "groups":
         return <QueryGroupsContainer />;
+        break;
+      case "locations":
+        return <QueryLocationsContainer />;
         break;
 
       default:
