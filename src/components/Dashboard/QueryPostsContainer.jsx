@@ -499,7 +499,7 @@ class QueryPostsContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      latestQueriesSliderValue: [1, 30],
+      queriesSliderValue: [1, 30],
       minSlider: 1,
       maxSlider: 40,
       selectedView: "grid",
@@ -529,9 +529,9 @@ class QueryPostsContainer extends React.Component {
     });
   };
 
-  latestQueriesSliderChangeHandler = (event, newValue) => {
+  queriesSliderChangeHandler = (event, newValue) => {
     this.setState({
-      latestQueriesSliderValue: newValue
+      queriesSliderValue: newValue
     });
   };
 
@@ -555,8 +555,8 @@ class QueryPostsContainer extends React.Component {
                     variant="p"
                     className={classes.topNavbarSelectedQuery}
                   >
-                    {this.props.latestQueries.map((item, index) => {
-                      return item.id == this.props.selectedQuery
+                    {this.props.queries.map((item, index) => {
+                      return item.id == this.props.selectedQuery.id
                         ? item.name
                         : "";
                     })}
@@ -659,7 +659,7 @@ QueryPostsContainer.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    latestQueries: state.latestQueries,
+    queries: state.queries,
     selectedQuery: state.selectedQuery,
     selectedQueryDashboardItem: state.selectedQueryDashboardItem,
     posts: state.posts

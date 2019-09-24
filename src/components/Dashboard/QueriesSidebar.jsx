@@ -656,11 +656,11 @@ class QueriesSidebar extends Component {
                   classes.nested,
                   classes.listItem,
                   "" +
-                    (this.props.selectedQueryDashboardItem == "emotion"
+                    (this.props.selectedQueryDashboardItem == "emotions"
                       ? classes.selectedNested
                       : "")
                 )}
-                onClick={() => this.handleClickListItem("emotion")}
+                onClick={() => this.handleClickListItem("emotions")}
               >
                 <ListItemText
                   primary="حس موجود"

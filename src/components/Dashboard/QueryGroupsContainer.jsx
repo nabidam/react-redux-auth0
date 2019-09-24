@@ -1125,7 +1125,7 @@ class QueryGroupsContainer extends React.Component {
       data,
       data01,
       emotionDatas,
-      latestQueriesSliderValue: [1, 30],
+      queriesSliderValue: [1, 30],
       minSlider: 1,
       maxSlider: 40,
       selectedTab: "keyWords",
@@ -1171,13 +1171,13 @@ class QueryGroupsContainer extends React.Component {
     });
   };
 
-  latestQueriesSliderChangeHandler = (event, newValue) => {
+  queriesSliderChangeHandler = (event, newValue) => {
     this.setState({
-      latestQueriesSliderValue: newValue
+      queriesSliderValue: newValue
     });
   };
 
-  latestQueriesSliderChangeCommittedHandler = (event, newValue) => {
+  queriesSliderChangeCommittedHandler = (event, newValue) => {
     var newMin = newValue[0] - 10;
     if (newMin < 1) {
       newMin = 1;
@@ -1255,8 +1255,8 @@ class QueryGroupsContainer extends React.Component {
                     variant="p"
                     className={classes.topNavbarSelectedQuery}
                   >
-                    {this.props.latestQueries.map((item, index) => {
-                      return item.id == this.props.selectedQuery
+                    {this.props.queries.map((item, index) => {
+                      return item.id == this.props.selectedQuery.id
                         ? item.name
                         : "";
                     })}
@@ -1744,7 +1744,7 @@ QueryGroupsContainer.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    latestQueries: state.latestQueries,
+    queries: state.queries,
     selectedQuery: state.selectedQuery,
     selectedQueryDashboardItem: state.selectedQueryDashboardItem,
     keywords: state.keywords,
