@@ -42,8 +42,9 @@ import TrafficIcon from "@material-ui/icons/Traffic";
 import PeopleIcon from "@material-ui/icons/People";
 import PublicIcon from "@material-ui/icons/Public";
 import addQuery from "../../actions/addQuery";
-import selectQueryMenu from "../../actions/selectQueryMenu";
+import selectQuery from "../../actions/selectQuery";
 import selectPage from "../../actions/selectPage";
+import backToQueries from "../../actions/backToQueries";
 import selectQueryDashboardListItem from "../../actions/selectQueryDashboardListItem";
 import history from "../../history";
 import BootstrapTooltip from "./BSTooltip";
@@ -322,7 +323,7 @@ class QueriesSidebar extends Component {
 
   handleChangeSearchQueryString = event => {
     var searched_query = event.target.value.toUpperCase();
-    var queries = this.props.latestQueries;
+    var queries = this.props.queries;
     var searched_queries = [];
     queries.map((item, index) => {
       if (item.name.toUpperCase().indexOf(searched_query) > -1) {
@@ -363,7 +364,7 @@ class QueriesSidebar extends Component {
   };
 
   handleSelectQueryMenu = item => {
-    this.props.selectQueryMenu(item.id, item.name);
+    this.props.selectQuery(item.id);
     this.setState({
       selectQueryAnchorEl: null,
       isSelectQueryOpen: false
@@ -425,7 +426,7 @@ class QueriesSidebar extends Component {
         >
           <ListItem
             className={classNames(classes.listItem, classes.backBtnItem)}
-            onClick={() => this.handleBack()}
+            onClick={() => this.props.backToQueries()}
           >
             <div className={classes.backBtnIcon}>
               <i className="fas fa-arrow-right" />
@@ -448,8 +449,8 @@ class QueriesSidebar extends Component {
               className={classes.selectQuery}
               onClick={event => this.handleClickSelectQuery(event)}
             >
-              {this.props.selectedQueryMenu
-                ? this.props.selectedQueryMenu.name
+              {this.props.selectedQuery
+                ? this.props.selectedQuery.name
                 : "انتخاب ردیاب"}
               <div className={classes.selectQueryIcon}>
                 <i className="fas fa-chevron-down" />
@@ -544,7 +545,7 @@ class QueriesSidebar extends Component {
                           </ListItem>
                         );
                       })
-                    : this.props.latestQueries.map((item, index) => {
+                    : this.props.queries.map((item, index) => {
                         return (
                           <ListItem
                             className={classNames(classes.listItemx)}
@@ -568,11 +569,7 @@ class QueriesSidebar extends Component {
               </div>
             </Popover>
           </ListItem>
-          <Collapse
-            in={this.props.selectedQueryMenu}
-            timeout="auto"
-            unmountOnExit
-          >
+          <Collapse in={this.props.selectedQuery} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
               <ListItem
                 className={classNames(
@@ -743,8 +740,8 @@ QueriesSidebar.propTypes = {
 const mapStateToProps = state => {
   return {
     isDrawerOpen: state.isDrawerOpen,
-    latestQueries: state.latestQueries,
-    selectedQueryMenu: state.selectedQueryMenu,
+    queries: state.queries,
+    selectedQuery: state.selectedQuery,
     selectedQueryDashboardItem: state.selectedQueryDashboardItem
   };
 };
@@ -753,10 +750,11 @@ const mapDispatchToProps = dispatch => {
   return {
     triggerDrawer: () => dispatch(triggerDrawer()),
     addQuery: username => dispatch(addQuery(username)),
-    selectQueryMenu: (id, name) => dispatch(selectQueryMenu(id, name)),
+    selectQuery: id => dispatch(selectQuery(id)),
     selectQueryDashboardListItem: item =>
       dispatch(selectQueryDashboardListItem(item)),
-    selectPage: page => dispatch(selectPage(page))
+    selectPage: page => dispatch(selectPage(page)),
+    backToQueries: () => dispatch(backToQueries())
   };
 };
 

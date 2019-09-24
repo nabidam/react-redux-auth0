@@ -33,6 +33,7 @@ import Influencers from "./Influencers";
 import Accounts from "./Accounts";
 import Projects from "./Projects";
 import Trends from "./Trends";
+import Queries from "./Queries";
 
 const drawerWidth = 240;
 
@@ -80,15 +81,24 @@ class Dashboard extends React.Component {
     return (
       <div className={classes.root}>
         <CssBaseline />
-        {this.props.selectedPage == "" ? <Header /> : <SecondHeader />}
+        {/* {this.props.selectedPage == "" ? <Header /> : <SecondHeader />} */}
+        <SecondHeader />
         {/* <Route exact path="/dashboard" component={Header} />
         <Route path="/dashboard/" component={SecondHeader} /> */}
         {/* <Header /> */}
-        <Route exact path="/dashboard/queries" component={QueriesSidebar} />
+        {this.props.selectedQueryDashboardItem != null ? (
+          <Route exact path="/dashboard/queries" component={QueriesSidebar} />
+        ) : (
+          ""
+        )}
         <Route exact path="/dashboard" component={Sidebar} />
         {/* <Sidebar /> */}
         {/* <Route exact path="/dashboard/add-query" component={AddQuery} /> */}
-        <Route exact path="/dashboard/queries" component={QueriesDashboard} />
+        {this.props.selectedQueryDashboardItem == null ? (
+          <Route exact path="/dashboard/queries" component={Queries} />
+        ) : (
+          <Route exact path="/dashboard/queries" component={QueriesDashboard} />
+        )}
         <Route
           exact
           path="/dashboard/traffic-analysis"
@@ -145,7 +155,8 @@ const mapStateToProps = state => {
   return {
     isSnackbarOpen: state.isSnackbarOpen,
     snackbarMessage: state.snackbarMessage,
-    selectedPage: state.selectedPage
+    selectedPage: state.selectedPage,
+    selectedQueryDashboardItem: state.selectedQueryDashboardItem
   };
 };
 

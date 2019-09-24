@@ -17,12 +17,14 @@ const initState = {
   id_token: null,
   expires_at: null,
   isDrawerOpen: false,
-  selectedQueryDashboardItem: "groups",
-  selectedPage: "",
+  selectedQueryDashboardItem: null,
+  selectedPage: "queries",
   selectedKeyword: "",
   selectedEmotion: "",
   selectedGroup: 0,
   selectedAnalysisType: 1,
+  selectedQueriesType: 1,
+  selectedQuery: 0,
   analysis: [
     {
       id: 1,
@@ -42,6 +44,68 @@ const initState = {
       id: 3,
       name: "تیراژه",
       active: 0,
+      date: "10 خرداد 98",
+      time: "16:43"
+    }
+  ],
+  queries: [
+    {
+      id: 1,
+      name: "ترامپ",
+      active: 1,
+      social: {
+        twitter: 1,
+        instagram: 1
+      },
+      retrieved_posts: 682,
+      date: "12 خرداد 98",
+      time: "16:43"
+    },
+    {
+      id: 2,
+      name: "پرسپولیس",
+      active: 1,
+      social: {
+        twitter: 1,
+        instagram: null
+      },
+      retrieved_posts: 682,
+      date: "18 خرداد 98",
+      time: "16:43"
+    },
+    {
+      id: 3,
+      name: "استادیوم",
+      active: 1,
+      social: {
+        twitter: 1,
+        instagram: 1
+      },
+      retrieved_posts: 682,
+      date: "10 خرداد 98",
+      time: "16:43"
+    },
+    {
+      id: 4,
+      name: "اپل",
+      active: 0,
+      social: {
+        twitter: 1,
+        instagram: 1
+      },
+      retrieved_posts: 682,
+      date: "10 خرداد 98",
+      time: "16:43"
+    },
+    {
+      id: 5,
+      name: "هنگ کنگ",
+      active: 0,
+      social: {
+        twitter: 1,
+        instagram: null
+      },
+      retrieved_posts: 682,
       date: "10 خرداد 98",
       time: "16:43"
     }
@@ -982,10 +1046,40 @@ const rootReducer = (state = initState, action) => {
           el.id == action.analysis ? {...el, active: !el.active} : el
         )
       };
+    case types.SELECT_QUERIES_TYPE:
+      return {
+        ...state,
+        selectedQueriesType: action.t
+      };
+    case types.CHANGE_QUERY_STATUS:
+      return {
+        ...state,
+        queries: state.queries.map(el =>
+          el.id == action.query ? {...el, active: !el.active} : el
+        )
+      };
+    case types.SELECT_QUERY:
+      var selectedQuery = {};
+      state.queries.map(q => {
+        if (q.id == action.id) {
+          selectedQuery = q;
+        }
+      });
+      return {
+        ...state,
+        selectedQuery,
+        selectedQueryDashboardItem: "dashboard"
+      };
     case types.SELECT_KEYWORD:
       return {
         ...state,
         selectedKeyword: action.word.text
+      };
+    case types.BACK_TO_QUERIES:
+      return {
+        ...state,
+        selectedQuery: null,
+        selectedQueryDashboardItem: null
       };
     default:
       return state;
