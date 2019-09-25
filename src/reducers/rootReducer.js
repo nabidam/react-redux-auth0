@@ -196,7 +196,7 @@ const initState = {
       comment_emotion: +1
     }
   ],
-  influencers: [
+  influencers_list: [
     {
       id: 1,
       name: "مرتضی محمدی",

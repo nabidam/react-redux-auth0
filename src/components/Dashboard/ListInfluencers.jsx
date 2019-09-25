@@ -351,7 +351,7 @@ class ListInfluencers extends React.Component {
                       this.state.rowHover != row.id ? classes.textMute : ""
                     }
                   >
-                    {row.overall_comments}
+                    {row.name}
                   </TableCell>
                   <TableCell
                     align="center"
@@ -405,7 +405,7 @@ const mapStateToProps = state => {
     latestQueries: state.latestQueries,
     selectedQuery: state.selectedQuery,
     selectedQueryDashboardItem: state.selectedQueryDashboardItem,
-    influencers: state.influencers
+    influencers: state.influencers_list
   };
 };
 
