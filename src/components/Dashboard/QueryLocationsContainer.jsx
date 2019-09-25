@@ -68,6 +68,7 @@ import ViewStreamOutlinedIcon from "@material-ui/icons/ViewStreamOutlined";
 import ViewModuleOutlinedIcon from "@material-ui/icons/ViewModuleOutlined";
 import ListPosts from "./ListPosts";
 import GridPosts from "./GridPosts";
+import WorldMap from "./WorldMap";
 
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
@@ -1227,6 +1228,7 @@ class QueryLocationsContainer extends React.Component {
                   </div>
                 </div>
                 <Divider variant="fullWidth" className={classes.dividerM} />
+                <WorldMap />
               </Paper>
             </Grid>
           </Grid>
@@ -1253,7 +1255,6 @@ class QueryLocationsContainer extends React.Component {
                   </div>
                 </div>
                 <Divider variant="fullWidth" />
-                
               </Paper>
             </Grid>
             <Grid item md={6} sm={12} xs={12}>

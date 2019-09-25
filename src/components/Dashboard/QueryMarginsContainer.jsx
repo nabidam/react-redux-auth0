@@ -76,6 +76,22 @@ import ListPosts from "./ListPosts";
 import GridPosts from "./GridPosts";
 import CheckIcon from "@material-ui/icons/Check";
 
+import {
+  Sigma,
+  EdgeShapes,
+  NodeShapes,
+  LoadJSON,
+  LoadGEXF,
+  Filter,
+  ForceAtlas2,
+  RelativeSize,
+  NOverlap,
+  NeoCypher,
+  NeoGraphItemsProducers,
+  RandomizeNodePositions,
+  SigmaEnableWebGL
+} from "react-sigma";
+
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
 const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
@@ -1429,6 +1445,9 @@ class QueryMarginsContainer extends React.Component {
                   </div>
                 </div>
                 <Divider variant="fullWidth" className={classes.dividerM} />
+                <Sigma>
+                  <LoadGEXF path="../../data/les-miserables.gexf"></LoadGEXF>
+                </Sigma>
               </Paper>
             </Grid>
             <Grid item md={4} sm={12} xs={12}>

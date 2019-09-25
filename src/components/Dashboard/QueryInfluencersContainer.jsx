@@ -1,37 +1,17 @@
-import React, {unstable_Profiler} from "react";
+import React from "react";
+import axios from "axios";
 import PropTypes from "prop-types";
 import {withStyles} from "@material-ui/core/styles";
 import classNames from "classnames";
-import {PDFDownloadLink, Document, Page, View, Text} from "@react-pdf/renderer";
 import {
-  CssBaseline,
   Typography,
   Container,
   Grid,
   Paper,
-  Avatar,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
   Divider,
-  Modal,
   Button,
   Tooltip as MTooltip
 } from "@material-ui/core";
-import Slider from "@material-ui/lab/Slider";
-// import {Slider} from "material-ui-slider";
-import ExcelDownload from "./ExcelDownload";
-import InboxIcon from "@material-ui/icons/Inbox";
-import DraftsIcon from "@material-ui/icons/Drafts";
-import HistoryIcon from "@material-ui/icons/History";
-import Traffic from "@material-ui/icons/Traffic";
-import Whatshot from "@material-ui/icons/Whatshot";
-import People from "@material-ui/icons/People";
-import ChatBubble from "@material-ui/icons/ChatBubble";
-import Header from "./Header";
-import Sidebar from "./Sidebar";
-import ReactEcharts from "echarts-for-react";
 import {
   ResponsiveContainer,
   BarChart,
@@ -52,63 +32,38 @@ import {
 } from "recharts";
 import {connect} from "react-redux";
 import changeSelectedQuery from "../../actions/changeSelectedQuery";
-import ReactExport from "react-data-export";
-import LatestQueriesPDF from "./LatestQueriesPDF";
 import moment from "moment";
-import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
-import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
-import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
-import CommentIcon from "@material-ui/icons/Comment";
 import BootstrapTooltip from "./BSTooltip";
-import ReactWordcloud from "react-wordcloud";
 import "d3-transition";
 import {select} from "d3-selection";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
-import ViewStreamOutlinedIcon from "@material-ui/icons/ViewStreamOutlined";
-import ViewModuleOutlinedIcon from "@material-ui/icons/ViewModuleOutlined";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import ListPosts from "./ListPosts";
-import GridPosts from "./GridPosts";
 import ListInfluencers from "./ListInfluencers";
 import CheckIcon from "@material-ui/icons/Check";
 
-const ExcelFile = ReactExport.ExcelFile;
-const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
-const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
+import ReactEcharts from "echarts-for-react";
+// import echarts from "echarts";
 
-const drawerWidth = 240;
+var echarts = require("echarts");
+require("echarts/src/chart/graph");
+echarts.dataTool = require("echarts/extension/dataTool");
 
-const dataSet1 = [
-  {
-    name: "Johson",
-    amount: 30000,
-    sex: "M",
-    is_married: true
-  },
-  {
-    name: "Monika",
-    amount: 355000,
-    sex: "F",
-    is_married: false
-  },
-  {
-    name: "John",
-    amount: 250000,
-    sex: "M",
-    is_married: false
-  },
-  {
-    name: "Josef",
-    amount: 450500,
-    sex: "M",
-    is_married: true
-  }
-];
+import gexf from "gexf";
+var lesMiserable = require("../../data/les-miserables.gexf");
+
+import {
+  Sigma,
+  EdgeShapes,
+  NodeShapes,
+  LoadJSON,
+  LoadGEXF,
+  Filter,
+  ForceAtlas2,
+  RelativeSize,
+  NOverlap,
+  NeoCypher,
+  NeoGraphItemsProducers,
+  RandomizeNodePositions,
+  SigmaEnableWebGL
+} from "react-sigma";
 
 const styles = theme => ({
   root: {
@@ -780,341 +735,6 @@ const emotionDatas = [
   }
 ];
 
-const data = [
-  {
-    date: moment()
-      .subtract(29, "days")
-      .format("MMM Do"),
-    posts: 100,
-    dayOfMonth: 1,
-    color: "#a9da79"
-  },
-  {
-    date: moment()
-      .subtract(28, "days")
-      .format("MMM Do"),
-    posts: 150,
-    dayOfMonth: 2,
-    color: "#95eb56"
-  },
-  {
-    date: moment()
-      .subtract(27, "days")
-      .format("MMM Do"),
-    posts: 200,
-    dayOfMonth: 3,
-    color: "#91dde2"
-  },
-  {
-    date: moment()
-      .subtract(26, "days")
-      .format("MMM Do"),
-    posts: 321,
-    dayOfMonth: 4,
-    color: "#0a1b35"
-  },
-  {
-    date: moment()
-      .subtract(25, "days")
-      .format("MMM Do"),
-    posts: 100,
-    dayOfMonth: 5,
-    color: "#e9432f"
-  },
-  {
-    date: moment()
-      .subtract(24, "days")
-      .format("MMM Do"),
-    posts: 533,
-    dayOfMonth: 6,
-    color: "#72e25f"
-  },
-  {
-    date: moment()
-      .subtract(23, "days")
-      .format("MMM Do"),
-    posts: 423,
-    dayOfMonth: 7,
-    color: "#8b8bf6"
-  },
-  {
-    date: moment()
-      .subtract(22, "days")
-      .format("MMM Do"),
-    posts: 324,
-    dayOfMonth: 8,
-    color: "#b2ab52"
-  },
-  {
-    date: moment()
-      .subtract(21, "days")
-      .format("MMM Do"),
-    posts: 423,
-    dayOfMonth: 9,
-    color: "#c35fd5"
-  },
-  {
-    date: moment()
-      .subtract(20, "days")
-      .format("MMM Do"),
-    posts: 312,
-    dayOfMonth: 10,
-    color: "#39c4e3"
-  },
-  {
-    date: moment()
-      .subtract(19, "days")
-      .format("MMM Do"),
-    posts: 123,
-    dayOfMonth: 11,
-    color: "#e03673"
-  },
-  {
-    date: moment()
-      .subtract(18, "days")
-      .format("MMM Do"),
-    posts: 253,
-    dayOfMonth: 12,
-    color: "#36fb59"
-  },
-  {
-    date: moment()
-      .subtract(17, "days")
-      .format("MMM Do"),
-    posts: 397,
-    dayOfMonth: 13,
-    color: "#c80b8a"
-  },
-  {
-    date: moment()
-      .subtract(16, "days")
-      .format("MMM Do"),
-    posts: 456,
-    dayOfMonth: 14,
-    color: "#67df60"
-  },
-  {
-    date: moment()
-      .subtract(15, "days")
-      .format("MMM Do"),
-    posts: 575,
-    dayOfMonth: 15,
-    color: "#9bcc4c"
-  },
-  {
-    date: moment()
-      .subtract(14, "days")
-      .format("MMM Do"),
-    posts: 423,
-    dayOfMonth: 16,
-    color: "#78bef0"
-  },
-  {
-    date: moment()
-      .subtract(13, "days")
-      .format("MMM Do"),
-    posts: 100,
-    dayOfMonth: 17,
-    color: "#dcffaa"
-  },
-  {
-    date: moment()
-      .subtract(12, "days")
-      .format("MMM Do"),
-    posts: 222,
-    dayOfMonth: 18,
-    color: "#a9da79"
-  },
-  {
-    date: moment()
-      .subtract(11, "days")
-      .format("MMM Do"),
-    posts: 321,
-    dayOfMonth: 19,
-    color: "#91dde2"
-  },
-  {
-    date: moment()
-      .subtract(10, "days")
-      .format("MMM Do"),
-    posts: 123,
-    dayOfMonth: 20,
-    color: "#0a1b35"
-  },
-  {
-    date: moment()
-      .subtract(9, "days")
-      .format("MMM Do"),
-    posts: 99,
-    dayOfMonth: 21,
-    color: "#e9432f"
-  },
-  {
-    date: moment()
-      .subtract(8, "days")
-      .format("MMM Do"),
-    posts: 654,
-    dayOfMonth: 22,
-    color: "#72e25f"
-  },
-  {
-    date: moment()
-      .subtract(7, "days")
-      .format("MMM Do"),
-    posts: 122,
-    dayOfMonth: 23,
-    color: "#8b8bf6"
-  },
-  {
-    date: moment()
-      .subtract(6, "days")
-      .format("MMM Do"),
-    posts: 344,
-    dayOfMonth: 24,
-    color: "#b2ab52"
-  },
-  {
-    date: moment()
-      .subtract(5, "days")
-      .format("MMM Do"),
-    posts: 244,
-    dayOfMonth: 25,
-    color: "#c35fd5"
-  },
-  {
-    date: moment()
-      .subtract(4, "days")
-      .format("MMM Do"),
-    posts: 354,
-    dayOfMonth: 26,
-    color: "#39c4e3"
-  },
-  {
-    date: moment()
-      .subtract(3, "days")
-      .format("MMM Do"),
-    posts: 421,
-    dayOfMonth: 27,
-    color: "#e03673"
-  },
-  {
-    date: moment()
-      .subtract(2, "days")
-      .format("MMM Do"),
-    posts: 124,
-    dayOfMonth: 28,
-    color: "#36fb59"
-  },
-  {
-    date: moment()
-      .subtract(1, "days")
-      .format("MMM Do"),
-    posts: 123,
-    dayOfMonth: 29,
-    color: "#36fb59"
-  },
-  {
-    date: moment().format("MMM Do"),
-    posts: 456,
-    dayOfMonth: 30,
-    color: "#36fb59"
-  }
-];
-
-const words = [
-  {
-    text: "دونالد",
-    value: 20
-  },
-  {
-    text: "تحریم",
-    value: 10
-  },
-  {
-    text: "ظریف",
-    value: 10
-  },
-  {
-    text: "مردم",
-    value: 13
-  },
-  {
-    text: "آمریکا",
-    value: 13
-  },
-  {
-    text: "چین",
-    value: 10
-  },
-  {
-    text: "ایران",
-    value: 8
-  },
-  {
-    text: "تغییر",
-    value: 13
-  },
-  {
-    text: "خرید",
-    value: 13
-  },
-  {
-    text: "ما",
-    value: 10
-  },
-  {
-    text: "کاخ",
-    value: 10
-  },
-  {
-    text: "تعرفه",
-    value: 10
-  },
-  {
-    text: "جدید",
-    value: 8
-  },
-  {
-    text: "گفت",
-    value: 10
-  },
-  {
-    text: "رسانه",
-    value: 10
-  },
-  {
-    text: "گرینلند",
-    value: 13
-  }
-];
-
-const data01 = [
-  {
-    name: "Group A",
-    value: 400
-  },
-  {
-    name: "Group B",
-    value: 300
-  },
-  {
-    name: "Group C",
-    value: 300
-  },
-  {
-    name: "Group D",
-    value: 200
-  },
-  {
-    name: "Group E",
-    value: 278
-  },
-  {
-    name: "Group F",
-    value: 189
-  }
-];
-
 // function getCallback(callback) {
 //   return function(word, event) {
 //     const isActive = callback !== "onWordMouseOut";
@@ -1146,9 +766,6 @@ class QueryInfluencersContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      words,
-      data,
-      data01,
       emotionDatas,
       queriesSliderValue: [1, 30],
       minSlider: 1,
@@ -1160,7 +777,9 @@ class QueryInfluencersContainer extends React.Component {
       selectedKeyword: "",
       callbacks: {},
       twitter: 1,
-      instagram: 0
+      instagram: 0,
+      graph: null,
+      graphCategories: []
     };
 
     this.handleSelectTab = this.handleSelectTab.bind(this);
@@ -1209,15 +828,56 @@ class QueryInfluencersContainer extends React.Component {
   };
 
   componentDidMount = () => {
-    this.setState({
-      callbacks: {
-        getWordTooltip: word =>
-          `The word "${word.text}" appears ${word.value} times.`,
-        onWordClick: this.getCallback("onWordClick"),
-        onWordMouseOut: this.getCallback("onWordMouseOut"),
-        onWordMouseOver: this.getCallback("onWordMouseOver")
-      }
-    });
+    // axios({
+    //   method: "get",
+    //   url:
+    //     "https://echarts.apache.org/examples/data/asset/data/les-miserables.gexf",
+    //   responseType: "json"
+    // }).then(function(response) {
+    //   console.log(response);
+    // });
+    // Converting a string to a DOM object
+    // var gexf_dom = new DOMParser().parseFromString(
+    //   ,
+    //   "application/xml"
+    // );
+    // // Parsing the gexf
+    // var graph = gexf.parse(gexf_dom);
+    // var graph = gexf.fetch(
+    //   "https://echarts.apache.org/examples/data/asset/data/les-miserables.gexf"
+    // );
+    // console.log(graph);
+    // // var graph = echarts.dataTool.gexf.parse(lesMiserable);
+    // var categories = [];
+    // for (var i = 0; i < 9; i++) {
+    //   categories[i] = {
+    //     name: "类目" + i
+    //   };
+    // }
+    // graph.nodes.forEach(function(node) {
+    //   node.itemStyle = null;
+    //   node.value = node.symbolSize;
+    //   node.symbolSize /= 1.5;
+    //   node.label = {
+    //     normal: {
+    //       show: node.symbolSize > 30
+    //     }
+    //   };
+    //   node.category = node.attributes.modularity_class;
+    // });
+    // this.setState({
+    //   graph,
+    //   graphCategories: categories
+    // });
+    // this.setState({
+    //   callbacks: {
+    //     getWordTooltip: word =>
+    //       `The word "${word.text}" appears ${word.value} times.`,
+    //     onWordClick: this.getCallback("onWordClick"),
+    //     onWordMouseOut: this.getCallback("onWordMouseOut"),
+    //     onWordMouseOver: this.getCallback("onWordMouseOver")
+    //   }
+    // });
   };
 
   handleWordClick = (word, event) => {
@@ -1323,6 +983,59 @@ class QueryInfluencersContainer extends React.Component {
       instagram: !this.state.instagram
     });
   };
+
+  getOption = () => ({
+    title: {
+      text: "Les Miserables",
+      subtext: "Default layout",
+      top: "bottom",
+      left: "right"
+    },
+    tooltip: {},
+    legend: [
+      {
+        // selectedMode: 'single',
+        data: this.statete.graphCategories.map(function(a) {
+          return a.name;
+        })
+      }
+    ],
+    animationDuration: 1500,
+    animationEasingUpdate: "quinticInOut",
+    series: [
+      {
+        name: "Les Miserables",
+        type: "graph",
+        layout: "none",
+        data: this.state.graph.nodes,
+        links: this.state.graph.links,
+        categories: this.state.graphCategories,
+        roam: true,
+        focusNodeAdjacency: true,
+        itemStyle: {
+          normal: {
+            borderColor: "#fff",
+            borderWidth: 1,
+            shadowBlur: 10,
+            shadowColor: "rgba(0, 0, 0, 0.3)"
+          }
+        },
+        label: {
+          position: "right",
+          formatter: "{b}"
+        },
+        lineStyle: {
+          color: "source",
+          curveness: 0.3
+        },
+        emphasis: {
+          lineStyle: {
+            width: 10
+          }
+        }
+      }
+    ]
+  });
 
   //   componentDidMount = () => {
   //     console.log(
@@ -1436,6 +1149,10 @@ class QueryInfluencersContainer extends React.Component {
                   </div>
                 </div>
                 <Divider variant="fullWidth" className={classes.dividerM} />
+                {/* <ReactEcharts option={this.getOption()} style={{height: 300}} /> */}
+                <Sigma>
+                  <LoadGEXF path="../../data/les-miserables.gexf"></LoadGEXF>
+                </Sigma>
               </Paper>
             </Grid>
           </Grid>

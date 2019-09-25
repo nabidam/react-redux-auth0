@@ -10,6 +10,8 @@ import "d3-transition";
 import {select, selectAll} from "d3-selection";
 import TagCloud from "./TagCloud";
 import randomColor from "randomcolor";
+import BootstrapTooltip from "./BSTooltip";
+import {Tooltip} from "@material-ui/core";
 
 const styles = {
   wordCloud: {
@@ -23,6 +25,19 @@ const styles = {
   small: {
     opacity: 0.7,
     fontSize: 16
+  },
+  word: {
+    "&:hover": {
+      cursor: "pointer"
+    }
+  },
+  selectedWord: {
+    border: "solid 5px rgba(255, 255, 255, 0.85)",
+    backgroundColor: "#4753ff",
+    padding: "2px 4px",
+    borderRadius: 19,
+    color: "#fff",
+    zIndex: 1000
   }
 };
 
@@ -95,8 +110,6 @@ class WordsCloud extends React.Component {
       min,
       max
     });
-    console.log(min);
-    console.log(max);
   };
 
   render() {
@@ -104,35 +117,40 @@ class WordsCloud extends React.Component {
     return (
       <div className="app-outer">
         <div className="app-inner">
+          <h1>{this.props.selectedKeyword}</h1>
           <TagCloud
             className="tag-cloud"
             style={{
-              fontFamily: "BYekan",
+              fontFamily: "BYekan"
               // fontSize: () => Math.round(Math.random() * 50) + 16,
               // fontSize: 30,
-              color: () => {
-                return "#3340ff";
-              }
+              // color: () => {
+              //   return "#08080d";
+              // }
             }}
           >
             {this.props.words.map((word, index) => {
-              var size =
-                (word.value - this.state.min) /
-                  (this.state.max - this.state.min) +
-                1 +
-                "em";
-              console.log(`"${size}"`);
-
               return (
                 <div
+                  className={classNames(
+                    classes.word,
+                    this.props.selectedKeyword == word.text
+                      ? classes.selectedWord
+                      : ""
+                  )}
                   key={index}
                   style={{
                     fontSize: () =>
                       ((word.value - this.state.min) /
                         (this.state.max - this.state.min) +
                         1) *
-                      12
+                      12,
+                    color:
+                      this.props.selectedKeyword == word.text
+                        ? "#fff"
+                        : "#08080d"
                   }}
+                  onClick={() => this.props.selectKeyword(word)}
                 >
                   {word.text}
                 </div>
@@ -147,7 +165,8 @@ class WordsCloud extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    words: state.words
+    words: state.words,
+    selectedKeyword: state.selectedKeyword
   };
 };
 
@@ -162,4 +181,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(WordsCloud);
+)(withStyles(styles)(WordsCloud));
