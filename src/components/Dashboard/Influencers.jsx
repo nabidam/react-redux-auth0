@@ -754,7 +754,7 @@ class Influencers extends React.Component {
                   <Divider variant="fullWidth" className={classes.dividerM} />
                   <Grid container className={classes.root}>
                     <Grid item md={12} sm={12} xs={12}>
-                      <Table className={classes.table} stickyHeader>
+                      <Table className={classes.table}>
                         <TableHead>
                           <TableRow>
                             <TableCell
