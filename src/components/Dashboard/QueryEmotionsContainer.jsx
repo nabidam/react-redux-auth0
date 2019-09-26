@@ -1,8 +1,7 @@
-import React, {unstable_Profiler} from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import {withStyles} from "@material-ui/core/styles";
 import classNames from "classnames";
-import {PDFDownloadLink, Document, Page, View, Text} from "@react-pdf/renderer";
 import {
   CssBaseline,
   Typography,
@@ -19,60 +18,19 @@ import {
   Button,
   Tooltip as MTooltip
 } from "@material-ui/core";
-import Slider from "@material-ui/lab/Slider";
-// import {Slider} from "material-ui-slider";
-import ExcelDownload from "./ExcelDownload";
-import InboxIcon from "@material-ui/icons/Inbox";
-import DraftsIcon from "@material-ui/icons/Drafts";
-import HistoryIcon from "@material-ui/icons/History";
-import Traffic from "@material-ui/icons/Traffic";
-import Whatshot from "@material-ui/icons/Whatshot";
-import People from "@material-ui/icons/People";
-import ChatBubble from "@material-ui/icons/ChatBubble";
-import Header from "./Header";
-import Sidebar from "./Sidebar";
-import ReactEcharts from "echarts-for-react";
 import {
   ResponsiveContainer,
-  BarChart,
-  Brush,
-  Bar,
-  Line,
-  CartesianGrid,
-  XAxis,
-  YAxis,
-  Label,
-  Tooltip,
   Cell,
-  AreaChart,
-  Area,
   PieChart,
   Pie,
   linearGradient
 } from "recharts";
 import {connect} from "react-redux";
-import changeSelectedQuery from "../../actions/changeSelectedQuery";
 import selectEmotion from "../../actions/selectEmotion";
 import ReactExport from "react-data-export";
-import LatestQueriesPDF from "./LatestQueriesPDF";
-import moment from "moment";
-import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
-import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
-import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
-import CommentIcon from "@material-ui/icons/Comment";
 import BootstrapTooltip from "./BSTooltip";
-import ReactWordcloud from "react-wordcloud";
-import "d3-transition";
-import {select} from "d3-selection";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
 import ViewStreamOutlinedIcon from "@material-ui/icons/ViewStreamOutlined";
 import ViewModuleOutlinedIcon from "@material-ui/icons/ViewModuleOutlined";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
 import ListEmotionPosts from "./ListEmotionPosts";
 import GridPosts from "./GridPosts";
 import CheckIcon from "@material-ui/icons/Check";
@@ -805,30 +763,6 @@ const styles = theme => ({
   }
 });
 
-// const data = [
-//   {
-//     name: 'Page A', uv: 4000, pv: 2400, amt: 2400,
-//   },
-//   {
-//     name: 'Page B', uv: 3000, pv: 1398, amt: 2210,
-//   },
-//   {
-//     name: 'Page C', uv: 2000, pv: 9800, amt: 2290,
-//   },
-//   {
-//     name: 'Page D', uv: 2780, pv: 3908, amt: 2000,
-//   },
-//   {
-//     name: 'Page E', uv: 1890, pv: 4800, amt: 2181,
-//   },
-//   {
-//     name: 'Page F', uv: 2390, pv: 3800, amt: 2500,
-//   },
-//   {
-//     name: 'Page G', uv: 3490, pv: 4300, amt: 2100,
-//   },
-// ];
-
 const emotionDatas = [
   {
     name: "حس مثبت",
@@ -844,375 +778,10 @@ const emotionDatas = [
   }
 ];
 
-const data = [
-  {
-    date: moment()
-      .subtract(29, "days")
-      .format("MMM Do"),
-    posts: 100,
-    dayOfMonth: 1,
-    color: "#a9da79"
-  },
-  {
-    date: moment()
-      .subtract(28, "days")
-      .format("MMM Do"),
-    posts: 150,
-    dayOfMonth: 2,
-    color: "#95eb56"
-  },
-  {
-    date: moment()
-      .subtract(27, "days")
-      .format("MMM Do"),
-    posts: 200,
-    dayOfMonth: 3,
-    color: "#91dde2"
-  },
-  {
-    date: moment()
-      .subtract(26, "days")
-      .format("MMM Do"),
-    posts: 321,
-    dayOfMonth: 4,
-    color: "#0a1b35"
-  },
-  {
-    date: moment()
-      .subtract(25, "days")
-      .format("MMM Do"),
-    posts: 100,
-    dayOfMonth: 5,
-    color: "#e9432f"
-  },
-  {
-    date: moment()
-      .subtract(24, "days")
-      .format("MMM Do"),
-    posts: 533,
-    dayOfMonth: 6,
-    color: "#72e25f"
-  },
-  {
-    date: moment()
-      .subtract(23, "days")
-      .format("MMM Do"),
-    posts: 423,
-    dayOfMonth: 7,
-    color: "#8b8bf6"
-  },
-  {
-    date: moment()
-      .subtract(22, "days")
-      .format("MMM Do"),
-    posts: 324,
-    dayOfMonth: 8,
-    color: "#b2ab52"
-  },
-  {
-    date: moment()
-      .subtract(21, "days")
-      .format("MMM Do"),
-    posts: 423,
-    dayOfMonth: 9,
-    color: "#c35fd5"
-  },
-  {
-    date: moment()
-      .subtract(20, "days")
-      .format("MMM Do"),
-    posts: 312,
-    dayOfMonth: 10,
-    color: "#39c4e3"
-  },
-  {
-    date: moment()
-      .subtract(19, "days")
-      .format("MMM Do"),
-    posts: 123,
-    dayOfMonth: 11,
-    color: "#e03673"
-  },
-  {
-    date: moment()
-      .subtract(18, "days")
-      .format("MMM Do"),
-    posts: 253,
-    dayOfMonth: 12,
-    color: "#36fb59"
-  },
-  {
-    date: moment()
-      .subtract(17, "days")
-      .format("MMM Do"),
-    posts: 397,
-    dayOfMonth: 13,
-    color: "#c80b8a"
-  },
-  {
-    date: moment()
-      .subtract(16, "days")
-      .format("MMM Do"),
-    posts: 456,
-    dayOfMonth: 14,
-    color: "#67df60"
-  },
-  {
-    date: moment()
-      .subtract(15, "days")
-      .format("MMM Do"),
-    posts: 575,
-    dayOfMonth: 15,
-    color: "#9bcc4c"
-  },
-  {
-    date: moment()
-      .subtract(14, "days")
-      .format("MMM Do"),
-    posts: 423,
-    dayOfMonth: 16,
-    color: "#78bef0"
-  },
-  {
-    date: moment()
-      .subtract(13, "days")
-      .format("MMM Do"),
-    posts: 100,
-    dayOfMonth: 17,
-    color: "#dcffaa"
-  },
-  {
-    date: moment()
-      .subtract(12, "days")
-      .format("MMM Do"),
-    posts: 222,
-    dayOfMonth: 18,
-    color: "#a9da79"
-  },
-  {
-    date: moment()
-      .subtract(11, "days")
-      .format("MMM Do"),
-    posts: 321,
-    dayOfMonth: 19,
-    color: "#91dde2"
-  },
-  {
-    date: moment()
-      .subtract(10, "days")
-      .format("MMM Do"),
-    posts: 123,
-    dayOfMonth: 20,
-    color: "#0a1b35"
-  },
-  {
-    date: moment()
-      .subtract(9, "days")
-      .format("MMM Do"),
-    posts: 99,
-    dayOfMonth: 21,
-    color: "#e9432f"
-  },
-  {
-    date: moment()
-      .subtract(8, "days")
-      .format("MMM Do"),
-    posts: 654,
-    dayOfMonth: 22,
-    color: "#72e25f"
-  },
-  {
-    date: moment()
-      .subtract(7, "days")
-      .format("MMM Do"),
-    posts: 122,
-    dayOfMonth: 23,
-    color: "#8b8bf6"
-  },
-  {
-    date: moment()
-      .subtract(6, "days")
-      .format("MMM Do"),
-    posts: 344,
-    dayOfMonth: 24,
-    color: "#b2ab52"
-  },
-  {
-    date: moment()
-      .subtract(5, "days")
-      .format("MMM Do"),
-    posts: 244,
-    dayOfMonth: 25,
-    color: "#c35fd5"
-  },
-  {
-    date: moment()
-      .subtract(4, "days")
-      .format("MMM Do"),
-    posts: 354,
-    dayOfMonth: 26,
-    color: "#39c4e3"
-  },
-  {
-    date: moment()
-      .subtract(3, "days")
-      .format("MMM Do"),
-    posts: 421,
-    dayOfMonth: 27,
-    color: "#e03673"
-  },
-  {
-    date: moment()
-      .subtract(2, "days")
-      .format("MMM Do"),
-    posts: 124,
-    dayOfMonth: 28,
-    color: "#36fb59"
-  },
-  {
-    date: moment()
-      .subtract(1, "days")
-      .format("MMM Do"),
-    posts: 123,
-    dayOfMonth: 29,
-    color: "#36fb59"
-  },
-  {
-    date: moment().format("MMM Do"),
-    posts: 456,
-    dayOfMonth: 30,
-    color: "#36fb59"
-  }
-];
-
-const words = [
-  {
-    text: "دونالد",
-    value: 20
-  },
-  {
-    text: "تحریم",
-    value: 10
-  },
-  {
-    text: "ظریف",
-    value: 10
-  },
-  {
-    text: "مردم",
-    value: 13
-  },
-  {
-    text: "آمریکا",
-    value: 13
-  },
-  {
-    text: "چین",
-    value: 10
-  },
-  {
-    text: "ایران",
-    value: 8
-  },
-  {
-    text: "تغییر",
-    value: 13
-  },
-  {
-    text: "خرید",
-    value: 13
-  },
-  {
-    text: "ما",
-    value: 10
-  },
-  {
-    text: "کاخ",
-    value: 10
-  },
-  {
-    text: "تعرفه",
-    value: 10
-  },
-  {
-    text: "جدید",
-    value: 8
-  },
-  {
-    text: "گفت",
-    value: 10
-  },
-  {
-    text: "رسانه",
-    value: 10
-  },
-  {
-    text: "گرینلند",
-    value: 13
-  }
-];
-
-const data01 = [
-  {
-    name: "Group A",
-    value: 400
-  },
-  {
-    name: "Group B",
-    value: 300
-  },
-  {
-    name: "Group C",
-    value: 300
-  },
-  {
-    name: "Group D",
-    value: 200
-  },
-  {
-    name: "Group E",
-    value: 278
-  },
-  {
-    name: "Group F",
-    value: 189
-  }
-];
-
-// function getCallback(callback) {
-//   return function(word, event) {
-//     const isActive = callback !== "onWordMouseOut";
-//     const element = event.target;
-//     // console.log(element);
-
-//     // const text = element.select();
-//     // console.log("x");
-
-//     element
-//       .on("click", () => {
-//         this.setState({
-//           selectedKeyword: word.text
-//         });
-//       })
-//       .transition()
-//       .attr("background", "white")
-//       .attr("font-size", isActive ? "300%" : "100%")
-//       .attr("text-decoration", isActive ? "underline" : "none");
-//   };
-// }
-// const callbacks = {
-//   onWordClick: getCallback("onWordClick"),
-//   onWordMouseOut: getCallback("onWordMouseOut"),
-//   onWordMouseOver: getCallback("onWordMouseOver")
-// };
-
 class QueryEmotionsContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      words,
-      data,
-      data01,
       emotionDatas,
       queriesSliderValue: [1, 30],
       minSlider: 1,
@@ -1228,7 +797,6 @@ class QueryEmotionsContainer extends React.Component {
     };
 
     this.handleSelectTab = this.handleSelectTab.bind(this);
-    this.handleSelectChartAction = this.handleSelectChartAction.bind(this);
     this.handleSelectView = this.handleSelectView.bind(this);
     this.handleHoverRow = this.handleHoverRow.bind(this);
     this.handleUnHoverRow = this.handleUnHoverRow.bind(this);
@@ -1254,69 +822,9 @@ class QueryEmotionsContainer extends React.Component {
     });
   };
 
-  brushChangeHandler = event => {
-    var new_data = this.state.data;
-    new_data.map(
-      (item, index) => (item.posts = Math.floor(Math.random() * (1000 + 1)))
-    );
-    this.setState({
-      data: new_data
-    });
-  };
-
-  queriesSliderChangeHandler = (event, newValue) => {
-    this.setState({
-      queriesSliderValue: newValue
-    });
-  };
-
-  queriesSliderChangeCommittedHandler = (event, newValue) => {
-    var newMin = newValue[0] - 10;
-    if (newMin < 1) {
-      newMin = 1;
-    }
-
-    var newMax = newValue[1] + 10;
-    if (newMax > 360) {
-      newMax = 360;
-    } else if (newMax < 30) {
-      newMax = 30;
-    }
-
-    console.log(newMin, newMax);
-
-    this.setState({
-      minSlider: newMin,
-      maxSlider: newMax
-    });
-  };
-
-  latestQuerySliderButtonHandler = event => {
-    var new_data = [];
-    for (var i = 30; i >= 1; i--) {
-      var d = {
-        date: moment()
-          .subtract(i, "days")
-          .format("MMM Do"),
-        posts: Math.floor(Math.random() * (1000 + 1)),
-        color: "#36fb59"
-      };
-      new_data.push(d);
-    }
-    this.setState({
-      data: new_data
-    });
-  };
-
   handleSelectTab = tab => {
     this.setState({
       selectedTab: tab
-    });
-  };
-
-  handleSelectChartAction = action => {
-    this.setState({
-      selectedChartAction: action
     });
   };
 
@@ -1351,13 +859,13 @@ class QueryEmotionsContainer extends React.Component {
               <Paper className={classes.topNavbarPaper}>
                 <div className={classes.topNavbarTitleBox}>
                   <Typography
-                    variant="p"
+                    variant="body1"
                     className={classes.topNavbarTitleText}
                   >
                     ردیاب:
                   </Typography>
                   <Typography
-                    variant="p"
+                    variant="body1"
                     className={classes.topNavbarSelectedQuery}
                   >
                     {this.props.queries.map((item, index) => {
@@ -1508,7 +1016,7 @@ class QueryEmotionsContainer extends React.Component {
                   <div className={classes.emotionStats}>
                     <div className={classes.negativeEmotionBox}>
                       <Typography
-                        variant="p"
+                        variant="body1"
                         className={
                           this.props.selectedEmotion == "negative"
                             ? classes.selectedNegativePercent
@@ -1517,13 +1025,16 @@ class QueryEmotionsContainer extends React.Component {
                       >
                         {this.state.emotionDatas[1].value}%
                       </Typography>
-                      <Typography variant="p" className={classes.negativeText}>
+                      <Typography
+                        variant="body1"
+                        className={classes.negativeText}
+                      >
                         {this.state.emotionDatas[1].name}
                       </Typography>
                     </div>
                     <div className={classes.positiveEmotionBox}>
                       <Typography
-                        variant="p"
+                        variant="body1"
                         className={
                           this.props.selectedEmotion == "positive"
                             ? classes.selectedPositivePercent
@@ -1532,7 +1043,10 @@ class QueryEmotionsContainer extends React.Component {
                       >
                         {this.state.emotionDatas[0].value}%
                       </Typography>
-                      <Typography variant="p" className={classes.positiceText}>
+                      <Typography
+                        variant="body1"
+                        className={classes.positiceText}
+                      >
                         {this.state.emotionDatas[0].name}
                       </Typography>
                     </div>
@@ -1719,7 +1233,6 @@ const mapStateToProps = state => {
   return {
     queries: state.queries,
     selectedQuery: state.selectedQuery,
-    selectedQueryDashboardItem: state.selectedQueryDashboardItem,
     posts: state.posts,
     keywords: state.keywords,
     selectedEmotion: state.selectedEmotion
@@ -1728,9 +1241,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    changeSelectedQuery: id => {
-      dispatch(changeSelectedQuery(id));
-    },
     selectEmotion: emotion => {
       dispatch(selectEmotion(emotion));
     }

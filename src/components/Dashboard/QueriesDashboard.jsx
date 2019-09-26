@@ -62,12 +62,11 @@ class QueriesDashboard extends React.Component {
 
 QueriesDashboard.propTypes = {
   // classes: PropTypes.object.isRequired,
-  theme: PropTypes.object.isRequired
+  // theme: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => {
   return {
-    latestQueries: state.latestQueries,
     selectedQuery: state.selectedQuery,
     selectedQueryDashboardItem: state.selectedQueryDashboardItem
   };

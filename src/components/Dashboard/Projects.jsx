@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import {withStyles} from "@material-ui/core/styles";
 import classNames from "classnames";
-import {PDFDownloadLink, Document, Page, View, Text} from "@react-pdf/renderer";
 import {
   CssBaseline,
   Typography,
@@ -20,41 +19,9 @@ import {
   Tooltip as MTooltip,
   Collapse
 } from "@material-ui/core";
-import Slider from "@material-ui/lab/Slider";
-// import {Slider} from "material-ui-slider";
-import ExcelDownload from "./ExcelDownload";
-import InboxIcon from "@material-ui/icons/Inbox";
-import DraftsIcon from "@material-ui/icons/Drafts";
-import HistoryIcon from "@material-ui/icons/History";
-import Traffic from "@material-ui/icons/Traffic";
-import Whatshot from "@material-ui/icons/Whatshot";
-import People from "@material-ui/icons/People";
-import ChatBubble from "@material-ui/icons/ChatBubble";
-import Header from "./Header";
-import Sidebar from "./Sidebar";
-import ReactEcharts from "echarts-for-react";
-import {
-  ResponsiveContainer,
-  BarChart,
-  Brush,
-  Bar,
-  Line,
-  CartesianGrid,
-  XAxis,
-  YAxis,
-  Tooltip,
-  Cell
-} from "recharts";
 import {connect} from "react-redux";
-import changeSelectedQuery from "../../actions/changeSelectedQuery";
-import selectAnalysisType from "../../actions/selectAnalysisType";
-import changeAnalysisStatus from "../../actions/changeAnalysisStatus";
-import ReactExport from "react-data-export";
-import LatestQueriesPDF from "./LatestQueriesPDF";
-import moment from "moment";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import PauseIcon from "@material-ui/icons/Pause";
-import ClearIcon from "@material-ui/icons/Clear";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
@@ -506,7 +473,7 @@ class Projects extends React.Component {
                   <Divider className={classes.fullWidthDivider} />
                   {this.props.projects.map(item => {
                     return (
-                      <div>
+                      <div key={item.id}>
                         <ListItem
                           className={classNames(
                             classes.listItem,
@@ -572,9 +539,9 @@ class Projects extends React.Component {
                           unmountOnExit
                         >
                           <List component="div" disablePadding>
-                            {item.queries.map(q => {
+                            {item.queries.map((q, index) => {
                               return (
-                                <ListItem className={classes.query}>
+                                <ListItem className={classes.query} key={index}>
                                   <div className={classes.projectInformation}>
                                     <div className={classes.projectTitle}>
                                       <Typography
@@ -632,7 +599,7 @@ class Projects extends React.Component {
                             })}
                           </List>
                         </Collapse>
-                        <Divider fullWidth />
+                        <Divider />
                       </div>
                     );
                   })}
@@ -646,27 +613,14 @@ class Projects extends React.Component {
   }
 }
 
-Projects.propTypes = {
-  classes: PropTypes.object.isRequired,
-  theme: PropTypes.object.isRequired
-};
-
 const mapStateToProps = state => {
   return {
-    latestQueries: state.latestQueries,
-    selectedQuery: state.selectedQuery,
-    accounts: state.accounts,
-    posts: state.myPosts,
     projects: state.projects
   };
 };
 
 const mapDispatchToProps = dispatch => {
-  return {
-    changeSelectedQuery: id => dispatch(changeSelectedQuery(id)),
-    selectAnalysisType: type => dispatch(selectAnalysisType(type)),
-    changeAnalysisStatus: analysis => dispatch(changeAnalysisStatus(analysis))
-  };
+  return {};
 };
 
 export default connect(

@@ -1292,13 +1292,13 @@ class QueryGroupsContainer extends React.Component {
               <Paper className={classes.topNavbarPaper}>
                 <div className={classes.topNavbarTitleBox}>
                   <Typography
-                    variant="p"
+                    variant="body1"
                     className={classes.topNavbarTitleText}
                   >
                     ردیاب:
                   </Typography>
                   <Typography
-                    variant="p"
+                    variant="body1"
                     className={classes.topNavbarSelectedQuery}
                   >
                     {this.props.queries.map((item, index) => {
@@ -1815,16 +1815,10 @@ class QueryGroupsContainer extends React.Component {
   }
 }
 
-QueryGroupsContainer.propTypes = {
-  classes: PropTypes.object.isRequired,
-  theme: PropTypes.object.isRequired
-};
-
 const mapStateToProps = state => {
   return {
     queries: state.queries,
     selectedQuery: state.selectedQuery,
-    selectedQueryDashboardItem: state.selectedQueryDashboardItem,
     keywords: state.keywords,
     groups: state.groups,
     selectedGroup: state.selectedGroup
@@ -1833,9 +1827,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    changeSelectedQuery: id => {
-      dispatch(changeSelectedQuery(id));
-    },
     selectGroup: id => {
       dispatch(selectGroup(id));
     }

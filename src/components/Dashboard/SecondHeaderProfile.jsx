@@ -57,7 +57,11 @@ const SecondHeaderProfile = () => {
           >
             <Grid container wrap="nowrap">
               <Grid item xs zeroMinWidth className={classes.headerItem}> */}
-        <Typography variant="p" component="p" className={classes.profileName}>
+        <Typography
+          variant="body1"
+          component="p"
+          className={classes.profileName}
+        >
           maryam
         </Typography>
         {/* </Grid>

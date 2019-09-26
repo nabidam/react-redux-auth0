@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import {withStyles} from "@material-ui/core/styles";
 import classNames from "classnames";
-import {PDFDownloadLink, Document, Page, View, Text} from "@react-pdf/renderer";
 import {
   CssBaseline,
   Typography,
@@ -19,40 +18,7 @@ import {
   Button,
   Tooltip as MTooltip
 } from "@material-ui/core";
-import Slider from "@material-ui/lab/Slider";
-// import {Slider} from "material-ui-slider";
-import ExcelDownload from "./ExcelDownload";
-import InboxIcon from "@material-ui/icons/Inbox";
-import DraftsIcon from "@material-ui/icons/Drafts";
-import HistoryIcon from "@material-ui/icons/History";
-import Traffic from "@material-ui/icons/Traffic";
-import Whatshot from "@material-ui/icons/Whatshot";
-import People from "@material-ui/icons/People";
-import ChatBubble from "@material-ui/icons/ChatBubble";
-import Header from "./Header";
-import Sidebar from "./Sidebar";
-import ReactEcharts from "echarts-for-react";
-import {
-  ResponsiveContainer,
-  BarChart,
-  Brush,
-  Bar,
-  Line,
-  CartesianGrid,
-  XAxis,
-  YAxis,
-  Tooltip,
-  Cell
-} from "recharts";
 import {connect} from "react-redux";
-import changeSelectedQuery from "../../actions/changeSelectedQuery";
-import selectAnalysisType from "../../actions/selectAnalysisType";
-import changeAnalysisStatus from "../../actions/changeAnalysisStatus";
-import ReactExport from "react-data-export";
-import LatestQueriesPDF from "./LatestQueriesPDF";
-import moment from "moment";
-import PlayArrowIcon from "@material-ui/icons/PlayArrow";
-import PauseIcon from "@material-ui/icons/Pause";
 import ClearIcon from "@material-ui/icons/Clear";
 
 const styles = theme => ({
@@ -372,14 +338,6 @@ class Accounts extends React.Component {
     this.state = {};
   }
 
-  //   componentDidMount = () => {
-  //     console.log(
-  //       moment()
-  //         .subtract(10, "days")
-  //         .format("Do")
-  //     );
-  //   };
-
   render() {
     const {classes} = this.props;
 
@@ -407,7 +365,7 @@ class Accounts extends React.Component {
                 </div>
                 <Grid container className={classes.root} spacing={4}>
                   {this.props.accounts.map(item => (
-                    <Grid item md={6} sm={6} xs={6} center>
+                    <Grid item md={6} sm={6} xs={6} center key={item.id}>
                       <div className={classes.account}>
                         <Grid
                           container
@@ -499,97 +457,6 @@ class Accounts extends React.Component {
                   ))}
                 </Grid>
               </Grid>
-              {/* <Grid item md={3} sm={3} xs={3} center>
-                <List className={classes.typeOfAnalysis}>
-                  <ListItem
-                    className={classNames(
-                      classes.listItem,
-                      this.props.selectedAnalysisType == 1
-                        ? classes.selectedAnalysisType
-                        : ""
-                    )}
-                    onClick={() => this.props.selectAnalysisType(1)}
-                  >
-                    <ListItemText
-                      primary="تحلیل‌های فعال"
-                      className="list-item-right"
-                    />
-                  </ListItem>
-                  <ListItem
-                    className={classNames(
-                      classes.listItem,
-                      this.props.selectedAnalysisType == 0
-                        ? classes.selectedAnalysisType
-                        : ""
-                    )}
-                    onClick={() => this.props.selectAnalysisType(0)}
-                  >
-                    <ListItemText
-                      primary="تحلیل‌های متوقف شده"
-                      className="list-item-right"
-                    />
-                  </ListItem>
-                </List>
-              </Grid> */}
-              {/* <Grid item md={9} sm={9} xs={9} center>
-                <List className={classes.activeAnalysis}>
-                  <Divider fullWidth />
-                  {this.props.analysis.map(item => {
-                    if (item.active == this.props.selectedAnalysisType) {
-                      return (
-                        <div>
-                          <ListItem
-                            className={classNames(
-                              classes.listItem,
-                              classes.listAnalysisItem
-                            )}
-                            onClick={() =>
-                              this.props.changeAnalysisStatus(item.id)
-                            }
-                          >
-                            {console.log(this.props.analysis)}
-                            <div className={classes.analysisListText}>
-                              <Typography
-                                variant="h1"
-                                className={classes.analysisName}
-                              >
-                                {item.name}
-                              </Typography>
-                              <Typography
-                                variant="body"
-                                className={classes.textMute}
-                              >
-                                ساخته شده در: {item.date}, ساعت: {item.time}
-                              </Typography>
-                            </div>
-
-                            <div className={classes.analysisListActions}>
-                              {item.active == 1 ? (
-                                <Button className={classes.pauseBtn}>
-                                  <PauseIcon className={classes.activeIcon} />
-                                </Button>
-                              ) : (
-                                <Button className={classes.playBtn}>
-                                  <PlayArrowIcon
-                                    className={classes.activeIcon}
-                                  />
-                                </Button>
-                              )}
-                              <Typography
-                                variant="body"
-                                className={classes.edit}
-                              >
-                                ویرایش
-                              </Typography>
-                            </div>
-                          </ListItem>
-                          <Divider fullWidth />
-                        </div>
-                      );
-                    }
-                  })}
-                </List>
-              </Grid> */}
             </Grid>
             <Grid container className={classes.root}>
               <Grid
@@ -618,10 +485,10 @@ class Accounts extends React.Component {
                 className={classes.postsContainer}
               >
                 <List className={classes.posts}>
-                  <Divider fullWidth />
+                  <Divider />
                   {this.props.posts.map(item => {
                     return (
-                      <div>
+                      <div key={item.id}>
                         <ListItem
                           className={classNames(
                             classes.listItem,
@@ -635,7 +502,7 @@ class Accounts extends React.Component {
                               className={classes.postImage}
                             />
                           </div>
-                          <Typography variant="p" className={classes.postText}>
+                          <Typography variant="body1" className={classes.postText}>
                             {item.post}
                           </Typography>
                           <div className={classes.postStats}>
@@ -662,9 +529,9 @@ class Accounts extends React.Component {
                           </div>
                           <div className={classes.hashtagsBox}>
                             <div className={classes.hashtags}>
-                              {item.hashtags.map(tag => {
+                              {item.hashtags.map((tag, index) => {
                                 return (
-                                  <span className={classes.tag}>
+                                  <span className={classes.tag} key={index}>
                                     #{tag.tag}
                                   </span>
                                 );
@@ -673,7 +540,7 @@ class Accounts extends React.Component {
                             <p className={classes.textMute}>هشتگ مرتبط</p>
                           </div>
                         </ListItem>
-                        <Divider fullWidth />
+                        <Divider />
                       </div>
                     );
                   })}
@@ -688,25 +555,18 @@ class Accounts extends React.Component {
 }
 
 Accounts.propTypes = {
-  classes: PropTypes.object.isRequired,
-  theme: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => {
   return {
-    latestQueries: state.latestQueries,
-    selectedQuery: state.selectedQuery,
     accounts: state.accounts,
     posts: state.myPosts
   };
 };
 
 const mapDispatchToProps = dispatch => {
-  return {
-    changeSelectedQuery: id => dispatch(changeSelectedQuery(id)),
-    selectAnalysisType: type => dispatch(selectAnalysisType(type)),
-    changeAnalysisStatus: analysis => dispatch(changeAnalysisStatus(analysis))
-  };
+  return {};
 };
 
 export default connect(

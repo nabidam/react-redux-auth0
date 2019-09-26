@@ -1,8 +1,7 @@
-import React, {unstable_Profiler} from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import {withStyles} from "@material-ui/core/styles";
 import classNames from "classnames";
-import {PDFDownloadLink, Document, Page, View, Text} from "@react-pdf/renderer";
 import {
   CssBaseline,
   Typography,
@@ -20,7 +19,6 @@ import {
   Tooltip as MTooltip
 } from "@material-ui/core";
 import Slider from "@material-ui/lab/Slider";
-// import {Slider} from "material-ui-slider";
 import ExcelDownload from "./ExcelDownload";
 import InboxIcon from "@material-ui/icons/Inbox";
 import DraftsIcon from "@material-ui/icons/Drafts";
@@ -64,39 +62,7 @@ import ReactWordcloud from "react-wordcloud";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import CheckIcon from "@material-ui/icons/Check";
-
-const ExcelFile = ReactExport.ExcelFile;
-const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
-const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
-
-const drawerWidth = 240;
-
-const dataSet1 = [
-  {
-    name: "Johson",
-    amount: 30000,
-    sex: "M",
-    is_married: true
-  },
-  {
-    name: "Monika",
-    amount: 355000,
-    sex: "F",
-    is_married: false
-  },
-  {
-    name: "John",
-    amount: 250000,
-    sex: "M",
-    is_married: false
-  },
-  {
-    name: "Josef",
-    amount: 450500,
-    sex: "M",
-    is_married: true
-  }
-];
+import QueriesWordsCloud from "./QueriesWordsCloud";
 
 const styles = theme => ({
   root: {
@@ -525,30 +491,6 @@ const styles = theme => ({
   }
 });
 
-// const data = [
-//   {
-//     name: 'Page A', uv: 4000, pv: 2400, amt: 2400,
-//   },
-//   {
-//     name: 'Page B', uv: 3000, pv: 1398, amt: 2210,
-//   },
-//   {
-//     name: 'Page C', uv: 2000, pv: 9800, amt: 2290,
-//   },
-//   {
-//     name: 'Page D', uv: 2780, pv: 3908, amt: 2000,
-//   },
-//   {
-//     name: 'Page E', uv: 1890, pv: 4800, amt: 2181,
-//   },
-//   {
-//     name: 'Page F', uv: 2390, pv: 3800, amt: 2500,
-//   },
-//   {
-//     name: 'Page G', uv: 3490, pv: 4300, amt: 2100,
-//   },
-// ];
-
 const emotionDatas = [
   {
     name: "حس مثبت",
@@ -803,107 +745,11 @@ const data = [
   }
 ];
 
-const words = [
-  {
-    text: "دونالد",
-    value: 20
-  },
-  {
-    text: "تحریم",
-    value: 10
-  },
-  {
-    text: "ظریف",
-    value: 10
-  },
-  {
-    text: "مردم",
-    value: 13
-  },
-  {
-    text: "آمریکا",
-    value: 13
-  },
-  {
-    text: "چین",
-    value: 10
-  },
-  {
-    text: "ایران",
-    value: 8
-  },
-  {
-    text: "تغییر",
-    value: 13
-  },
-  {
-    text: "خرید",
-    value: 13
-  },
-  {
-    text: "ما",
-    value: 10
-  },
-  {
-    text: "کاخ",
-    value: 10
-  },
-  {
-    text: "تعرفه",
-    value: 10
-  },
-  {
-    text: "جدید",
-    value: 8
-  },
-  {
-    text: "گفت",
-    value: 10
-  },
-  {
-    text: "رسانه",
-    value: 10
-  },
-  {
-    text: "گرینلند",
-    value: 13
-  }
-];
-
-const data01 = [
-  {
-    name: "Group A",
-    value: 400
-  },
-  {
-    name: "Group B",
-    value: 300
-  },
-  {
-    name: "Group C",
-    value: 300
-  },
-  {
-    name: "Group D",
-    value: 200
-  },
-  {
-    name: "Group E",
-    value: 278
-  },
-  {
-    name: "Group F",
-    value: 189
-  }
-];
-
 class QueryDashboardContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      words,
       data,
-      data01,
       emotionDatas,
       queriesSliderValue: [1, 30],
       minSlider: 1,
@@ -919,60 +765,6 @@ class QueryDashboardContainer extends React.Component {
     this.handleTwitterClick = this.handleTwitterClick.bind(this);
     this.handleInstagramClick = this.handleInstagramClick.bind(this);
   }
-
-  brushChangeHandler = event => {
-    var new_data = this.state.data;
-    new_data.map(
-      (item, index) => (item.posts = Math.floor(Math.random() * (1000 + 1)))
-    );
-    this.setState({
-      data: new_data
-    });
-  };
-
-  queriesSliderChangeHandler = (event, newValue) => {
-    this.setState({
-      queriesSliderValue: newValue
-    });
-  };
-
-  queriesSliderChangeCommittedHandler = (event, newValue) => {
-    var newMin = newValue[0] - 10;
-    if (newMin < 1) {
-      newMin = 1;
-    }
-
-    var newMax = newValue[1] + 10;
-    if (newMax > 360) {
-      newMax = 360;
-    } else if (newMax < 30) {
-      newMax = 30;
-    }
-
-    console.log(newMin, newMax);
-
-    this.setState({
-      minSlider: newMin,
-      maxSlider: newMax
-    });
-  };
-
-  latestQuerySliderButtonHandler = event => {
-    var new_data = [];
-    for (var i = 30; i >= 1; i--) {
-      var d = {
-        date: moment()
-          .subtract(i, "days")
-          .format("MMM Do"),
-        posts: Math.floor(Math.random() * (1000 + 1)),
-        color: "#36fb59"
-      };
-      new_data.push(d);
-    }
-    this.setState({
-      data: new_data
-    });
-  };
 
   handleSelectTab = tab => {
     this.setState({
@@ -998,14 +790,6 @@ class QueryDashboardContainer extends React.Component {
     });
   };
 
-  //   componentDidMount = () => {
-  //     console.log(
-  //       moment()
-  //         .subtract(10, "days")
-  //         .format("Do")
-  //     );
-  //   };
-
   render() {
     const {classes} = this.props;
     return (
@@ -1017,13 +801,13 @@ class QueryDashboardContainer extends React.Component {
               <Paper className={classes.topNavbarPaper}>
                 <div className={classes.topNavbarTitleBox}>
                   <Typography
-                    variant="p"
+                    variant="body1"
                     className={classes.topNavbarTitleText}
                   >
                     ردیاب:
                   </Typography>
                   <Typography
-                    variant="p"
+                    variant="body1"
                     className={classes.topNavbarSelectedQuery}
                   >
                     {this.props.queries.map((item, index) => {
@@ -1297,7 +1081,7 @@ class QueryDashboardContainer extends React.Component {
                     </BootstrapTooltip>
                   </div>
                 </div>
-                <Divider variant="fullWidth" />
+                <Divider />
                 <div className={classes.fieldsContent}>
                   <List component="div" disablePadding className={classes.tabs}>
                     <ListItem
@@ -1331,7 +1115,7 @@ class QueryDashboardContainer extends React.Component {
                       />
                     </ListItem>
                   </List>
-                  <ReactWordcloud
+                  {/* <ReactWordcloud
                     options={{
                       colors: ["#3340ff"],
                       rotations: 3,
@@ -1340,7 +1124,8 @@ class QueryDashboardContainer extends React.Component {
                       fontWeight: "bold"
                     }}
                     words={this.state.words}
-                  />
+                  /> */}
+                  <QueriesWordsCloud />
                   <Button color="primary" className={classes.showMoreFields}>
                     مشاهده تمام موضوعات مرتبط
                     <div className={classes.showMoreFieldsIcon}>
@@ -1429,23 +1214,23 @@ class QueryDashboardContainer extends React.Component {
                   <div className={classes.emotionStats}>
                     <div className={classes.negativeEmotion}>
                       <Typography
-                        variant="p"
+                        variant="body1"
                         className={classes.negativePercent}
                       >
                         {this.state.emotionDatas[1].value}%
                       </Typography>
-                      <Typography variant="p" className={classes.negativeText}>
+                      <Typography variant="body1" className={classes.negativeText}>
                         {this.state.emotionDatas[1].name}
                       </Typography>
                     </div>
                     <div className={classes.positiveEmotion}>
                       <Typography
-                        variant="p"
+                        variant="body1"
                         className={classes.positivePercent}
                       >
                         {this.state.emotionDatas[0].value}%
                       </Typography>
-                      <Typography variant="p" className={classes.positiceText}>
+                      <Typography variant="body1" className={classes.positiceText}>
                         {this.state.emotionDatas[0].name}
                       </Typography>
                     </div>
@@ -1465,11 +1250,6 @@ class QueryDashboardContainer extends React.Component {
     );
   }
 }
-
-QueryDashboardContainer.propTypes = {
-  classes: PropTypes.object.isRequired,
-  theme: PropTypes.object.isRequired
-};
 
 const mapStateToProps = state => {
   return {

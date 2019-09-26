@@ -783,11 +783,9 @@ class QueryInfluencersContainer extends React.Component {
     };
 
     this.handleSelectTab = this.handleSelectTab.bind(this);
-    this.handleSelectChartAction = this.handleSelectChartAction.bind(this);
     this.handleSelectView = this.handleSelectView.bind(this);
     this.handleHoverRow = this.handleHoverRow.bind(this);
     this.handleUnHoverRow = this.handleUnHoverRow.bind(this);
-    this.handleWordClick = this.handleWordClick.bind(this);
     this.handleTwitterClick = this.handleTwitterClick.bind(this);
     this.handleInstagramClick = this.handleInstagramClick.bind(this);
   }
@@ -878,86 +876,6 @@ class QueryInfluencersContainer extends React.Component {
     //     onWordMouseOver: this.getCallback("onWordMouseOver")
     //   }
     // });
-  };
-
-  handleWordClick = (word, event) => {
-    this.setState({
-      selectedKeyword: word.text
-    });
-    // console.log(word);
-    // console.log(event);
-
-    const element = event.target;
-    console.log(element);
-    element.setAttribute("fill", "#f2c314");
-
-    // const text = element.select();
-    // console.log("x");
-
-    // text
-    //   .on("click", () => {
-    //     this.setState({
-    //       selectedKeyword: word.text
-    //     });
-    //   })
-    //   .transition()
-    //   .attr("background", "white")
-    //   .attr("font-size", isActive ? "300%" : "100%")
-    //   .attr("text-decoration", isActive ? "underline" : "none");
-  };
-
-  brushChangeHandler = event => {
-    var new_data = this.state.data;
-    new_data.map(
-      (item, index) => (item.posts = Math.floor(Math.random() * (1000 + 1)))
-    );
-    this.setState({
-      data: new_data
-    });
-  };
-
-  queriesSliderChangeHandler = (event, newValue) => {
-    this.setState({
-      queriesSliderValue: newValue
-    });
-  };
-
-  queriesSliderChangeCommittedHandler = (event, newValue) => {
-    var newMin = newValue[0] - 10;
-    if (newMin < 1) {
-      newMin = 1;
-    }
-
-    var newMax = newValue[1] + 10;
-    if (newMax > 360) {
-      newMax = 360;
-    } else if (newMax < 30) {
-      newMax = 30;
-    }
-
-    console.log(newMin, newMax);
-
-    this.setState({
-      minSlider: newMin,
-      maxSlider: newMax
-    });
-  };
-
-  latestQuerySliderButtonHandler = event => {
-    var new_data = [];
-    for (var i = 30; i >= 1; i--) {
-      var d = {
-        date: moment()
-          .subtract(i, "days")
-          .format("MMM Do"),
-        posts: Math.floor(Math.random() * (1000 + 1)),
-        color: "#36fb59"
-      };
-      new_data.push(d);
-    }
-    this.setState({
-      data: new_data
-    });
   };
 
   handleSelectTab = tab => {
@@ -1056,13 +974,13 @@ class QueryInfluencersContainer extends React.Component {
               <Paper className={classes.topNavbarPaper}>
                 <div className={classes.topNavbarTitleBox}>
                   <Typography
-                    variant="p"
+                    variant="body1"
                     className={classes.topNavbarTitleText}
                   >
                     ردیاب:
                   </Typography>
                   <Typography
-                    variant="p"
+                    variant="body1"
                     className={classes.topNavbarSelectedQuery}
                   >
                     {this.props.queries.map((item, index) => {

@@ -101,7 +101,7 @@ const styles = theme => ({
     minWidth: 44,
     height: 44,
     borderRadius: 22,
-    margin: "0px ",
+    margin: "0px 10px",
     border: "solid 5px rgba(255, 255, 255, 0.85)",
     "&:hover": {
       opacity: 0.7,
@@ -592,13 +592,13 @@ class QueryPostsContainer extends React.Component {
               <Paper className={classes.topNavbarPaper} square={true}>
                 <div className={classes.topNavbarTitleBox}>
                   <Typography
-                    variant="p"
+                    variant="body1"
                     className={classes.topNavbarTitleText}
                   >
                     ردیاب:
                   </Typography>
                   <Typography
-                    variant="p"
+                    variant="body1"
                     className={classes.topNavbarSelectedQuery}
                   >
                     {this.props.queries.map((item, index) => {

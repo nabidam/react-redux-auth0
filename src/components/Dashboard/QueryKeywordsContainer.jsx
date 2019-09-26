@@ -1230,60 +1230,6 @@ class QueryKeywordsContainer extends React.Component {
     //   .attr("text-decoration", isActive ? "underline" : "none");
   };
 
-  brushChangeHandler = event => {
-    var new_data = this.state.data;
-    new_data.map(
-      (item, index) => (item.posts = Math.floor(Math.random() * (1000 + 1)))
-    );
-    this.setState({
-      data: new_data
-    });
-  };
-
-  queriesSliderChangeHandler = (event, newValue) => {
-    this.setState({
-      queriesSliderValue: newValue
-    });
-  };
-
-  queriesSliderChangeCommittedHandler = (event, newValue) => {
-    var newMin = newValue[0] - 10;
-    if (newMin < 1) {
-      newMin = 1;
-    }
-
-    var newMax = newValue[1] + 10;
-    if (newMax > 360) {
-      newMax = 360;
-    } else if (newMax < 30) {
-      newMax = 30;
-    }
-
-    console.log(newMin, newMax);
-
-    this.setState({
-      minSlider: newMin,
-      maxSlider: newMax
-    });
-  };
-
-  latestQuerySliderButtonHandler = event => {
-    var new_data = [];
-    for (var i = 30; i >= 1; i--) {
-      var d = {
-        date: moment()
-          .subtract(i, "days")
-          .format("MMM Do"),
-        posts: Math.floor(Math.random() * (1000 + 1)),
-        color: "#36fb59"
-      };
-      new_data.push(d);
-    }
-    this.setState({
-      data: new_data
-    });
-  };
-
   handleSelectTab = tab => {
     this.setState({
       selectedTab: tab
@@ -1327,13 +1273,13 @@ class QueryKeywordsContainer extends React.Component {
               <Paper className={classes.topNavbarPaper}>
                 <div className={classes.topNavbarTitleBox}>
                   <Typography
-                    variant="p"
+                    variant="body1"
                     className={classes.topNavbarTitleText}
                   >
                     ردیاب:
                   </Typography>
                   <Typography
-                    variant="p"
+                    variant="body1"
                     className={classes.topNavbarSelectedQuery}
                   >
                     {this.props.queries.map((item, index) => {
@@ -1605,7 +1551,6 @@ const mapStateToProps = state => {
   return {
     queries: state.queries,
     selectedQuery: state.selectedQuery,
-    selectedQueryDashboardItem: state.selectedQueryDashboardItem,
     posts: state.posts,
     keywords: state.keywords,
     words: state.words,

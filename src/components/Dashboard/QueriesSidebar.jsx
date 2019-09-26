@@ -402,13 +402,6 @@ class QueriesSidebar extends Component {
     }
   };
 
-  // componentDidMount = () => {
-  //   this.setState({isSelectQueryOpen: Boolean(this.state.selectQueryAnchorEl)});
-  //   const selectQueryId = this.state.isSelectQueryOpen
-  //     ? "simple-popover"
-  //     : undefined;
-  // };
-
   render() {
     const {classes, theme} = this.props;
     return (
@@ -457,25 +450,6 @@ class QueriesSidebar extends Component {
                 <i className="fas fa-chevron-down" />
               </div>
             </Button>
-            {/* <Dialog
-              className={classes.selectQueryDialog}
-              open={this.state.isSelectQueryOpen}
-              onClose={() => this.handleClickSelectQuery()}
-              aria-labelledby="selectQuery"
-              maxWidth="xs"
-              component={Popover}
-              top={0}
-              right={0}
-            >
-              <DialogTitle className="list-item-right" id="selectQuery">
-                ایجاد کوئری جدید
-              </DialogTitle>
-              <DialogContent>
-                <DialogContentText className="list-item-right">
-                  نام کاربری مورد نظر را وارد کنید:
-                </DialogContentText>
-              </DialogContent>
-            </Dialog> */}
             <Backdrop
               className={classes.backdrop}
               open={this.state.isSelectQueryOpen}
@@ -570,138 +544,136 @@ class QueriesSidebar extends Component {
               </div>
             </Popover>
           </ListItem>
-          <Collapse in={this.props.selectedQuery} timeout="auto" unmountOnExit>
-            <List component="div" disablePadding>
-              <ListItem
-                className={classNames(
-                  classes.nested,
-                  classes.listItem,
-                  "" +
-                    (this.props.selectedQueryDashboardItem == "dashboard"
-                      ? classes.selectedNested
-                      : "")
-                )}
-                onClick={() => this.handleClickListItem("dashboard")}
-              >
-                <ListItemText
-                  primary="میز کار"
-                  className="list-item-right level-2-items"
-                />
-              </ListItem>
-              <ListItem
-                className={classNames(
-                  classes.nested,
-                  classes.listItem,
-                  "" +
-                    (this.props.selectedQueryDashboardItem == "posts"
-                      ? classes.selectedNested
-                      : "")
-                )}
-                onClick={() => this.handleClickListItem("posts")}
-              >
-                <ListItemText className="list-item-right level-2-items">
-                  پست‌ها
-                  <span className={classes.postsBadge}>347</span>
-                </ListItemText>
-              </ListItem>
-              <ListItem
-                className={classNames(
-                  classes.nested,
-                  classes.listItem,
-                  "" +
-                    (this.props.selectedQueryDashboardItem == "keywords"
-                      ? classes.selectedNested
-                      : "")
-                )}
-                onClick={() => this.handleClickListItem("keywords")}
-              >
-                <ListItemText
-                  primary="عبارات خاص"
-                  className="list-item-right level-2-items"
-                />
-              </ListItem>
-              <ListItem
-                className={classNames(
-                  classes.nested,
-                  classes.listItem,
-                  "" +
-                    (this.props.selectedQueryDashboardItem == "margins"
-                      ? classes.selectedNested
-                      : "")
-                )}
-                onClick={() => this.handleClickListItem("margins")}
-              >
-                <ListItemText
-                  primary="کنارش‌ها"
-                  className="list-item-right level-2-items"
-                />
-              </ListItem>
-              <ListItem
-                className={classNames(
-                  classes.nested,
-                  classes.listItem,
-                  "" +
-                    (this.props.selectedQueryDashboardItem == "influencers"
-                      ? classes.selectedNested
-                      : "")
-                )}
-                onClick={() => this.handleClickListItem("influencers")}
-              >
-                <ListItemText
-                  primary="افراد مؤثر"
-                  className="list-item-right level-2-items"
-                />
-              </ListItem>
-              <ListItem
-                className={classNames(
-                  classes.nested,
-                  classes.listItem,
-                  "" +
-                    (this.props.selectedQueryDashboardItem == "emotions"
-                      ? classes.selectedNested
-                      : "")
-                )}
-                onClick={() => this.handleClickListItem("emotions")}
-              >
-                <ListItemText
-                  primary="حس موجود"
-                  className="list-item-right level-2-items"
-                />
-              </ListItem>
-              <ListItem
-                className={classNames(
-                  classes.nested,
-                  classes.listItem,
-                  "" +
-                    (this.props.selectedQueryDashboardItem == "groups"
-                      ? classes.selectedNested
-                      : "")
-                )}
-                onClick={() => this.handleClickListItem("groups")}
-              >
-                <ListItemText
-                  primary="دسته‌بندی‌ها"
-                  className="list-item-right level-2-items"
-                />
-              </ListItem>
-              <ListItem
-                className={classNames(
-                  classes.nested,
-                  classes.listItem,
-                  "" +
-                    (this.props.selectedQueryDashboardItem == "locations"
-                      ? classes.selectedNested
-                      : "")
-                )}
-                onClick={() => this.handleClickListItem("locations")}
-              >
-                <ListItemText
-                  primary="مکان مرتبط"
-                  className="list-item-right level-2-items"
-                />
-              </ListItem>
-            </List>
-          </Collapse>
+          <List component="div" disablePadding>
+            <ListItem
+              className={classNames(
+                classes.nested,
+                classes.listItem,
+                "" +
+                  (this.props.selectedQueryDashboardItem == "dashboard"
+                    ? classes.selectedNested
+                    : "")
+              )}
+              onClick={() => this.handleClickListItem("dashboard")}
+            >
+              <ListItemText
+                primary="میز کار"
+                className="list-item-right level-2-items"
+              />
+            </ListItem>
+            <ListItem
+              className={classNames(
+                classes.nested,
+                classes.listItem,
+                "" +
+                  (this.props.selectedQueryDashboardItem == "posts"
+                    ? classes.selectedNested
+                    : "")
+              )}
+              onClick={() => this.handleClickListItem("posts")}
+            >
+              <ListItemText className="list-item-right level-2-items">
+                پست‌ها
+                <span className={classes.postsBadge}>347</span>
+              </ListItemText>
+            </ListItem>
+            <ListItem
+              className={classNames(
+                classes.nested,
+                classes.listItem,
+                "" +
+                  (this.props.selectedQueryDashboardItem == "keywords"
+                    ? classes.selectedNested
+                    : "")
+              )}
+              onClick={() => this.handleClickListItem("keywords")}
+            >
+              <ListItemText
+                primary="عبارات خاص"
+                className="list-item-right level-2-items"
+              />
+            </ListItem>
+            <ListItem
+              className={classNames(
+                classes.nested,
+                classes.listItem,
+                "" +
+                  (this.props.selectedQueryDashboardItem == "margins"
+                    ? classes.selectedNested
+                    : "")
+              )}
+              onClick={() => this.handleClickListItem("margins")}
+            >
+              <ListItemText
+                primary="کنارش‌ها"
+                className="list-item-right level-2-items"
+              />
+            </ListItem>
+            <ListItem
+              className={classNames(
+                classes.nested,
+                classes.listItem,
+                "" +
+                  (this.props.selectedQueryDashboardItem == "influencers"
+                    ? classes.selectedNested
+                    : "")
+              )}
+              onClick={() => this.handleClickListItem("influencers")}
+            >
+              <ListItemText
+                primary="افراد مؤثر"
+                className="list-item-right level-2-items"
+              />
+            </ListItem>
+            <ListItem
+              className={classNames(
+                classes.nested,
+                classes.listItem,
+                "" +
+                  (this.props.selectedQueryDashboardItem == "emotions"
+                    ? classes.selectedNested
+                    : "")
+              )}
+              onClick={() => this.handleClickListItem("emotions")}
+            >
+              <ListItemText
+                primary="حس موجود"
+                className="list-item-right level-2-items"
+              />
+            </ListItem>
+            <ListItem
+              className={classNames(
+                classes.nested,
+                classes.listItem,
+                "" +
+                  (this.props.selectedQueryDashboardItem == "groups"
+                    ? classes.selectedNested
+                    : "")
+              )}
+              onClick={() => this.handleClickListItem("groups")}
+            >
+              <ListItemText
+                primary="دسته‌بندی‌ها"
+                className="list-item-right level-2-items"
+              />
+            </ListItem>
+            <ListItem
+              className={classNames(
+                classes.nested,
+                classes.listItem,
+                "" +
+                  (this.props.selectedQueryDashboardItem == "locations"
+                    ? classes.selectedNested
+                    : "")
+              )}
+              onClick={() => this.handleClickListItem("locations")}
+            >
+              <ListItemText
+                primary="مکان مرتبط"
+                className="list-item-right level-2-items"
+              />
+            </ListItem>
+          </List>
         </List>
         <List className={classes.footer} component="nav">
           <Divider className={classes.divider} />
@@ -731,16 +703,15 @@ class QueriesSidebar extends Component {
   }
 }
 
-QueriesSidebar.propTypes = {
-  classes: PropTypes.object.isRequired,
-  theme: PropTypes.object.isRequired,
-  isDrawerOpen: PropTypes.bool,
-  triggerDrawer: PropTypes.func.isRequired
-};
+// QueriesSidebar.propTypes = {
+//   classes: PropTypes.object.isRequired,
+//   theme: PropTypes.object.isRequired,
+//   isDrawerOpen: PropTypes.bool,
+//   triggerDrawer: PropTypes.func.isRequired
+// };
 
 const mapStateToProps = state => {
   return {
-    isDrawerOpen: state.isDrawerOpen,
     queries: state.queries,
     selectedQuery: state.selectedQuery,
     selectedQueryDashboardItem: state.selectedQueryDashboardItem
@@ -749,9 +720,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    triggerDrawer: () => dispatch(triggerDrawer()),
-    addQuery: username => dispatch(addQuery(username)),
-    selectQuery: id => dispatch(selectQuery(id)),
     selectQueryDashboardListItem: item =>
       dispatch(selectQueryDashboardListItem(item)),
     selectPage: page => dispatch(selectPage(page)),

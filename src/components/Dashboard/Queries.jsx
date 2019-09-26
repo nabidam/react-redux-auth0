@@ -274,7 +274,7 @@ class Queries extends React.Component {
           <div className={classes.toolbar} />
           <Container maxWidth="md">
             <Grid container className={classes.root} spacing={4}>
-              <Grid item md={12} sm={12} xs={12} center>
+              <Grid item md={12} sm={12} xs={12}>
                 <div className={classes.headerBox}>
                   <Typography variant="h1" className={classes.title}>
                     ردیاب‌ها
@@ -293,12 +293,12 @@ class Queries extends React.Component {
                     <i className="fa fa-search fa-lg"></i>
                   </Button>
                   <div style={{flexGrow: 1}} />
-                  <Typography variant="body" className={classes.numberOfQuery}>
+                  <Typography variant="body1" className={classes.numberOfQuery}>
                     {this.props.queries.length} ردیاب ایجاد شده
                   </Typography>
                 </div>
               </Grid>
-              <Grid item md={3} sm={3} xs={3} center>
+              <Grid item md={3} sm={3} xs={3}>
                 <List className={classes.typeOfQuery}>
                   <ListItem
                     className={classNames(
@@ -330,13 +330,13 @@ class Queries extends React.Component {
                   </ListItem>
                 </List>
               </Grid>
-              <Grid item md={9} sm={9} xs={9} center>
+              <Grid item md={9} sm={9} xs={9}>
                 <List className={classes.activeQuery}>
-                  <Divider fullWidth />
-                  {this.props.queries.map(item => {
+                  <Divider />
+                  {this.props.queries.map((item, index) => {
                     if (item.active == this.props.selectedQueriesType) {
                       return (
-                        <div>
+                        <div key={index}>
                           <ListItem
                             className={classNames(
                               classes.listItem,
@@ -406,14 +406,14 @@ class Queries extends React.Component {
                                 </Button>
                               )}
                               <Typography
-                                variant="body"
+                                variant="body1"
                                 className={classes.edit}
                               >
                                 ویرایش
                               </Typography>
                             </div>
                           </ListItem>
-                          <Divider fullWidth />
+                          <Divider />
                         </div>
                       );
                     }

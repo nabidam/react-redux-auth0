@@ -429,7 +429,6 @@ class Sidebar extends Component {
                 id="username"
                 label="username"
                 type="text"
-                fullWidth
                 value={this.state.queryUsername}
                 onChange={this.handleChangeQueryUsername}
                 error={!this.state.isUsernameEntered}

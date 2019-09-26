@@ -155,7 +155,6 @@ class AddQuery extends Component {
                       error={!this.state.isNameEntered}
                       required
                       margin="normal"
-                      fullWidth
                     />
                   </Grid>
                   <Grid item md={6} sm={6} xs={12}>
@@ -168,7 +167,6 @@ class AddQuery extends Component {
                       error={!this.state.isUsernameEntered}
                       required
                       margin="normal"
-                      fullWidth
                     />
                   </Grid>
                   <Grid item md={6} sm={6} xs={12}>

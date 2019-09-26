@@ -306,11 +306,11 @@ class TrafficAnalysis extends React.Component {
               </Grid>
               <Grid item md={9} sm={9} xs={9} center>
                 <List className={classes.activeAnalysis}>
-                  <Divider fullWidth />
+                  <Divider />
                   {this.props.analysis.map(item => {
                     if (item.active == this.props.selectedAnalysisType) {
                       return (
-                        <div>
+                        <div key={item.id}>
                           <ListItem
                             className={classNames(
                               classes.listItem,
@@ -356,7 +356,7 @@ class TrafficAnalysis extends React.Component {
                               </Typography>
                             </div>
                           </ListItem>
-                          <Divider fullWidth />
+                          <Divider />
                         </div>
                       );
                     }

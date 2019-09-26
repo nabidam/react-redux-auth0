@@ -1183,9 +1183,12 @@ class Trends extends React.Component {
                                   }}
                                 >
                                   <List>
-                                    {row.initiators.map(item => {
+                                    {row.initiators.map((item, index) => {
                                       return (
-                                        <ListItem className={classes.listItem}>
+                                        <ListItem
+                                          className={classes.listItem}
+                                          key={index}
+                                        >
                                           <Grid
                                             container
                                             className={classes.root}
@@ -1278,9 +1281,12 @@ class Trends extends React.Component {
                                   }}
                                 >
                                   <List>
-                                    {row.influencers.map(item => {
+                                    {row.influencers.map((item, index) => {
                                       return (
-                                        <ListItem className={classes.listItem}>
+                                        <ListItem
+                                          key={index}
+                                          className={classes.listItem}
+                                        >
                                           <Grid
                                             container
                                             className={classes.root}
@@ -1383,9 +1389,12 @@ class Trends extends React.Component {
                                 align="right"
                               >
                                 <div className={classes.relatedWords}>
-                                  {row.related_words.map(word => {
+                                  {row.related_words.map((word, index) => {
                                     return (
-                                      <span className={classes.relatedWord}>
+                                      <span
+                                        className={classes.relatedWord}
+                                        key={index}
+                                      >
                                         {word}
                                       </span>
                                     );

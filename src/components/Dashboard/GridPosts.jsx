@@ -1,8 +1,7 @@
-import React, {unstable_Profiler} from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import {withStyles} from "@material-ui/core/styles";
 import classNames from "classnames";
-import {PDFDownloadLink, Document, Page, View, Text} from "@react-pdf/renderer";
 import {
   CssBaseline,
   Typography,
@@ -19,49 +18,9 @@ import {
   Button,
   Tooltip as MTooltip
 } from "@material-ui/core";
-import Slider from "@material-ui/lab/Slider";
-// import {Slider} from "material-ui-slider";
-import ExcelDownload from "./ExcelDownload";
-import InboxIcon from "@material-ui/icons/Inbox";
-import DraftsIcon from "@material-ui/icons/Drafts";
-import HistoryIcon from "@material-ui/icons/History";
-import Traffic from "@material-ui/icons/Traffic";
-import Whatshot from "@material-ui/icons/Whatshot";
-import People from "@material-ui/icons/People";
-import ChatBubble from "@material-ui/icons/ChatBubble";
-import Header from "./Header";
-import Sidebar from "./Sidebar";
-import ReactEcharts from "echarts-for-react";
-import {
-  ResponsiveContainer,
-  BarChart,
-  Brush,
-  Bar,
-  Line,
-  CartesianGrid,
-  XAxis,
-  YAxis,
-  Tooltip,
-  Cell
-} from "recharts";
 import {connect} from "react-redux";
-import changeSelectedQuery from "../../actions/changeSelectedQuery";
 import selectEmotion from "../../actions/selectEmotion";
-import ReactExport from "react-data-export";
-import LatestQueriesPDF from "./LatestQueriesPDF";
-import moment from "moment";
-import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
-import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
-import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
-import CommentIcon from "@material-ui/icons/Comment";
 import BootstrapTooltip from "./BSTooltip";
-import ViewStreamOutlinedIcon from "@material-ui/icons/ViewStreamOutlined";
-import ViewModuleOutlinedIcon from "@material-ui/icons/ViewModuleOutlined";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
 
 const styles = theme => ({
   root: {
@@ -447,16 +406,8 @@ class GridPosts extends React.Component {
   }
 }
 
-GridPosts.propTypes = {
-  classes: PropTypes.object.isRequired,
-  theme: PropTypes.object.isRequired
-};
-
 const mapStateToProps = state => {
   return {
-    latestQueries: state.latestQueries,
-    selectedQuery: state.selectedQuery,
-    selectedQueryDashboardItem: state.selectedQueryDashboardItem,
     posts: state.posts,
     selectedEmotion: state.selectedEmotion
   };
@@ -464,9 +415,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    changeSelectedQuery: id => {
-      dispatch(changeSelectedQuery(id));
-    },
     selectEmotion: emotion => {
       dispatch(selectEmotion(emotion));
     }

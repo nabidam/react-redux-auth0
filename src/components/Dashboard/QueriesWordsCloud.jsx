@@ -41,57 +41,14 @@ const styles = {
   }
 };
 
-class WordsCloud extends React.Component {
+class QueriesWordsCloud extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       maxWordValue: 0,
       minWordValue: 0
     };
-
-    this.handleWordClick = this.handleWordClick.bind(this);
   }
-
-  handleWordClick = (word, event) => {
-    this.props.selectKeyword(word);
-    console.log(word);
-    // console.log(event);
-
-    const element = event.target;
-    const texts = selectAll("text");
-    const text = select(element);
-    // console.log(texts);
-    texts.attr("fill", "#3340ff");
-
-    var SVGRect = text.node().getBBox();
-    var padding = 2;
-    var rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-    rect.setAttribute("x", SVGRect.x - padding);
-    rect.setAttribute("y", SVGRect.y - padding);
-    rect.setAttribute("width", SVGRect.width + padding * 2);
-    rect.setAttribute("height", SVGRect.height + padding * 2);
-    rect.setAttribute("fill", "yellow");
-    text.parentNode.insertBefore(rect, text);
-    // element.setAttribute("fill", "#fff");
-    // element.setAttribute(
-    //   "style",
-    //   "border-radius: 17.5px; width: 84px; height: 35px;background-color: #4753ff;color: '#fff'"
-    // );
-
-    // const text = element.select();
-    // console.log("x");
-
-    // text
-    //   .on("click", () => {
-    //     this.setState({
-    //       selectedKeyword: word.text
-    //     });
-    //   })
-    //   .transition()
-    //   .attr("background", "white")
-    //   .attr("font-size", isActive ? "300%" : "100%")
-    //   .attr("text-decoration", isActive ? "underline" : "none");
-  };
 
   componentDidMount = () => {
     var words = this.props.words;
@@ -131,12 +88,7 @@ class WordsCloud extends React.Component {
             {this.props.words.map((word, index) => {
               return (
                 <div
-                  className={classNames(
-                    classes.word,
-                    this.props.selectedKeyword == word.text
-                      ? classes.selectedWord
-                      : ""
-                  )}
+                  className={classNames(classes.word)}
                   key={index}
                   style={{
                     fontSize: () =>
@@ -144,12 +96,8 @@ class WordsCloud extends React.Component {
                         (this.state.max - this.state.min) +
                         1) *
                       12,
-                    color:
-                      this.props.selectedKeyword == word.text
-                        ? "#fff"
-                        : "#08080d"
+                    color: "#3340ff"
                   }}
-                  onClick={() => this.props.selectKeyword(word)}
                 >
                   {word.text}
                 </div>
@@ -180,4 +128,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(styles)(WordsCloud));
+)(withStyles(styles)(QueriesWordsCloud));

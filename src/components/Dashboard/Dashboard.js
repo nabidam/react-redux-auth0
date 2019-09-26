@@ -146,11 +146,6 @@ class Dashboard extends React.Component {
   }
 }
 
-Dashboard.propTypes = {
-  classes: PropTypes.object.isRequired,
-  theme: PropTypes.object.isRequired
-};
-
 const mapStateToProps = state => {
   return {
     isSnackbarOpen: state.isSnackbarOpen,

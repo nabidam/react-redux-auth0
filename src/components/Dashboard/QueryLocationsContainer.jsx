@@ -1026,7 +1026,6 @@ class QueryLocationsContainer extends React.Component {
     };
 
     this.handleSelectTab = this.handleSelectTab.bind(this);
-    this.handleSelectChartAction = this.handleSelectChartAction.bind(this);
     this.handleTwitterClick = this.handleTwitterClick.bind(this);
     this.handleInstagramClick = this.handleInstagramClick.bind(this);
     this.handleSelectView = this.handleSelectView.bind(this);
@@ -1035,60 +1034,6 @@ class QueryLocationsContainer extends React.Component {
   handleSelectView = view => {
     this.setState({
       selectedView: view
-    });
-  };
-
-  brushChangeHandler = event => {
-    var new_data = this.state.data;
-    new_data.map(
-      (item, index) => (item.posts = Math.floor(Math.random() * (1000 + 1)))
-    );
-    this.setState({
-      data: new_data
-    });
-  };
-
-  queriesSliderChangeHandler = (event, newValue) => {
-    this.setState({
-      queriesSliderValue: newValue
-    });
-  };
-
-  queriesSliderChangeCommittedHandler = (event, newValue) => {
-    var newMin = newValue[0] - 10;
-    if (newMin < 1) {
-      newMin = 1;
-    }
-
-    var newMax = newValue[1] + 10;
-    if (newMax > 360) {
-      newMax = 360;
-    } else if (newMax < 30) {
-      newMax = 30;
-    }
-
-    console.log(newMin, newMax);
-
-    this.setState({
-      minSlider: newMin,
-      maxSlider: newMax
-    });
-  };
-
-  latestQuerySliderButtonHandler = event => {
-    var new_data = [];
-    for (var i = 30; i >= 1; i--) {
-      var d = {
-        date: moment()
-          .subtract(i, "days")
-          .format("MMM Do"),
-        posts: Math.floor(Math.random() * (1000 + 1)),
-        color: "#36fb59"
-      };
-      new_data.push(d);
-    }
-    this.setState({
-      data: new_data
     });
   };
 
@@ -1135,13 +1080,13 @@ class QueryLocationsContainer extends React.Component {
               <Paper className={classes.topNavbarPaper}>
                 <div className={classes.topNavbarTitleBox}>
                   <Typography
-                    variant="p"
+                    variant="body1"
                     className={classes.topNavbarTitleText}
                   >
                     ردیاب:
                   </Typography>
                   <Typography
-                    variant="p"
+                    variant="body1"
                     className={classes.topNavbarSelectedQuery}
                   >
                     {this.props.queries.map((item, index) => {
@@ -1336,23 +1281,23 @@ class QueryLocationsContainer extends React.Component {
                   <div className={classes.emotionStats}>
                     <div className={classes.negativeEmotion}>
                       <Typography
-                        variant="p"
+                        variant="body1"
                         className={classes.negativePercent}
                       >
                         {this.state.emotionDatas[1].value}%
                       </Typography>
-                      <Typography variant="p" className={classes.negativeText}>
+                      <Typography variant="body1" className={classes.negativeText}>
                         {this.state.emotionDatas[1].name}
                       </Typography>
                     </div>
                     <div className={classes.positiveEmotion}>
                       <Typography
-                        variant="p"
+                        variant="body1"
                         className={classes.positivePercent}
                       >
                         {this.state.emotionDatas[0].value}%
                       </Typography>
-                      <Typography variant="p" className={classes.positiceText}>
+                      <Typography variant="body1" className={classes.positiceText}>
                         {this.state.emotionDatas[0].name}
                       </Typography>
                     </div>

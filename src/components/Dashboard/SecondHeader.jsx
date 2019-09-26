@@ -177,7 +177,7 @@ class SecondHeader extends React.Component {
               <Grid item xs zeroMinWidth className={classes.headerItem}>
                 <SearchIcon className={classes.headerItemIcon} />
                 <Typography
-                  variant="p"
+                  variant="body1"
                   component="p"
                   className={classes.headerItemText}
                 >
@@ -201,7 +201,7 @@ class SecondHeader extends React.Component {
               <Grid item xs zeroMinWidth className={classes.headerItem}>
                 <TrafficIcon className={classes.headerItemIcon} />
                 <Typography
-                  variant="p"
+                  variant="body1"
                   component="p"
                   className={classes.headerItemText}
                 >
@@ -230,7 +230,7 @@ class SecondHeader extends React.Component {
                   )}
                 />
                 <Typography
-                  variant="p"
+                  variant="body1"
                   component="p"
                   className={classes.headerItemText}
                 >
@@ -254,7 +254,7 @@ class SecondHeader extends React.Component {
               <Grid item xs zeroMinWidth className={classes.headerItem}>
                 <ShowChartIcon className={classes.headerItemIcon} />
                 <Typography
-                  variant="p"
+                  variant="body1"
                   component="p"
                   className={classes.headerItemText}
                 >
@@ -278,7 +278,7 @@ class SecondHeader extends React.Component {
               <Grid item xs zeroMinWidth className={classes.headerItem}>
                 <ShowChartIcon className={classes.headerItemIcon} />
                 <Typography
-                  variant="p"
+                  variant="body1"
                   component="p"
                   className={classes.headerItemText}
                 >
@@ -307,7 +307,7 @@ class SecondHeader extends React.Component {
                   )}
                 />
                 <Typography
-                  variant="p"
+                  variant="body1"
                   component="p"
                   className={classes.headerItemText}
                 >
