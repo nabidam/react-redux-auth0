@@ -11,6 +11,7 @@ import {connect} from "react-redux";
 import {withStyles} from "@material-ui/core/styles";
 import history from "./history";
 import authenticateChecked from "./actions/authenticateChecked";
+import PieChart from "./components/Dashboard/PieChart";
 // import AddQuery from "./components/Dashboard/AddQuery";
 // import "./styles/fontawesome.css";
 
@@ -61,6 +62,7 @@ class App extends Component {
                 this.props.isAuthenticated ? <Dashboard /> : <Login />
               }
             />
+            <Route exact path="/svg" component={PieChart} />
             <Route path="/callback" component={Callback} />
             <Route path="/about" component={About} />
             <Route path="/cloud" component={WordsCloud} />

@@ -46,7 +46,7 @@ import {
   Cell,
   AreaChart,
   Area,
-  PieChart,
+  // PieChart,
   Pie,
   linearGradient
 } from "recharts";
@@ -69,6 +69,7 @@ import ViewModuleOutlinedIcon from "@material-ui/icons/ViewModuleOutlined";
 import ListPosts from "./ListPosts";
 import GridPosts from "./GridPosts";
 import WorldMap from "./WorldMap";
+import PieChart from "./PieChart";
 
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
@@ -632,6 +633,12 @@ const styles = theme => ({
 
   locationsPaper: {
     height: 475
+  },
+  pieChart: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "100%"
   }
 });
 
@@ -661,14 +668,14 @@ const styles = theme => ({
 
 const emotionDatas = [
   {
-    name: "حس مثبت",
-    value: 58,
-    color: "#03d588"
-  },
-  {
     name: "حس منفی",
     value: 42,
     color: "#ec373c"
+  },
+  {
+    name: "حس مثبت",
+    value: 58,
+    color: "#03d588"
   }
 ];
 
@@ -1221,62 +1228,15 @@ class QueryLocationsContainer extends React.Component {
                   </div>
                 </div>
                 <Divider variant="fullWidth" />
-                <ResponsiveContainer
-                  width="100%"
-                  className={classes.leftToRight}
-                >
-                  <PieChart width={150}>
-                    {emotionDatas.map((item, index) => {
-                      const color = item.color;
-                      return (
-                        <defs key={index}>
-                          <radialGradient
-                            id={"color" + index}
-                            x1="10"
-                            y1="10"
-                            x2="1"
-                            y2="1"
-                          >
-                            <stop
-                              offset="0%"
-                              stopColor={color}
-                              stopOpacity={0.5}
-                            />
-                            <stop
-                              offset="10%"
-                              stopColor={color}
-                              stopOpacity={0.75}
-                            />
-                            <stop
-                              offset="20%"
-                              stopColor={color}
-                              stopOpacity={1}
-                            />
-                          </radialGradient>
-                        </defs>
-                      );
-                    })}
-                    <Pie
-                      data={this.state.emotionDatas}
-                      dataKey="value"
-                      nameKey="name"
-                      cx="50%"
-                      cy="50%"
-                      innerRadius={60}
-                      outerRadius={74}
-                      fill="#82ca9d"
-                      startAngle={90}
-                      endAngle={450}
-                    >
-                      {emotionDatas.map((item, index) => {
-                        const color = item.color;
-                        return (
-                          <Cell fill={"url(#color" + index + ")"} key={index} />
-                        );
-                      })}
-                    </Pie>
-                  </PieChart>
-                </ResponsiveContainer>
+                <div className={classes.pieChart}>
+                  <PieChart
+                    data={this.state.emotionDatas}
+                    innerRadius={300}
+                    outerRadius={400}
+                    width={250}
+                    height={250}
+                  />
+                </div>
                 <div className={classes.emotionsContent}>
                   <div className={classes.emotionStats}>
                     <div className={classes.negativeEmotion}>
@@ -1284,10 +1244,13 @@ class QueryLocationsContainer extends React.Component {
                         variant="body1"
                         className={classes.negativePercent}
                       >
-                        {this.state.emotionDatas[1].value}%
+                        {this.state.emotionDatas[0].value}%
                       </Typography>
-                      <Typography variant="body1" className={classes.negativeText}>
-                        {this.state.emotionDatas[1].name}
+                      <Typography
+                        variant="body1"
+                        className={classes.negativeText}
+                      >
+                        {this.state.emotionDatas[0].name}
                       </Typography>
                     </div>
                     <div className={classes.positiveEmotion}>
@@ -1295,10 +1258,13 @@ class QueryLocationsContainer extends React.Component {
                         variant="body1"
                         className={classes.positivePercent}
                       >
-                        {this.state.emotionDatas[0].value}%
+                        {this.state.emotionDatas[1].value}%
                       </Typography>
-                      <Typography variant="body1" className={classes.positiceText}>
-                        {this.state.emotionDatas[0].name}
+                      <Typography
+                        variant="body1"
+                        className={classes.positiceText}
+                      >
+                        {this.state.emotionDatas[1].name}
                       </Typography>
                     </div>
                   </div>

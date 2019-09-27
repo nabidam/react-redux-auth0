@@ -44,7 +44,7 @@ import {
   Cell,
   AreaChart,
   Area,
-  PieChart,
+  // PieChart,
   Pie,
   linearGradient
 } from "recharts";
@@ -63,6 +63,7 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import CheckIcon from "@material-ui/icons/Check";
 import QueriesWordsCloud from "./QueriesWordsCloud";
+import PieChart from "./PieChart";
 
 const styles = theme => ({
   root: {
@@ -488,19 +489,25 @@ const styles = theme => ({
       opacity: 0.7,
       backgroundColor: "#1da1f2"
     }
+  },
+  pieChart: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "100%"
   }
 });
 
 const emotionDatas = [
   {
-    name: "حس مثبت",
-    value: 58,
-    color: "#03d588"
-  },
-  {
     name: "حس منفی",
     value: 42,
     color: "#ec373c"
+  },
+  {
+    name: "حس مثبت",
+    value: 58,
+    color: "#03d588"
   }
 ];
 
@@ -1154,7 +1161,16 @@ class QueryDashboardContainer extends React.Component {
                   </div>
                 </div>
                 <Divider variant="fullWidth" />
-                <ResponsiveContainer
+                <div className={classes.pieChart}>
+                  <PieChart
+                    data={this.state.emotionDatas}
+                    innerRadius={300}
+                    outerRadius={400}
+                    width={250}
+                    height={250}
+                  />
+                </div>
+                {/* <ResponsiveContainer
                   width="100%"
                   className={classes.leftToRight}
                 >
@@ -1209,7 +1225,7 @@ class QueryDashboardContainer extends React.Component {
                       })}
                     </Pie>
                   </PieChart>
-                </ResponsiveContainer>
+                </ResponsiveContainer> */}
                 <div className={classes.emotionsContent}>
                   <div className={classes.emotionStats}>
                     <div className={classes.negativeEmotion}>
@@ -1217,10 +1233,13 @@ class QueryDashboardContainer extends React.Component {
                         variant="body1"
                         className={classes.negativePercent}
                       >
-                        {this.state.emotionDatas[1].value}%
+                        {this.state.emotionDatas[0].value}%
                       </Typography>
-                      <Typography variant="body1" className={classes.negativeText}>
-                        {this.state.emotionDatas[1].name}
+                      <Typography
+                        variant="body1"
+                        className={classes.negativeText}
+                      >
+                        {this.state.emotionDatas[0].name}
                       </Typography>
                     </div>
                     <div className={classes.positiveEmotion}>
@@ -1228,10 +1247,13 @@ class QueryDashboardContainer extends React.Component {
                         variant="body1"
                         className={classes.positivePercent}
                       >
-                        {this.state.emotionDatas[0].value}%
+                        {this.state.emotionDatas[1].value}%
                       </Typography>
-                      <Typography variant="body1" className={classes.positiceText}>
-                        {this.state.emotionDatas[0].name}
+                      <Typography
+                        variant="body1"
+                        className={classes.positiveText}
+                      >
+                        {this.state.emotionDatas[1].name}
                       </Typography>
                     </div>
                   </div>
