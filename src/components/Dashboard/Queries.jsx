@@ -53,6 +53,7 @@ import LatestQueriesPDF from "./LatestQueriesPDF";
 import moment from "moment";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import PauseIcon from "@material-ui/icons/Pause";
+import selectPage from "../../actions/selectPage";
 
 const styles = theme => ({
   wrapper: {
@@ -257,6 +258,10 @@ class Queries extends React.Component {
     this.state = {};
   }
 
+  handleClickAddQueries = () => {
+    this.props.selectPage("queries/add");
+  };
+
   //   componentDidMount = () => {
   //     console.log(
   //       moment()
@@ -279,7 +284,11 @@ class Queries extends React.Component {
                   <Typography variant="h1" className={classes.title}>
                     ردیاب‌ها
                   </Typography>
-                  <Button color="primary" className={classes.newQueryBtn}>
+                  <Button
+                    color="primary"
+                    className={classes.newQueryBtn}
+                    onClick={() => this.handleClickAddQueries()}
+                  >
                     ساخت ردیاب جدید
                   </Button>
                 </div>
@@ -446,7 +455,8 @@ const mapDispatchToProps = dispatch => {
   return {
     selectQuery: id => dispatch(selectQuery(id)),
     selectQueriesType: type => dispatch(selectQueriesType(type)),
-    changeQueryStatus: query => dispatch(changeQueryStatus(query))
+    changeQueryStatus: query => dispatch(changeQueryStatus(query)),
+    selectPage: page => dispatch(selectPage(page))
   };
 };
 
