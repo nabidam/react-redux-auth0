@@ -53,6 +53,7 @@ import LatestQueriesPDF from "./LatestQueriesPDF";
 import moment from "moment";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import PauseIcon from "@material-ui/icons/Pause";
+import selectPage from "../../actions/selectPage";
 
 const styles = theme => ({
   wrapper: {
@@ -228,6 +229,10 @@ class TrafficAnalysis extends React.Component {
     this.state = {};
   }
 
+  handleClickAddAnalysis = () => {
+    this.props.selectPage("traffic-analysis/add");
+  };
+
   //   componentDidMount = () => {
   //     console.log(
   //       moment()
@@ -250,7 +255,11 @@ class TrafficAnalysis extends React.Component {
                   <Typography variant="h1" className={classes.title}>
                     تحلیل ترافیکی
                   </Typography>
-                  <Button color="primary" className={classes.newAnalysisBtn}>
+                  <Button
+                    color="primary"
+                    className={classes.newAnalysisBtn}
+                    onClick={() => this.handleClickAddAnalysis()}
+                  >
                     ساخت تحلیل جدید
                   </Button>
                 </div>
@@ -265,7 +274,7 @@ class TrafficAnalysis extends React.Component {
                   </Button>
                   <div style={{flexGrow: 1}} />
                   <Typography
-                    variant="body"
+                    variant="body1"
                     className={classes.numberOfAnalysis}
                   >
                     ۳ تحلیل ایجاد شده
@@ -329,7 +338,7 @@ class TrafficAnalysis extends React.Component {
                                 {item.name}
                               </Typography>
                               <Typography
-                                variant="body"
+                                variant="body1"
                                 className={classes.textMute}
                               >
                                 ساخته شده در: {item.date}, ساعت: {item.time}
@@ -349,7 +358,7 @@ class TrafficAnalysis extends React.Component {
                                 </Button>
                               )}
                               <Typography
-                                variant="body"
+                                variant="body1"
                                 className={classes.edit}
                               >
                                 ویرایش
@@ -389,7 +398,8 @@ const mapDispatchToProps = dispatch => {
   return {
     changeSelectedQuery: id => dispatch(changeSelectedQuery(id)),
     selectAnalysisType: type => dispatch(selectAnalysisType(type)),
-    changeAnalysisStatus: analysis => dispatch(changeAnalysisStatus(analysis))
+    changeAnalysisStatus: analysis => dispatch(changeAnalysisStatus(analysis)),
+    selectPage: page => dispatch(selectPage(page))
   };
 };
 

@@ -452,7 +452,7 @@ class Projects extends React.Component {
                   </Button>
                   <div style={{flexGrow: 1}} />
                   <Typography
-                    variant="body"
+                    variant="body1"
                     className={classes.numberOfProjects}
                   >
                     {this.props.projects.length} پروژه ایجاد شده
@@ -588,7 +588,7 @@ class Projects extends React.Component {
                                       </Button>
                                     )}
                                     <Typography
-                                      variant="body"
+                                      variant="body1"
                                       className={classes.edit}
                                     >
                                       ویرایش

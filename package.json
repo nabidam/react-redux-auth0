@@ -17,6 +17,8 @@
     "echarts-for-react": "^2.0.15-beta.0",
     "file-saver": "^2.0.2",
     "gexf": "^0.2.5",
+    "google-map-react": "^1.1.5",
+    "google-maps-react": "^2.0.2",
     "history": "^4.9.0",
     "json-loader": "^0.5.7",
     "material-ui-slider": "^3.0.3",

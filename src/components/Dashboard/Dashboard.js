@@ -34,6 +34,10 @@ import Accounts from "./Accounts";
 import Projects from "./Projects";
 import Trends from "./Trends";
 import Queries from "./Queries";
+import AddTrafficAnalysis from "./AddTrafficAnalysis";
+import AddTrafficAnalysisHeader from "./AddTrafficAnalysisHeader";
+import AddQueries from "./AddQueries";
+import AddQueriesHeader from "./AddQueriesHeader";
 
 const drawerWidth = 240;
 
@@ -64,6 +68,16 @@ const styles = theme => ({
 class Dashboard extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      mainHeaderPages: [
+        "queries",
+        "traffic-analysis",
+        "influencers",
+        "accounts",
+        "projects",
+        "trends"
+      ]
+    };
 
     this.handleCloseSnackbar = this.handleCloseSnackbar.bind(this);
   }
@@ -81,8 +95,22 @@ class Dashboard extends React.Component {
     return (
       <div className={classes.root}>
         <CssBaseline />
-        {/* {this.props.selectedPage == "" ? <Header /> : <SecondHeader />} */}
-        <SecondHeader />
+        {this.state.mainHeaderPages.indexOf(this.props.selectedPage) == -1 ? (
+          ""
+        ) : (
+          <SecondHeader />
+        )}
+        <Route
+          exact
+          path="/dashboard/traffic-analysis/add"
+          component={AddTrafficAnalysisHeader}
+        />
+        <Route
+          exact
+          path="/dashboard/queries/add"
+          component={AddQueriesHeader}
+        />
+        {/* <SecondHeader /> */}
         {/* <Route exact path="/dashboard" component={Header} />
         <Route path="/dashboard/" component={SecondHeader} /> */}
         {/* <Header /> */}
@@ -99,10 +127,16 @@ class Dashboard extends React.Component {
         ) : (
           <Route exact path="/dashboard/queries" component={QueriesDashboard} />
         )}
+        <Route exact path="/dashboard/queries/add" component={AddQueries} />
         <Route
           exact
           path="/dashboard/traffic-analysis"
           component={TrafficAnalysis}
+        />
+        <Route
+          exact
+          path="/dashboard/traffic-analysis/add"
+          component={AddTrafficAnalysis}
         />
         <Route exact path="/dashboard/influencers" component={Influencers} />
         <Route exact path="/dashboard/accounts" component={Accounts} />

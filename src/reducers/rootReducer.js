@@ -1081,6 +1081,11 @@ const rootReducer = (state = initState, action) => {
         selectedQuery: null,
         selectedQueryDashboardItem: null
       };
+    case types.CANCEL_CREATE:
+      return {
+        ...state,
+        selectedPage: action.page
+      };
     default:
       return state;
   }
