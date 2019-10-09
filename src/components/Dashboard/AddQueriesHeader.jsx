@@ -1,206 +1,243 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {withStyles} from "@material-ui/core/styles";
 import classNames from "classnames";
+import {withStyles, withTheme} from "@material-ui/core/styles";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import IconButton from "@material-ui/core/IconButton";
+import MenuIcon from "@material-ui/icons/Menu";
+import ExitIcon from "@material-ui/icons/ExitToAppRounded";
+import Tooltip from "@material-ui/core/Tooltip";
+import requestLogout from "../../actions/requestLogout";
+import selectPage from "../../actions/selectPage";
+import history from "../../history";
 import {connect} from "react-redux";
-import {
-  CssBaseline,
-  Typography,
-  Container,
-  Grid,
-  Paper,
-  Avatar,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Divider,
-  Modal,
-  Button,
-  Tooltip as MTooltip
-} from "@material-ui/core";
-import {Map, GoogleApiWrapper} from "google-maps-react";
+import triggerDrawer from "../../actions/triggerDrawer";
+import SecondHeaderProfile from "./SecondHeaderProfile";
+import SecondHeaderNotifications from "./SecondHeaderNotifications";
+import UpgradePremium from "./UpgradePremium";
+import {Divider} from "@material-ui/core";
+import Paper from "@material-ui/core/Paper";
+import {Button, Grid} from "@material-ui/core";
+import SearchIcon from "@material-ui/icons/Search";
+import ShowChartIcon from "@material-ui/icons/ShowChart";
+import TrafficIcon from "@material-ui/icons/Traffic";
+import PeopleIcon from "@material-ui/icons/People";
+import CloseIcon from "@material-ui/icons/Close";
+import cancelCreate from "../../actions/cancelCreate";
 
 const styles = theme => ({
-  wrapper: {
-    width: "100vw",
-    minHeight: "100vh",
-    backgroundColor: "#fff"
-  },
   root: {
-    display: "flex",
-    flexGrow: 1
+    display: "flex"
   },
-  toolbar: {
-    display: "flex",
-    alignItems: "center",
-    padding: "0 8px",
-    height: 80,
-    ...theme.mixins.toolbar,
-    justifyContent: "flex-start"
-  },
-  content: {
-    display: "flex",
-    justifyContent: "center",
-    flexDirection: "column",
-    // direction: "rtl",
+  grow: {
     flexGrow: 1,
-    // padding: theme.spacing(3),
-    marginRight: 0,
-    transition: theme.transitions.create("margin", {
+    textAlign: "right"
+  },
+  appBar: {
+    height: 80,
+    // width: `calc(100% - ${drawerWidth}px)`,
+    // marginRight: drawerWidth,
+    backgroundColor: "#fff",
+    color: "#3c3c3c",
+    zIndex: theme.zIndex.drawer + 1,
+    transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen
     })
   },
-
-  container: {
-    paddingTop: 10
-  },
-  labelBox: {
+  toolBar: {
     display: "flex",
-    flexDirection: "row",
-    padding: "20px 0px"
-  },
-  input: {
-    width: "100%",
-    height: 44,
-    position: "relative",
-    borderRadius: 22,
-    backgroundColor: "#edf1f6",
-    border: "none",
-    padding: "0px 22px",
-    color: "#a2a5a9",
-    display: "flex",
-    justifyContent: "right",
-    "&::placeholder": {
-      color: "#a2a5a9"
-    }
-  },
-  bulbIcon: {
-    width: 22,
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    color: "#adb2b9"
-  },
-  map: {
-    width: "100%",
+    // justifyContent: "space-between",
     height: "100%"
   },
-  mapBox: {
-    height: 180,
-    position: "relative"
+  textBlack: {
+    color: "#3c3c3c"
   },
-  chevronDownIcon: {
+  titlePaper: {
+    padding: "0px 0px",
+    fontSize: 12,
+    height: "100%",
     display: "flex",
-    position: "absolute",
-    left: "19px",
+    alignItems: "center",
+    justifyContent: "start",
+    color: "#08080d",
+    margin: "0px 25px",
+    backgroundColor: "#fff",
+    borderRadius: 0,
+    boxShadow: "none"
+  },
+  headerPaper: {
+    padding: "0px 0px",
+    fontSize: 18,
+    height: "100%",
+    display: "flex",
+    alignItems: "center",
+    color: "#08080d",
+    margin: "0px 25px",
+    backgroundColor: "#fff",
+    borderRadius: 0,
+    boxShadow: "none",
+    borderBottom: "2px solid #edf1f6"
+    // height: "89%",
+    // borderRight: "solid 1px #edf1f6"
+    // minWidth: 78,
+  },
+  selectedHeaderPaper: {
+    color: "#4753ff",
+    "&::after": {
+      content: `""`,
+      position: "absolute",
+      bottom: 0,
+      width: "100%",
+      height: 4,
+      background: "#4753ff",
+      borderTopLeftRadius: "2.5px",
+      borderTopRightRadius: "2.5px"
+    }
+  },
+  headerItemIcon: {
+    marginLeft: 17
+  },
+  cardText: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    textAlign: "right"
+  },
+  headerItem: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    textAlign: "right"
+  },
+  primaryText: {
+    fontSize: 18,
+    textAlign: "center"
+  },
+  headerItemText: {
+    fontSize: 18,
+    textAlign: "left"
+  },
+  notification: {
+    flexGrow: 1
+  },
+  profile: {},
+  newAnalysisBtn: {
+    width: 170,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: "#4753ff",
+    border: "solid 5px rgba(255, 255, 255, 0.85)",
+    color: "#fff",
+    "&:hover": {
+      backgroundColor: "#0500cb"
+    },
+    "&:active": {
+      opacity: 0.7
+    }
+  },
+  closePaper: {
+    padding: "0px 0px",
+    fontSize: 12,
+    color: "#08080d",
+    margin: "0px 25px",
+    backgroundColor: "#fff",
+    borderRadius: 0,
+    boxShadow: "none"
+  },
+  headerContainer: {
+    height: "100%"
+  },
+  titleGrid: {
+    display: "flex",
+    justifyContent: "center"
+  },
+  closeIconGrid: {
+    display: "flex",
+    justifyContent: "flex-end",
+    alignItems: " center",
+    padding: "0px 36px"
+  },
+  closeIcon: {
+    fontSize: "2rem",
     color: "#08080d"
   }
 });
 
-class AddQueries extends React.Component {
+class AddQueriesHeader extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
   }
-
-  //   componentDidMount = () => {
-  //     console.log(
-  //       moment()
-  //         .subtract(10, "days")
-  //         .format("Do")
-  //     );
-  //   };
 
   render() {
     const {classes} = this.props;
 
     return (
-      <div className={classes.wrapper}>
-        <main className={classes.content}>
-          <div className={classes.toolbar} />
-          <Container maxWidth="xs" className={classes.container}>
-            <Grid container className={classes.root} spacing={4}>
-              <Grid item md={12} sm={12} xs={12}>
-                <div className={classes.labelBox}>
-                  <i
-                    className={classNames(classes.bulbIcon, "far fa-lightbulb")}
-                  ></i>
-                  <Typography variant="body2">
-                    فواصل زمانی ردیاب خود را انتخاب کنید
-                  </Typography>
-                </div>
-                <Button className={classes.input}>
-                  انتخاب فاصله زمانی تحلیل
-                  <div className={classes.chevronDownIcon}>
-                    <i className="fas fa-chevron-down" />
-                  </div>
-                </Button>
-              </Grid>
-              <Grid item md={12} sm={12} xs={12}>
-                <div className={classes.labelBox}>
-                  <i
-                    className={classNames(classes.bulbIcon, "far fa-lightbulb")}
-                  ></i>
-                  <Typography variant="body2">
-                    محدوده جغرافیایی که می‌خواهید تحلیل ترافیکی شود را انتخاب
-                    کنید
-                  </Typography>
-                </div>
-                <input
-                  type="text"
-                  className={classes.input}
-                  placeholder="نام محدوده مورد نظر"
-                />
-              </Grid>
-              <Grid item md={12} sm={12} xs={12}>
-                <div className={classes.mapBox}>
-                  <Map
-                    google={this.props.google}
-                    zoom={8}
-                    className={classes.map}
-                    initialCenter={{lat: 47.444, lng: -122.176}}
-                  />
-                </div>
-              </Grid>
+      <AppBar position="fixed" className={classes.appBar}>
+        <Toolbar className={classes.toolBar}>
+          <Grid container className={classes.headerContainer}>
+            <Grid item md={4}>
+              <Paper className={classes.titlePaper}>
+                <Grid container wrap="nowrap" spacing={2}>
+                  <Grid item xs zeroMinWidth className={classes.cardText}>
+                    <Button
+                      color="primary"
+                      className={classes.newAnalysisBtn}
+                      onClick={() => this.handleClickAddAnalysis()}
+                    >
+                      ایجاد ردیاب
+                    </Button>
+                  </Grid>
+                </Grid>
+              </Paper>
             </Grid>
-          </Container>
-        </main>
-      </div>
+            <Grid item md={4} className={classes.titleGrid}>
+              <Paper className={classNames(classes.headerPaper)}>
+                <Grid container wrap="nowrap">
+                  <Grid item xs zeroMinWidth className={classes.headerItem}>
+                    <Typography
+                      variant="body1"
+                      component="p"
+                      className={classes.headerItemText}
+                    >
+                      ساخت ردیاب جدید
+                    </Typography>
+                  </Grid>
+                </Grid>
+              </Paper>
+            </Grid>
+            <Grid item md={4} className={classes.closeIconGrid}>
+              <IconButton onClick={() => this.props.selectPage("queries")}>
+                <CloseIcon className={classes.closeIcon} />
+              </IconButton>
+            </Grid>
+          </Grid>
+        </Toolbar>
+      </AppBar>
     );
   }
 }
 
-AddQueries.propTypes = {
-  classes: PropTypes.object.isRequired,
-  theme: PropTypes.object.isRequired
-};
-
 const mapStateToProps = state => {
   return {
-    latestQueries: state.latestQueries,
-    selectedQuery: state.selectedQuery,
-    queries: state.queries,
-    selectedQueriesType: state.selectedQueriesType
+    auth: state.auth,
+    isAuthenticated: state.isAuthenticated,
+    isDrawerOpen: state.isDrawerOpen,
+    selectedPage: state.selectedPage
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    selectQuery: id => dispatch(selectQuery(id)),
-    selectQueriesType: type => dispatch(selectQueriesType(type)),
-    changeQueryStatus: query => dispatch(changeQueryStatus(query))
+    requestLogout: () => dispatch(requestLogout()),
+    triggerDrawer: () => dispatch(triggerDrawer()),
+    selectPage: page => dispatch(selectPage(page))
   };
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(
-  withStyles(styles, {withTheme: true})(
-    GoogleApiWrapper({
-      apiKey: "AIzaSyA8W4yPrXzLkbPNOAoq5e2sGIcsjucBM1A"
-    })(AddQueries)
-  )
-);
+)(withStyles(styles, {withTheme: true})(AddQueriesHeader));
