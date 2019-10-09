@@ -24,6 +24,7 @@ import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import PauseIcon from "@material-ui/icons/Pause";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import selectPage from "../../actions/selectPage";
 
 const styles = theme => ({
   wrapper: {
@@ -408,6 +409,10 @@ class Projects extends React.Component {
     });
   };
 
+  handleClickAddQueries = () => {
+    this.props.selectPage("projects/add");
+  };
+
   //   componentDidMount = () => {
   //     console.log(
   //       moment()
@@ -437,7 +442,11 @@ class Projects extends React.Component {
                   <Typography variant="h1" className={classes.title}>
                     پروژه‌ها
                   </Typography>
-                  <Button color="primary" className={classes.newProjectBtn}>
+                  <Button
+                    color="primary"
+                    className={classes.newProjectBtn}
+                    onClick={() => this.handleClickAddQueries()}
+                  >
                     ساخت پروژه جدید
                   </Button>
                 </div>
@@ -620,7 +629,9 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-  return {};
+  return {
+    selectPage: page => dispatch(selectPage(page))
+  };
 };
 
 export default connect(

@@ -38,6 +38,8 @@ import AddTrafficAnalysis from "./AddTrafficAnalysis";
 import AddTrafficAnalysisHeader from "./AddTrafficAnalysisHeader";
 import AddQueries from "./AddQueries";
 import AddQueriesHeader from "./AddQueriesHeader";
+import AddProjects from "./AddProjects";
+import AddProjectsHeader from "./AddProjectsHeader";
 
 const drawerWidth = 240;
 
@@ -110,6 +112,11 @@ class Dashboard extends React.Component {
           path="/dashboard/queries/add"
           component={AddQueriesHeader}
         />
+        <Route
+          exact
+          path="/dashboard/projects/add"
+          component={AddProjectsHeader}
+        />
         {/* <SecondHeader /> */}
         {/* <Route exact path="/dashboard" component={Header} />
         <Route path="/dashboard/" component={SecondHeader} /> */}
@@ -141,6 +148,7 @@ class Dashboard extends React.Component {
         <Route exact path="/dashboard/influencers" component={Influencers} />
         <Route exact path="/dashboard/accounts" component={Accounts} />
         <Route exact path="/dashboard/projects" component={Projects} />
+        <Route exact path="/dashboard/projects/add" component={AddProjects} />
         <Route exact path="/dashboard/trends" component={Trends} />
         <Route exact path="/dashboard" component={MainDashboard} />
         <Snackbar
