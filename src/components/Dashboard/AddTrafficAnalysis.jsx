@@ -23,7 +23,7 @@ import {Map, GoogleApiWrapper} from "google-maps-react";
 
 const styles = theme => ({
   wrapper: {
-    width: "100%",
+    width: "100vw",
     minHeight: "100vh",
     backgroundColor: "#fff"
   },

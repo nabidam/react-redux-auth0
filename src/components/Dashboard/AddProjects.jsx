@@ -253,10 +253,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(
-  withStyles(styles, {withTheme: true})(
-    GoogleApiWrapper({
-      apiKey: "AIzaSyA8W4yPrXzLkbPNOAoq5e2sGIcsjucBM1A"
-    })(AddProjects)
-  )
-);
+)(withStyles(styles, {withTheme: true})(AddProjects));

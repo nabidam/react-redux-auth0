@@ -48,7 +48,8 @@ const drawerWidth = 240;
 const styles = theme => ({
   root: {
     display: "flex",
-    flexGrow: 1
+    flexGrow: 1,
+    overflow: "hidden"
   },
   close: {
     padding: theme.spacing(0.5)
