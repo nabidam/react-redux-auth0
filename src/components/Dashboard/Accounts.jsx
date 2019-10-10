@@ -20,6 +20,7 @@ import {
 } from "@material-ui/core";
 import {connect} from "react-redux";
 import ClearIcon from "@material-ui/icons/Clear";
+import selectPage from "../../actions/selectPage";
 
 const styles = theme => ({
   wrapper: {
@@ -338,6 +339,10 @@ class Accounts extends React.Component {
     this.state = {};
   }
 
+  handleClickAddQueries = () => {
+    this.props.selectPage("accounts/add-post");
+  };
+
   render() {
     const {classes} = this.props;
 
@@ -471,7 +476,11 @@ class Accounts extends React.Component {
                   <Typography variant="h1" className={classes.title}>
                     مدیریت پست‌ها
                   </Typography>
-                  <Button color="primary" className={classes.newAnalysisBtn}>
+                  <Button
+                    color="primary"
+                    className={classes.newAnalysisBtn}
+                    onClick={() => this.handleClickAddQueries()}
+                  >
                     ایجاد پست جدید
                   </Button>
                 </div>
@@ -502,7 +511,10 @@ class Accounts extends React.Component {
                               className={classes.postImage}
                             />
                           </div>
-                          <Typography variant="body1" className={classes.postText}>
+                          <Typography
+                            variant="body1"
+                            className={classes.postText}
+                          >
                             {item.post}
                           </Typography>
                           <div className={classes.postStats}>
@@ -566,7 +578,9 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-  return {};
+  return {
+    selectPage: page => dispatch(selectPage(page))
+  };
 };
 
 export default connect(
