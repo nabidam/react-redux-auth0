@@ -25,7 +25,7 @@ import AddIcon from "@material-ui/icons/Add";
 
 const styles = theme => ({
   wrapper: {
-    width: "98vw",
+    width: "100%",
     minHeight: "100vh",
     backgroundColor: "#fff"
   },

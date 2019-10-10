@@ -16,11 +16,17 @@ import {
   Divider,
   Modal,
   Button,
-  Tooltip as MTooltip
+  Tooltip as MTooltip,
+  DialogTitle,
+  DialogContent,
+  DialogActions
 } from "@material-ui/core";
+import Dialog from "@material-ui/core/Dialog";
 import {connect} from "react-redux";
 import ClearIcon from "@material-ui/icons/Clear";
 import selectPage from "../../actions/selectPage";
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from "@material-ui/icons/Close";
 
 const styles = theme => ({
   wrapper: {
@@ -330,14 +336,115 @@ const styles = theme => ({
   instagram: {
     color: "#da2b72",
     margin: "0px 5px"
+  },
+
+  addAccountDialog: {
+    minWidth: 430,
+    minHeight: 288
+  },
+  dialogHeader: {
+    position: "relative",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    height: 56,
+    minWidth: 430,
+    boxShadow: "0 2px 15px 0 rgba(0, 0, 0, 0.1)"
+  },
+  dialogTitle: {
+    padding: "0px 0px",
+    fontSize: 18,
+    height: "100%",
+    display: "flex",
+    alignItems: "center",
+    color: "#08080d",
+    margin: "0px 25px",
+    backgroundColor: "#fff",
+    borderRadius: 0,
+    boxShadow: "none",
+    borderBottom: "2px solid #edf1f6"
+  },
+  closeIconBox: {
+    position: "absolute",
+    left: 0,
+    marginLeft: 5
+  },
+  labelBox: {
+    display: "flex",
+    flexDirection: "row",
+    padding: "20px 0px",
+    justifyContent: "center",
+    marginBottom: 10
+  },
+  bulbIcon: {
+    width: 22,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    color: "#adb2b9"
+  },
+  addAccountDialogBody: {
+    display: "flex",
+    justifyContent: "center",
+    flexDirection: "column"
+  },
+  socialIconBox: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center"
+  },
+  socialMediaIcon: {
+    height: 44,
+    fontSize: "1rem",
+    padding: "8px 20px",
+    marginBottom: 20,
+    display: "flex",
+    justifyContent: "right",
+    alignItems: "center",
+    border: "solid 5px rgba(0, 0, 0, 0.02)",
+    borderRadius: 22,
+    backgroundColor: "#edf1f6",
+    color: "rgba(8, 8, 13, 0.5)"
+  },
+  socialIcon: {
+    marginLeft: 10
+  },
+  socialText: {
+    color: "#08080d"
+  },
+  closeIcon: {
+    fontSize: "1rem",
+    color: "#08080d"
   }
 });
 
 class Accounts extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      addAccountDialogOpen: false
+    };
+
+    this.handleOpenAddAccountDialog = this.handleOpenAddAccountDialog.bind(
+      this
+    );
+    this.handleCloseAddAccountDialog = this.handleCloseAddAccountDialog.bind(
+      this
+    );
   }
+
+  handleOpenAddAccountDialog = () => {
+    this.setState({
+      addAccountDialogOpen: true
+    });
+  };
+
+  handleCloseAddAccountDialog = () => {
+    this.setState({
+      addAccountDialogOpen: false
+    });
+  };
 
   handleClickAddQueries = () => {
     this.props.selectPage("accounts/add-post");
@@ -364,9 +471,83 @@ class Accounts extends React.Component {
                   <Typography variant="h1" className={classes.title}>
                     حساب‌های شما
                   </Typography>
-                  <Button color="primary" className={classes.newAnalysisBtn}>
+                  <Button
+                    color="primary"
+                    className={classes.newAnalysisBtn}
+                    onClick={() => this.handleOpenAddAccountDialog()}
+                  >
                     افزودن حساب
                   </Button>
+                  <Dialog
+                    className={classes.addAccountDialog}
+                    onClose={() => this.handleCloseAddAccountDialog()}
+                    open={this.state.addAccountDialogOpen}
+                  >
+                    <div className={classes.dialogHeader}>
+                      <div className={classes.dialogTitle}>
+                        <Typography
+                          variant="body1"
+                          component="p"
+                          className={classes.headerItemText}
+                        >
+                          افزودن حساب کاربری
+                        </Typography>
+                      </div>
+                      <IconButton
+                        onClick={() => this.handleCloseAddAccountDialog()}
+                        className={classes.closeIconBox}
+                      >
+                        <CloseIcon className={classes.closeIcon} />
+                      </IconButton>
+                    </div>
+                    <DialogContent className={classes.addAccountDialogBody}>
+                      <div className={classes.labelBox}>
+                        <i
+                          className={classNames(
+                            classes.bulbIcon,
+                            "far fa-lightbulb"
+                          )}
+                        ></i>
+                        <Typography
+                          variant="body1"
+                          className={classes.socialText}
+                        >
+                          شبکه اجتماعی مورد نظر خود را برای افزودن حساب کاربری
+                          انتخاب کنید
+                        </Typography>
+                      </div>
+                      <div className={classes.socialIconBox}>
+                        <IconButton className={classes.socialMediaIcon}>
+                          <i
+                            className={classNames(
+                              classes.socialIcon,
+                              "fab fa-instagram fa-sm"
+                            )}
+                          ></i>
+                          <Typography
+                            variant="body2"
+                            className={classes.socialText}
+                          >
+                            ورود به اینستاگرام
+                          </Typography>
+                        </IconButton>
+                        <IconButton className={classes.socialMediaIcon}>
+                          <i
+                            className={classNames(
+                              classes.socialIcon,
+                              "fab fa-twitter fa-sm"
+                            )}
+                          ></i>
+                          <Typography
+                            variant="body2"
+                            className={classes.socialText}
+                          >
+                            ورود به توییتر
+                          </Typography>
+                        </IconButton>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
                 </div>
                 <Grid container className={classes.root} spacing={4}>
                   {this.props.accounts.map(item => (

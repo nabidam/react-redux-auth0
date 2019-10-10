@@ -24,7 +24,7 @@ import IconButton from "@material-ui/core/IconButton";
 
 const styles = theme => ({
   wrapper: {
-    width: "98vw",
+    width: "100%",
     minHeight: "100vh",
     backgroundColor: "#fff"
   },
