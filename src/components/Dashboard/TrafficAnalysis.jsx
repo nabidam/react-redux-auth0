@@ -250,7 +250,7 @@ class TrafficAnalysis extends React.Component {
           <div className={classes.toolbar} />
           <Container maxWidth="md">
             <Grid container className={classes.root} spacing={4}>
-              <Grid item md={12} sm={12} xs={12} center>
+              <Grid item md={12} sm={12} xs={12} center="true">
                 <div className={classes.headerBox}>
                   <Typography variant="h1" className={classes.title}>
                     تحلیل ترافیکی
@@ -281,7 +281,7 @@ class TrafficAnalysis extends React.Component {
                   </Typography>
                 </div>
               </Grid>
-              <Grid item md={3} sm={3} xs={3} center>
+              <Grid item md={3} sm={3} xs={3} center="true">
                 <List className={classes.typeOfAnalysis}>
                   <ListItem
                     className={classNames(
@@ -313,7 +313,7 @@ class TrafficAnalysis extends React.Component {
                   </ListItem>
                 </List>
               </Grid>
-              <Grid item md={9} sm={9} xs={9} center>
+              <Grid item md={9} sm={9} xs={9} center="true">
                 <List className={classes.activeAnalysis}>
                   <Divider />
                   {this.props.analysis.map(item => {

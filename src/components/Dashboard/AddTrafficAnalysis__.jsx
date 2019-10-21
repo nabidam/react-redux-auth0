@@ -19,15 +19,7 @@ import {
   Button,
   Tooltip as MTooltip
 } from "@material-ui/core";
-// import {Map, GoogleApiWrapper} from "google-maps-react";
-// import ReactMapboxGl, {Layer, Feature} from "react-mapbox-gl";
-// import ReactMapGL from "react-map-gl";
-import Map from "./Map";
-
-// const Map = ReactMapboxGl({
-//   accessToken:
-//     "pk.eyJ1IjoibmFiaWRhbSIsImEiOiJjazFsejVrdXgwYWFiM2hwY2xzcng2YnRvIn0.9oIMFnFAebsE812OCde1Fw"
-// });
+import {Map, GoogleApiWrapper} from "google-maps-react";
 
 const styles = theme => ({
   wrapper: {
@@ -99,10 +91,6 @@ const styles = theme => ({
     height: 180,
     position: "relative"
   },
-  mapDiv: {
-    height: "100%",
-    width: "100%"
-  },
   chevronDownIcon: {
     display: "flex",
     position: "absolute",
@@ -114,24 +102,23 @@ const styles = theme => ({
 class AddTrafficAnalysis extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      viewport: {
-        width: 400,
-        height: 400,
-        latitude: 37.7577,
-        longitude: -122.4376,
-        zoom: 8
-      }
-    };
+    this.state = {};
   }
 
   componentDidMount = () => {
-    // mapboxgl.accessToken =
-    //   "pk.eyJ1IjoibmFiaWRhbSIsImEiOiJjazFsejVrdXgwYWFiM2hwY2xzcng2YnRvIn0.9oIMFnFAebsE812OCde1Fw";
-    // var map = new mapboxgl.Map({
-    //   container: "map",
-    //   style: "mapbox://styles/mapbox/streets-v10"
-    // });
+    const script = document.createElement("script");
+    script.src = "../../sdk/tomtom.min.js";
+    document.body.appendChild(script);
+    script.async = true;
+    script.onload = function() {
+      window.tomtom.L.map("map", {
+        source: "vector",
+        key: "OUzAaFsiFoB0V4PhzQ8iJEgQH9TOEyGN",
+        center: [37.769167, -122.478468],
+        basePath: "/sdk",
+        zoom: 15
+      });
+    };
   };
 
   render() {
@@ -177,8 +164,7 @@ class AddTrafficAnalysis extends React.Component {
               </Grid>
               <Grid item md={12} sm={12} xs={12}>
                 <div className={classes.mapBox}>
-                  {/* <div id="map" className={classes.mapDiv}></div> */}
-                  <Map />
+                  <div id="map"></div>
                 </div>
               </Grid>
             </Grid>
@@ -214,4 +200,10 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(styles, {withTheme: true})(AddTrafficAnalysis));
+)(
+  withStyles(styles, {withTheme: true})(
+    GoogleApiWrapper({
+      apiKey: "AIzaSyA8W4yPrXzLkbPNOAoq5e2sGIcsjucBM1A"
+    })(AddTrafficAnalysis)
+  )
+);
