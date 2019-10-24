@@ -62,24 +62,34 @@ class PieChart extends React.Component {
       width: 150,
       height: 150,
       co: 1,
-      hoveredPie: null
+      hoveredPie: null,
+      selectedEmotion: "",
+      selectedPosts: "",
+      selectedPercent: ""
     };
 
     this.handleHover = this.handleHover.bind(this);
     this.handleUnhover = this.handleUnhover.bind(this);
   }
 
-  handleHover = id => {
+  handleHover = (id, data) => {
+    console.log(data);
     this.setState({
       co: 0.9,
-      hoveredPie: id
+      hoveredPie: id,
+      selectedEmotion: data.name,
+      selectedPosts: data.posts + " پست",
+      selectedPercent: "%" + data.value
     });
   };
 
   handleUnhover = () => {
     this.setState({
       co: 1,
-      hoveredPie: null
+      hoveredPie: null,
+      selectedEmotion: "",
+      selectedPosts: "",
+      selectedPercent: ""
     });
   };
 
@@ -272,7 +282,7 @@ class PieChart extends React.Component {
                   key={"path-" + index}
                   d={pathData}
                   fill={"url(#gradient-" + index + ")"}
-                  onMouseEnter={() => this.handleHover(index)}
+                  onMouseEnter={() => this.handleHover(index, item)}
                   onMouseLeave={() => this.handleUnhover()}
                 ></path>
               );
@@ -317,6 +327,51 @@ class PieChart extends React.Component {
                 // <circle cx={startX} cy={startY} r={0.1} fill="black" />
               );
             })}
+            <text
+              x="0"
+              y="-0.3px"
+              textAnchor="middle"
+              fill="#adb2b9"
+              fontSize="0.15px"
+              fontFamily="Arial"
+              dy=".3em"
+              transform="rotate(90)"
+            >
+              {this.state.selectedEmotion}
+              {/* <tspan dy="-0.4px" dx="0" textLength="1px">
+                {this.state.selectedEmotion}
+              </tspan>
+              <tspan dy="+0.4px" dx="-0.6px" textLength="1px">
+                {this.state.selectedPosts}{" "}
+              </tspan>
+              <tspan dy="+0.4px" dx="-0.6px" textLength="1px">
+                {this.state.selectedPercent}
+              </tspan> */}
+            </text>
+            <text
+              x="0"
+              y="0"
+              textAnchor="middle"
+              fill="black"
+              fontSize="0.2px"
+              fontFamily="Arial"
+              dy=".3em"
+              transform="rotate(90)"
+            >
+              {this.state.selectedPosts}
+            </text>
+            <text
+              x="0"
+              y="0.3px"
+              textAnchor="middle"
+              fill="#adb2b9"
+              fontSize="0.15px"
+              fontFamily="Arial"
+              dy=".3em"
+              transform="rotate(90)"
+            >
+              {this.state.selectedPercent}
+            </text>
           </g>
         </svg>
       </div>
