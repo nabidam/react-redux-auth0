@@ -33,7 +33,7 @@ body {
   direction: rtl;
 }
 
-.level-2-items > span {
+.level-2-items>span {
   font-size: 11px;
 }
 
@@ -123,7 +123,7 @@ body {
   flex: 1;
 }
 
-.tag-cloud > div {
+.tag-cloud>div {
   transition: 1.4s;
 }
 
@@ -244,4 +244,37 @@ body {
   border-top-color: #000000;
   border-width: 5px;
   margin-left: -5px;
+}
+
+/* *** */
+
+.sidebarStyle {
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 12px;
+  background-color: #404040;
+  color: #ffffff;
+  z-index: 1 !important;
+  padding: 6px;
+  font-weight: bold;
+}
+
+.mapContainer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  text-align: right !important;
+}
+
+.mapbox-div {
+  text-align: right !important;
+}
+
+.mapboxgl-control-container {
+  position: relative;
+  top: 0
 }

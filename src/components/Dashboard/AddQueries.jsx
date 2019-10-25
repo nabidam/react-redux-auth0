@@ -19,7 +19,7 @@ import {
   Button,
   Tooltip as MTooltip
 } from "@material-ui/core";
-import {Map, GoogleApiWrapper} from "google-maps-react";
+// import {Map, GoogleApiWrapper} from "google-maps-react";
 import IconButton from "@material-ui/core/IconButton";
 
 const styles = theme => ({
@@ -321,13 +321,17 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
+// export default connect(
+//   mapStateToProps,
+//   mapDispatchToProps
+// )(
+//   withStyles(styles, {withTheme: true})(
+//     GoogleApiWrapper({
+//       apiKey: "AIzaSyA8W4yPrXzLkbPNOAoq5e2sGIcsjucBM1A"
+//     })(AddQueries)
+//   )
+// );
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(
-  withStyles(styles, {withTheme: true})(
-    GoogleApiWrapper({
-      apiKey: "AIzaSyA8W4yPrXzLkbPNOAoq5e2sGIcsjucBM1A"
-    })(AddQueries)
-  )
-);
+)(AddQueries);

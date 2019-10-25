@@ -19,10 +19,11 @@ import {
   Button,
   Tooltip as MTooltip
 } from "@material-ui/core";
+import MapComponent from "./MapComponent";
 // import {Map, GoogleApiWrapper} from "google-maps-react";
 // import ReactMapboxGl, {Layer, Feature} from "react-mapbox-gl";
 // import ReactMapGL from "react-map-gl";
-import Map from "./Map";
+// import Map from "./Map";
 
 // const Map = ReactMapboxGl({
 //   accessToken:
@@ -96,8 +97,13 @@ const styles = theme => ({
     height: "100%"
   },
   mapBox: {
+    border: "2px solid #e4e8ed",
+    borderRadius: 3,
     height: 180,
-    position: "relative"
+    position: "relative",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
   },
   mapDiv: {
     height: "100%",
@@ -108,8 +114,37 @@ const styles = theme => ({
     position: "absolute",
     left: "19px",
     color: "#08080d"
+  },
+
+  mapOverlay: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
+    backgroundColor: "#fff",
+    opacity: "0.4"
+  },
+  changeMapBtn: {
+    width: 170,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: "#4753ff",
+    border: "solid 5px rgba(255, 255, 255, 0.85)",
+    color: "#fff",
+    "&:hover": {
+      backgroundColor: "#0500cb"
+    },
+    "&:active": {
+      opacity: 0.7
+    }
   }
 });
+
+// const Map = ReactMapboxGl({
+//   accessToken:
+//     "pk.eyJ1IjoibmFiaWRhbSIsImEiOiJjazFsejVrdXgwYWFiM2hwY2xzcng2YnRvIn0.9oIMFnFAebsE812OCde1Fw"
+// });
 
 class AddTrafficAnalysis extends React.Component {
   constructor(props) {
@@ -124,6 +159,15 @@ class AddTrafficAnalysis extends React.Component {
       }
     };
   }
+
+  handleClickChangeMap = () => {
+    var mapOverlay = document.getElementById("map-overlay");
+    mapOverlay.parentNode.removeChild(mapOverlay);
+    var mapBtn = document.getElementById("map-btn");
+    mapBtn.parentNode.removeChild(mapBtn);
+    var mapBox = document.getElementById("map-box");
+    mapBox.style.borderColor = "#4753ff";
+  };
 
   componentDidMount = () => {
     // mapboxgl.accessToken =
@@ -176,9 +220,36 @@ class AddTrafficAnalysis extends React.Component {
                 />
               </Grid>
               <Grid item md={12} sm={12} xs={12}>
-                <div className={classes.mapBox}>
+                <div className={classes.mapBox} id="map-box">
+                  <MapComponent />
+                  <div id="map-overlay" className={classes.mapOverlay}></div>
+                  <Button
+                    id="map-btn"
+                    color="primary"
+                    className={classes.changeMapBtn}
+                    onClick={() => this.handleClickChangeMap()}
+                  >
+                    انتخاب محدوده
+                  </Button>
                   {/* <div id="map" className={classes.mapDiv}></div> */}
-                  <Map />
+                  {/* <Map /> */}
+                  {/* <Map
+                    style="mapbox://styles/mapbox/streets-v9"
+                    containerStyle={{
+                      height: "100vh",
+                      width: "100vw"
+                    }}
+                  >
+                    <Layer
+                      type="symbol"
+                      id="marker"
+                      layout={{"icon-image": "marker-15"}}
+                    >
+                      <Feature
+                        coordinates={[-0.481747846041145, 51.3233379650232]}
+                      />
+                    </Layer>
+                  </Map> */}
                 </div>
               </Grid>
             </Grid>

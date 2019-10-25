@@ -64,6 +64,9 @@ import Tab from "@material-ui/core/Tab";
 import CheckIcon from "@material-ui/icons/Check";
 import QueriesWordsCloud from "./QueriesWordsCloud";
 import PieChart from "./PieChart";
+import CustomizedActiveDot from "./CustomizedActiveDot";
+import CustomizedTooltip from "./CustomizedTooltip";
+import PostsChart from "./PostsChart";
 
 const styles = theme => ({
   root: {
@@ -340,7 +343,11 @@ const styles = theme => ({
     height: 37,
     borderRadius: 19,
     justifyContent: "right",
-    border: "1px solid #979797"
+    border: "1px solid #979797",
+    "&:hover": {
+      borderColor: "#4753ff",
+      color: "#4753ff"
+    }
 
     // "&:hover": {
     //   backgroundColor: "#0500cb"
@@ -362,7 +369,7 @@ const styles = theme => ({
   emotionStats: {
     display: "flex",
     marginBottom: 35,
-    width: 150
+    width: 250
   },
   negativeEmotion: {
     flexGrow: 1,
@@ -387,6 +394,31 @@ const styles = theme => ({
     }
   },
   negativeText: {
+    fontSize: 10
+  },
+  neutralEmotion: {
+    flexGrow: 1,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-start"
+  },
+  neutralPercent: {
+    position: "relative",
+    width: 45,
+    fontWeight: "bold",
+    textAlign: "left",
+    "&::after": {
+      content: `""`,
+      position: "absolute",
+      right: 0,
+      width: 16,
+      height: 16,
+      border: "solid 5px rgba(255, 255, 255, 0.85)",
+      background: "#4a90e2",
+      borderRadius: "50%"
+    }
+  },
+  neutralText: {
     fontSize: 10
   },
   positiveEmotion: {
@@ -424,7 +456,11 @@ const styles = theme => ({
     height: 37,
     borderRadius: 19,
     justifyContent: "right",
-    border: "1px solid #979797"
+    border: "1px solid #979797",
+    "&:hover": {
+      borderColor: "#4753ff",
+      color: "#4753ff"
+    }
 
     // "&:hover": {
     //   backgroundColor: "#0500cb"
@@ -501,13 +537,21 @@ const styles = theme => ({
 const emotionDatas = [
   {
     name: "حس منفی",
-    value: 42,
-    color: "#ec373c"
+    value: 32,
+    color: "#ec373c",
+    posts: 457
+  },
+  {
+    name: "حس خنثی",
+    value: 28,
+    color: "#4a90e2",
+    posts: 457
   },
   {
     name: "حس مثبت",
-    value: 58,
-    color: "#03d588"
+    value: 40,
+    color: "#03d588",
+    posts: 457
   }
 ];
 
@@ -752,6 +796,14 @@ const data = [
   }
 ];
 
+// const CustomTooltip = ({active, payload, label}) => {
+//   if (active) {
+//     return <div className="custom-tooltip">x</div>;
+//   }
+
+//   return null;
+// };
+
 class QueryDashboardContainer extends React.Component {
   constructor(props) {
     super(props);
@@ -766,6 +818,13 @@ class QueryDashboardContainer extends React.Component {
       twitter: 1,
       instagram: 0
     };
+    this.tooltip = null;
+    this.tooltipQty = null;
+    this.tooltipDate = null;
+    this.tooltipContent = null;
+
+    // this.onChartMouseMove = this.onChartMouseMove.bind(this);
+    // this.onChartMouseLeave = this.onChartMouseLeave.bind(this);
 
     this.handleSelectTab = this.handleSelectTab.bind(this);
     this.handleSelectChartAction = this.handleSelectChartAction.bind(this);
@@ -795,6 +854,62 @@ class QueryDashboardContainer extends React.Component {
     this.setState({
       instagram: !this.state.instagram
     });
+  };
+
+  // showToolTip = e => {
+  //   let x = Math.round(e.cx);
+  //   let y = Math.round(e.cy);
+  //   this.tooltip.style.opacity = "1";
+  //   this.tooltip.childNode[0].innerHTML = e.payload["value"];
+  // };
+
+  // hideTooltip = e => {
+  //   this.tooltip.style.opacity = "0";
+  // };
+
+  // onChartMouseMove(chart) {
+  //   if (chart.isTooltipActive) {
+  //     let point = this.area.props.points[chart.activeTooltipIndex];
+
+  //     if (point != this.point) {
+  //       this.point = point;
+  //       this.updateTooltip();
+  //     }
+  //   }
+  // }
+
+  // onChartMouseLeave() {
+  //   this.point = null;
+  //   this.updateTooltip();
+  // }
+
+  // updateTooltip() {
+  //   if (this.point) {
+  //     let x = Math.round(this.point.x);
+  //     let y = Math.round(this.point.y);
+
+  //     this.tooltip.style.opacity = "1";
+  //     this.tooltip.style.transform = `translate(${x}px, ${y}px)`;
+  //     this.tooltip.childNodes[0].innerHTML = this.point.payload["value"];
+  //   } else {
+  //     this.tooltip.style.opacity = "0";
+  //   }
+  // }
+
+  customMouseOver = e => {
+    let x = Math.round(e.cx);
+    let y = Math.round(e.cy);
+    this.tooltip.style.opacity = "1";
+    this.tooltip.style.transform = `translate(${x + 49}px, ${y + 355}px)`;
+    this.tooltipContent.innerHTML =
+      "<p>" + e.payload["dayOfMonth"] + " تیر</p>";
+    // console.log(this.area);
+    // console.log(e.payload["dayOfMonth"]);
+  };
+
+  over = e => {
+    this.tooltip.style.opacity = "0";
+    // console.log("yy");
   };
 
   render() {
@@ -1014,16 +1129,17 @@ class QueryDashboardContainer extends React.Component {
                 </Grid>
                 <Grid container className={classes.chartBox}>
                   <Grid item md={12} className={classes.chart}>
+                    {/* <div> */}
                     <ResponsiveContainer
                       width="100%"
                       height="100%"
-                      className={classes.leftToRight}
+                      className="left-to-right"
                     >
                       <AreaChart
-                        // width={500}
                         height={150}
                         data={this.state.data.reverse()}
-                        // margin={{top: 10, right: 20, left: 0, bottom: 0}}
+                        // onMouseMove={this.onChartMouseMove}
+                        // onMouseLeave={this.onChartMouseLeave}
                       >
                         <defs>
                           <linearGradient
@@ -1045,11 +1161,14 @@ class QueryDashboardContainer extends React.Component {
                             />
                           </linearGradient>
                         </defs>
-                        {/* <CartesianGrid strokeDasharray="3 3" /> */}
                         <XAxis dataKey="dayOfMonth">
                           <Label value="تیر" position="right" offset={10} />
                         </XAxis>
-                        <Tooltip />
+                        {/* <Tooltip /> */}
+                        <Tooltip
+                          cursor={false}
+                          wrapperStyle={{display: "none"}}
+                        />
                         <Area
                           type="monotone"
                           dataKey="posts"
@@ -1057,10 +1176,34 @@ class QueryDashboardContainer extends React.Component {
                           strokeWidth={3}
                           fillOpacity={1}
                           fill="url(#color)"
+                          ref={ref => (this.area = ref)}
+                          activeDot={<CustomizedActiveDot />}
+                          // activeDot={{
+                          //   onMouseOver: e => this.customMouseOver(e),
+                          //   onMouseLeave: this.over
+                          // }}
                         />
                         <YAxis orientation="right" />
                       </AreaChart>
                     </ResponsiveContainer>
+                    {/* <div
+                        className="ui-chart-tooltip"
+                        ref={ref => (this.tooltip = ref)}
+                      >
+                        <div className="ui-chart-tooltip-content"></div>
+                      </div> */}
+                    <div
+                      className="ui-chart-tooltip"
+                      ref={ref => (this.tooltip = ref)}
+                    >
+                      <div
+                        className="ui-chart-tooltip-content"
+                        ref={ref => (this.tooltipContent = ref)}
+                      >
+                        {/* <div className="tooltip-heading">1x1</div> */}
+                      </div>
+                    </div>
+                    {/* </div> */}
                   </Grid>
                 </Grid>
               </Paper>
@@ -1242,18 +1385,32 @@ class QueryDashboardContainer extends React.Component {
                         {this.state.emotionDatas[0].name}
                       </Typography>
                     </div>
-                    <div className={classes.positiveEmotion}>
+                    <div className={classes.neutralEmotion}>
                       <Typography
                         variant="body1"
-                        className={classes.positivePercent}
+                        className={classes.neutralPercent}
                       >
                         {this.state.emotionDatas[1].value}%
                       </Typography>
                       <Typography
                         variant="body1"
-                        className={classes.positiveText}
+                        className={classes.negativeText}
                       >
                         {this.state.emotionDatas[1].name}
+                      </Typography>
+                    </div>
+                    <div className={classes.positiveEmotion}>
+                      <Typography
+                        variant="body1"
+                        className={classes.positivePercent}
+                      >
+                        {this.state.emotionDatas[2].value}%
+                      </Typography>
+                      <Typography
+                        variant="body1"
+                        className={classes.positiveText}
+                      >
+                        {this.state.emotionDatas[2].name}
                       </Typography>
                     </div>
                   </div>

@@ -19,7 +19,7 @@ import {
   Button,
   Tooltip as MTooltip
 } from "@material-ui/core";
-import {Map, GoogleApiWrapper} from "google-maps-react";
+// import {Map, GoogleApiWrapper} from "google-maps-react";
 
 const styles = theme => ({
   wrapper: {

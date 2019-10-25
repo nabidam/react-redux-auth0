@@ -19,7 +19,7 @@ import {
   Button,
   Tooltip as MTooltip
 } from "@material-ui/core";
-import {Map, GoogleApiWrapper} from "google-maps-react";
+// import {Map, GoogleApiWrapper} from "google-maps-react";
 
 const styles = theme => ({
   wrapper: {
@@ -156,12 +156,12 @@ class AddTrafficAnalysis extends React.Component {
               </Grid>
               <Grid item md={12} sm={12} xs={12}>
                 <div className={classes.mapBox}>
-                  <Map
+                  {/* <Map
                     google={this.props.google}
                     zoom={8}
                     className={classes.map}
                     initialCenter={{lat: 47.444, lng: -122.176}}
-                  />
+                  /> */}
                 </div>
               </Grid>
             </Grid>

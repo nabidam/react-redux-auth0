@@ -384,7 +384,7 @@ const styles = theme => ({
   emotionStats: {
     display: "flex",
     marginBottom: 35,
-    width: 150
+    width: 250
   },
   negativeEmotionBox: {
     flexGrow: 1,
@@ -767,21 +767,52 @@ const styles = theme => ({
     justifyContent: "center",
     alignItems: "center",
     height: "100%"
+  },
+  neutralEmotion: {
+    flexGrow: 1,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-start"
+  },
+  neutralPercent: {
+    position: "relative",
+    width: 45,
+    fontWeight: "bold",
+    textAlign: "left",
+    "&::after": {
+      content: `""`,
+      position: "absolute",
+      right: 0,
+      width: 16,
+      height: 16,
+      border: "solid 5px rgba(255, 255, 255, 0.85)",
+      background: "#4a90e2",
+      borderRadius: "50%"
+    }
   }
 });
 
 const emotionDatas = [
   {
     name: "حس منفی",
-    value: 42,
+    value: 32,
     color: "#ec373c",
-    emotion: "negative"
+    emotion: "negative",
+    posts: 457
+  },
+  {
+    name: "حس خنثی",
+    value: 28,
+    color: "#4a90e2",
+    emotion: "neutral",
+    posts: 457
   },
   {
     name: "حس مثبت",
-    value: 58,
+    value: 40,
     color: "#03d588",
-    emotion: "positive"
+    emotion: "positive",
+    posts: 457
   }
 ];
 
@@ -985,6 +1016,20 @@ class QueryEmotionsContainer extends React.Component {
                         {this.state.emotionDatas[0].name}
                       </Typography>
                     </div>
+                    <div className={classes.neutralEmotion}>
+                      <Typography
+                        variant="body1"
+                        className={classes.neutralPercent}
+                      >
+                        {this.state.emotionDatas[1].value}%
+                      </Typography>
+                      <Typography
+                        variant="body1"
+                        className={classes.negativeText}
+                      >
+                        {this.state.emotionDatas[1].name}
+                      </Typography>
+                    </div>
                     <div className={classes.positiveEmotionBox}>
                       <Typography
                         variant="body1"
@@ -998,7 +1043,7 @@ class QueryEmotionsContainer extends React.Component {
                       </Typography>
                       <Typography
                         variant="body1"
-                        className={classes.positiveeText}
+                        className={classes.positiveText}
                       >
                         {this.state.emotionDatas[1].name}
                       </Typography>
