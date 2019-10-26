@@ -27,6 +27,25 @@ import AddIcon from "@material-ui/icons/Add";
 import selectPage from "../../actions/selectPage";
 import ClearIcon from "@material-ui/icons/Clear";
 import CheckIcon from "@material-ui/icons/Check";
+import CalenderComponent from "./CalenderCompnent";
+import "react-modern-calendar-datepicker/lib/DatePicker.css";
+import {Calendar} from "react-modern-calendar-datepicker";
+
+const months = [
+  "",
+  "فروردین",
+  "اردیبهشت",
+  "خرداد",
+  "تیر",
+  "مرداد",
+  "شهریور",
+  "مهر",
+  "آبان",
+  "آذر",
+  "دی",
+  "بهمن",
+  "اسفند"
+];
 
 const styles = theme => ({
   wrapper: {
@@ -331,6 +350,10 @@ const styles = theme => ({
       opacity: 0.7,
       backgroundColor: "#1da1f2"
     }
+  },
+
+  dayIsSelected: {
+    color: "#08080d"
   }
 });
 
@@ -350,7 +373,16 @@ class AddQueries extends React.Component {
 
       isSelectProjectOpen: false,
       selectProjectAnchorEl: null,
-      selectedProject: null
+      selectedProject: null,
+
+      isCalenderOpen: false,
+      calenderAnchorEl: null,
+
+      selectedDay: {
+        from: null,
+        to: null
+      },
+      isDaySelected: false
     };
   }
 
@@ -374,6 +406,28 @@ class AddQueries extends React.Component {
     });
 
     this.handleCloseSelectProject();
+  };
+
+  handleCalenderClick = event => {
+    this.setState({
+      calenderAnchorEl: event.currentTarget,
+      isCalenderOpen: Boolean(event.currentTarget)
+    });
+  };
+
+  handleCloseCalender = () => {
+    this.setState({
+      calenderAnchorEl: null,
+      isCalenderOpen: false
+    });
+  };
+
+  handleSelectedDay = day => {
+    // console.log(day);
+    this.setState({
+      selectedDay: day,
+      isDaySelected: true
+    });
   };
 
   handleAddInstagramUser = e => {
@@ -613,12 +667,55 @@ class AddQueries extends React.Component {
                     یک بازه زمانی برای ردیاب خود انتخاب کنید
                   </Typography>
                 </div>
-                <Button className={classes.input}>
-                  انتخاب بازه زمانی
+                <Button
+                  className={classNames(
+                    classes.input,
+                    this.state.isDaySelected ? classes.dayIsSelected : ""
+                  )}
+                  onClick={event => this.handleCalenderClick(event)}
+                >
+                  {this.state.isDaySelected == false
+                    ? "انتخاب بازه زمانی"
+                    : this.state.selectedDay.from.day +
+                      " " +
+                      months[this.state.selectedDay.from.month] +
+                      " " +
+                      this.state.selectedDay.from.year +
+                      " - " +
+                      (this.state.selectedDay.to
+                        ? this.state.selectedDay.to.day +
+                          " " +
+                          months[this.state.selectedDay.to.month] +
+                          " " +
+                          this.state.selectedDay.to.year
+                        : "")}
                   <div className={classes.chevronDownIcon}>
                     <i className="fas fa-chevron-down" />
                   </div>
                 </Button>
+                <Popover
+                  open={this.state.isCalenderOpen}
+                  onClose={() => this.handleCloseCalender()}
+                  anchorEl={this.state.calenderAnchorEl}
+                  anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "right"
+                  }}
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right"
+                  }}
+                  classes={{
+                    paper: classes.calenderPopover
+                  }}
+                >
+                  <Calendar
+                    value={this.state.selectedDay}
+                    onChange={day => this.handleSelectedDay(day)}
+                    shouldHighlightWeekends
+                    isPersian
+                  />
+                </Popover>
               </Grid>
 
               <Grid item md={12} sm={12} xs={12}>
