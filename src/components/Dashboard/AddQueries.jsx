@@ -25,6 +25,8 @@ import MapComponent from "./MapComponent";
 import Popover from "@material-ui/core/Popover";
 import AddIcon from "@material-ui/icons/Add";
 import selectPage from "../../actions/selectPage";
+import ClearIcon from "@material-ui/icons/Clear";
+import CheckIcon from "@material-ui/icons/Check";
 
 const styles = theme => ({
   wrapper: {
@@ -225,6 +227,110 @@ const styles = theme => ({
   },
   projectIsSelected: {
     color: "#08080d"
+  },
+
+  tagWrapper: {
+    display: "flex",
+    flexDirection: "row",
+    width: "100%",
+    overflow: "hidden",
+    minHeight: 44,
+    position: "relative",
+    borderRadius: 22,
+    backgroundColor: "#edf1f6",
+    border: "none",
+    padding: "8px 22px",
+    color: "#a2a5a9",
+    display: "flex",
+    justifyContent: "right",
+    alignItems: "center",
+    flexWrap: "wrap",
+    "&::placeholder": {
+      color: "#a2a5a9"
+    }
+  },
+  tagHolder: {
+    display: "flex",
+    flexDirection: "row",
+    padding: 5,
+    marginTop: 1,
+    marginBottom: 1,
+    borderRadius: 22,
+    height: 26,
+    color: "#fff",
+    marginLeft: 10,
+    backgroundColor: "#4753ff"
+  },
+  tag: {
+    fontSize: 12,
+    marginLeft: 5
+  },
+  tagRemove: {
+    backgroundColor: "#fff",
+    color: "#4753ff",
+    width: 16,
+    height: 16,
+    borderRadius: "50%",
+    "&:hover": {
+      cursor: "pointer"
+    }
+  },
+  tagRemoveIcon: {
+    fontSize: "1rem"
+  },
+  tagInput: {
+    flexGrow: 1,
+    border: "none",
+    backgroundColor: "#edf1f6",
+    color: "#a2a5a9",
+    "&:focus": {
+      outline: "none"
+    }
+  },
+
+  socialMediaIconBox: {
+    position: "relative"
+  },
+  checkIconTiny: {
+    color: "#fff",
+    backgroundColor: "#03d588",
+    width: 14,
+    height: 14,
+    borderRadius: 22,
+    position: "absolute",
+    top: 2,
+    right: 10,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  instagramIconBtn: {
+    color: "#fff",
+    backgroundColor: "#da2b72",
+    minWidth: 44,
+    height: 44,
+    borderRadius: 22,
+    margin: "0px 10px",
+    border: "solid 5px rgba(255, 255, 255, 0.85)",
+    padding: 0,
+    "&:hover": {
+      opacity: 0.7,
+      backgroundColor: "#da2b72"
+    }
+  },
+  twitterIconBtn: {
+    color: "#fff",
+    backgroundColor: "#1da1f2",
+    minWidth: 44,
+    height: 44,
+    borderRadius: 22,
+    margin: "0px 10px",
+    border: "solid 5px rgba(255, 255, 255, 0.85)",
+    padding: 0,
+    "&:hover": {
+      opacity: 0.7,
+      backgroundColor: "#1da1f2"
+    }
   }
 });
 
@@ -232,6 +338,16 @@ class AddQueries extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      instagramUsers: [],
+      twitterUsers: [],
+      hashtags: [],
+      keywords: [],
+
+      twitter: 0,
+      instagram: 0,
+
+      isLocationEnable: false,
+
       isSelectProjectOpen: false,
       selectProjectAnchorEl: null,
       selectedProject: null
@@ -258,6 +374,108 @@ class AddQueries extends React.Component {
     });
 
     this.handleCloseSelectProject();
+  };
+
+  handleAddInstagramUser = e => {
+    if (e.keyCode == 13 && e.target.value != "") {
+      this.setState({
+        instagramUsers: [...this.state.instagramUsers, e.target.value]
+      });
+      e.target.value = "";
+    }
+  };
+
+  handleRemoveInstagramUser = id => {
+    var removed_list = [];
+    this.state.instagramUsers.map((item, index) => {
+      if (index != id) {
+        removed_list.push(item);
+      }
+    });
+    this.setState({
+      instagramUsers: removed_list
+    });
+  };
+
+  handleAddTwitterUser = e => {
+    if (e.keyCode == 13 && e.target.value != "") {
+      this.setState({
+        twitterUsers: [...this.state.twitterUsers, e.target.value]
+      });
+      e.target.value = "";
+    }
+  };
+
+  handleRemoveTwitterUser = id => {
+    var removed_list = [];
+    this.state.twitterUsers.map((item, index) => {
+      if (index != id) {
+        removed_list.push(item);
+      }
+    });
+    this.setState({
+      twitterUsers: removed_list
+    });
+  };
+
+  handleAddHashtag = e => {
+    if (e.keyCode == 13 && e.target.value != "") {
+      this.setState({
+        hashtags: [...this.state.hashtags, e.target.value]
+      });
+      e.target.value = "";
+    }
+  };
+
+  handleRemoveHashtag = id => {
+    var removed_list = [];
+    this.state.hashtags.map((item, index) => {
+      if (index != id) {
+        removed_list.push(item);
+      }
+    });
+    this.setState({
+      hashtags: removed_list
+    });
+  };
+
+  handleAddKeyword = e => {
+    if (e.keyCode == 13 && e.target.value != "") {
+      this.setState({
+        keywords: [...this.state.keywords, e.target.value]
+      });
+      e.target.value = "";
+    }
+  };
+
+  handleRemoveKeyword = id => {
+    var removed_list = [];
+    this.state.keywords.map((item, index) => {
+      if (index != id) {
+        removed_list.push(item);
+      }
+    });
+    this.setState({
+      keywords: removed_list
+    });
+  };
+
+  handleTwitterClick = () => {
+    this.setState({
+      twitter: !this.state.twitter
+    });
+  };
+
+  handleInstagramClick = () => {
+    this.setState({
+      instagram: !this.state.instagram
+    });
+  };
+
+  handleEnableLocation = () => {
+    this.setState({
+      isLocationEnable: !this.state.isLocationEnable
+    });
   };
 
   handleClickChangeMap = () => {
@@ -369,89 +587,23 @@ class AddQueries extends React.Component {
                       );
                     })}
                   </List>
-                  <div className="popover">
-                    {/* <IconButton
-                        className={classes.iconButtonSQ}
-                        aria-label="search"
-                      >
-                        <SearchIcon />
-                      </IconButton>
-                      <InputBase
-                        value={this.state.searchQueryString}
-                        onChange={this.handleChangeSearchQueryString}
-                        className={classes.inputSQ}
-                        placeholder="جستجو در ردیاب‌ها"
-                        inputProps={{"aria-label": "search queries"}}
-                      />
-                      <IconButton
-                        color="primary"
-                        className={classNames(
-                          classes.iconButtonSQ,
-                          this.state.searchQueryString != ""
-                            ? classes.showClearBtn
-                            : classes.hideClearBtn
-                        )}
-                        onClick={this.handleClearSearchQueryString}
-                        aria-label="clear"
-                      >
-                        <CloseIcon />
-                      </IconButton> */}
-                    {/* <List component="nav" className={classes.selectQueryList}>
-                      {this.state.searchQueryString != ""
-                        ? this.state.seachedQueries.map((item, index) => {
-                            return (
-                              <ListItem
-                                className={classNames(classes.listItemx)}
-                                key={item.id}
-                                button
-                                onClick={() => this.handleSelectQueryMenu(item)}
-                              >
-                                <ListItemText className="list-item-right">
-                                  {item.name}
-                                </ListItemText>
-                                <ListItemText
-                                  className={classes.listItemTextMeta}
-                                >
-                                  {item.created_at}
-                                </ListItemText>
-                                <ListItemIcon
-                                  className={classes.iconChevronList}
-                                >
-                                  <ChevronLeft />
-                                </ListItemIcon>
-                              </ListItem>
-                            );
-                          })
-                        : this.props.latestQueries.map((item, index) => {
-                            return (
-                              <ListItem
-                                className={classNames(classes.listItemx)}
-                                key={item.id}
-                                button
-                                onClick={() => this.handleSelectQueryMenu(item)}
-                              >
-                                <ListItemText className="list-item-right">
-                                  {item.name}
-                                </ListItemText>
-                                <ListItemText
-                                  className={classes.listItemTextMeta}
-                                >
-                                  {item.created_at}
-                                </ListItemText>
-                                <ListItemIcon
-                                  className={classes.iconChevronList}
-                                >
-                                  <ChevronLeft />
-                                </ListItemIcon>
-                              </ListItem>
-                            );
-                          })}
-                    </List> */}
-                  </div>
                 </Popover>
               </Grid>
             </Grid>
             <Grid container className={classes.root} spacing={2}>
+              <Grid item md={6} sm={6} xs={12}>
+                <div className={classes.labelBox}>
+                  <i
+                    className={classNames(classes.bulbIcon, "far fa-lightbulb")}
+                  ></i>
+                  <Typography variant="body2">نام ردیاب</Typography>
+                </div>
+                <input
+                  type="text"
+                  className={classes.input}
+                  placeholder="وارد کردن نام ردیاب"
+                />
+              </Grid>
               <Grid item md={6} sm={6} xs={12}>
                 <div className={classes.labelBox}>
                   <i
@@ -468,19 +620,6 @@ class AddQueries extends React.Component {
                   </div>
                 </Button>
               </Grid>
-              <Grid item md={6} sm={6} xs={12}>
-                <div className={classes.labelBox}>
-                  <i
-                    className={classNames(classes.bulbIcon, "far fa-lightbulb")}
-                  ></i>
-                  <Typography variant="body2">نام ردیاب</Typography>
-                </div>
-                <input
-                  type="text"
-                  className={classes.input}
-                  placeholder="وارد کردن نام ردیاب"
-                />
-              </Grid>
 
               <Grid item md={12} sm={12} xs={12}>
                 <div className={classes.labelBox}>
@@ -493,28 +632,98 @@ class AddQueries extends React.Component {
                 </div>
                 <Grid container className={classes.root} spacing={2}>
                   <Grid item md={1}>
-                    <IconButton className={classes.socialMediaIcon}>
-                      <i className="fab fa-instagram fa-sm"></i>
-                    </IconButton>
+                    <div className={classes.socialMediaIconBox}>
+                      <IconButton
+                        className={
+                          this.state.instagram
+                            ? classes.instagramIconBtn
+                            : classes.socialMediaIcon
+                        }
+                        onClick={() => this.handleInstagramClick()}
+                      >
+                        <i className="fab fa-instagram fa-sm"></i>
+                      </IconButton>
+                      {this.state.instagram ? (
+                        <span className={classes.checkIconTiny}>
+                          <CheckIcon style={{fontSize: "0.9rem"}} />
+                        </span>
+                      ) : (
+                        ""
+                      )}
+                    </div>
                   </Grid>
                   <Grid item md={5}>
-                    <input
-                      type="text"
-                      className={classes.input}
-                      placeholder="نام کاربری فرد موثر برای ردیابی"
-                    />
+                    <div className={classes.tagWrapper}>
+                      {this.state.instagramUsers.map((item, index) => {
+                        return (
+                          <div className={classes.tagHolder} key={index}>
+                            <div className={classes.tag}>{item}</div>
+                            <div
+                              className={classes.tagRemove}
+                              onClick={() =>
+                                this.handleRemoveInstagramUser(index)
+                              }
+                            >
+                              <ClearIcon className={classes.tagRemoveIcon} />
+                            </div>
+                          </div>
+                        );
+                      })}
+                      <input
+                        type="text"
+                        className={classes.tagInput}
+                        placeholder="نام کاربری فرد موثر برای ردیابی"
+                        id="instagram-users"
+                        onKeyUp={e => this.handleAddInstagramUser(e)}
+                      />
+                    </div>
                   </Grid>
                   <Grid item md={1}>
-                    <IconButton className={classes.socialMediaIcon}>
-                      <i className="fab fa-twitter fa-sm"></i>
-                    </IconButton>
+                    <div className={classes.socialMediaIconBox}>
+                      <IconButton
+                        className={
+                          this.state.twitter
+                            ? classes.twitterIconBtn
+                            : classes.socialMediaIcon
+                        }
+                        onClick={() => this.handleTwitterClick()}
+                      >
+                        <i className="fab fa-twitter fa-sm"></i>
+                      </IconButton>
+                      {this.state.twitter ? (
+                        <span className={classes.checkIconTiny}>
+                          <CheckIcon style={{fontSize: "0.9rem"}} />
+                        </span>
+                      ) : (
+                        ""
+                      )}
+                    </div>
                   </Grid>
                   <Grid item md={5}>
-                    <input
-                      type="text"
-                      className={classes.input}
-                      placeholder="نام کاربری فرد موثر برای ردیابی"
-                    />
+                    <div className={classes.tagWrapper}>
+                      {this.state.twitterUsers.map((item, index) => {
+                        return (
+                          <div className={classes.tagHolder} key={index}>
+                            <div className={classes.tag}>{item}</div>
+                            <div
+                              className={classes.tagRemove}
+                              onClick={() =>
+                                this.handleRemoveTwitterUser(index)
+                              }
+                            >
+                              <ClearIcon className={classes.tagRemoveIcon} />
+                            </div>
+                          </div>
+                        );
+                      })}
+                      <input
+                        type="text"
+                        className={classes.tagInput}
+                        placeholder="نام کاربری فرد موثر برای ردیابی"
+                        id="twitter-users"
+                        onKeyUp={e => this.handleAddTwitterUser(e)}
+                      />
+                    </div>
                   </Grid>
                 </Grid>
               </Grid>
@@ -530,73 +739,120 @@ class AddQueries extends React.Component {
                 </div>
                 <Grid container className={classes.root} spacing={2}>
                   <Grid item md={6}>
-                    <input
-                      type="text"
-                      className={classes.input}
-                      placeholder="هشتگ مرتبط با ردیاب را وارد کنید"
-                    />
+                    <div className={classes.tagWrapper}>
+                      {this.state.hashtags.map((item, index) => {
+                        return (
+                          <div className={classes.tagHolder} key={index}>
+                            <div className={classes.tag}>{item}</div>
+                            <div
+                              className={classes.tagRemove}
+                              onClick={() => this.handleRemoveHashtag(index)}
+                            >
+                              <ClearIcon className={classes.tagRemoveIcon} />
+                            </div>
+                          </div>
+                        );
+                      })}
+                      <input
+                        type="text"
+                        className={classes.tagInput}
+                        placeholder="نام کاربری فرد موثر برای ردیابی"
+                        id="instagram-users"
+                        onKeyUp={e => this.handleAddHashtag(e)}
+                      />
+                    </div>
                   </Grid>
                   <Grid item md={6}>
-                    <input
-                      type="text"
-                      className={classes.input}
-                      placeholder="کلمات کلیدی مرتبط با ردیاب را وارد کنید"
-                    />
+                    <div className={classes.tagWrapper}>
+                      {this.state.keywords.map((item, index) => {
+                        return (
+                          <div className={classes.tagHolder} key={index}>
+                            <div className={classes.tag}>{item}</div>
+                            <div
+                              className={classes.tagRemove}
+                              onClick={() => this.handleRemoveKeyword(index)}
+                            >
+                              <ClearIcon className={classes.tagRemoveIcon} />
+                            </div>
+                          </div>
+                        );
+                      })}
+                      <input
+                        type="text"
+                        className={classes.tagInput}
+                        placeholder="نام کاربری فرد موثر برای ردیابی"
+                        id="instagram-users"
+                        onKeyUp={e => this.handleAddKeyword(e)}
+                      />
+                    </div>
                   </Grid>
                 </Grid>
               </Grid>
-              <Grid
-                item
-                md={12}
-                sm={12}
-                xs={12}
-                className={classes.enableMapGrid}
-              >
-                <Button
-                  color="primary"
-                  className={classes.enableMapBtn}
-                  // onClick={() => this.showMapBox()}
+              {this.state.isLocationEnable != true ? (
+                <Grid
+                  item
+                  md={12}
+                  sm={12}
+                  xs={12}
+                  className={classes.enableMapGrid}
                 >
-                  انتخاب محدوده جغرافیایی
-                </Button>
-              </Grid>
-
-              <Grid item md={12} sm={12} xs={12}>
-                <div className={classes.labelBox}>
-                  <i
-                    className={classNames(classes.bulbIcon, "far fa-lightbulb")}
-                  ></i>
-                  <Typography variant="body2">
-                    محدوده جغرافیایی مرتبط با ردیاب را انتخاب کنید
-                  </Typography>
-                </div>
-                <Grid container className={classes.root} spacing={2}>
-                  <Grid item md={6}>
-                    <div className={classes.mapBox} id="map-box">
-                      <MapComponent />
-                      <div
-                        id="map-overlay"
-                        className={classes.mapOverlay}
-                      ></div>
-                      <Button
-                        id="map-btn"
-                        color="primary"
-                        className={classes.changeMapBtn}
-                        onClick={() => this.handleClickChangeMap()}
-                      >
-                        انتخاب محدوده
-                      </Button>
-                    </div>
-                  </Grid>
-                  <Grid item md={6}>
-                    <div className={classes.box}>
-                      <Typography variant="body2" className={classes.textMute}>
-                        هشتگ یا کلمه کلیدی مرتبط پیدا نشده است
-                      </Typography>
-                    </div>
+                  <Button
+                    color="primary"
+                    className={classes.enableMapBtn}
+                    onClick={() => this.handleEnableLocation()}
+                  >
+                    انتخاب محدوده جغرافیایی
+                  </Button>
+                </Grid>
+              ) : (
+                ""
+              )}
+              {this.state.isLocationEnable ? (
+                <Grid item md={12} sm={12} xs={12}>
+                  <div className={classes.labelBox}>
+                    <i
+                      className={classNames(
+                        classes.bulbIcon,
+                        "far fa-lightbulb"
+                      )}
+                    ></i>
+                    <Typography variant="body2">
+                      محدوده جغرافیایی مرتبط با ردیاب را انتخاب کنید
+                    </Typography>
+                  </div>
+                  <Grid container className={classes.root} spacing={2}>
+                    <Grid item md={6}>
+                      <div className={classes.mapBox} id="map-box">
+                        <MapComponent />
+                        <div
+                          id="map-overlay"
+                          className={classes.mapOverlay}
+                        ></div>
+                        <Button
+                          id="map-btn"
+                          color="primary"
+                          className={classes.changeMapBtn}
+                          onClick={() => this.handleClickChangeMap()}
+                        >
+                          انتخاب محدوده
+                        </Button>
+                      </div>
+                    </Grid>
+                    <Grid item md={6}>
+                      <div className={classes.box}>
+                        <Typography
+                          variant="body2"
+                          className={classes.textMute}
+                        >
+                          هشتگ یا کلمه کلیدی مرتبط پیدا نشده است
+                        </Typography>
+                      </div>
+                    </Grid>
                   </Grid>
                 </Grid>
-              </Grid>
+              ) : (
+                ""
+              )}
             </Grid>
           </Container>
         </main>
