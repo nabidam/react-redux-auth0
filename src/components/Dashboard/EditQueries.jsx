@@ -354,10 +354,14 @@ const styles = theme => ({
 
   dayIsSelected: {
     color: "#08080d"
+  },
+
+  mapBoxEnable: {
+    borderColor: "#4753ff"
   }
 });
 
-class AddQueries extends React.Component {
+class EditQueries extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -370,6 +374,7 @@ class AddQueries extends React.Component {
       instagram: 0,
 
       isLocationEnable: false,
+      isMapChangable: false,
       mapCenter: [51.4124, 35.7325],
 
       isSelectProjectOpen: false,
@@ -385,8 +390,11 @@ class AddQueries extends React.Component {
       },
       isDaySelected: false,
 
-      queryName: ""
+      editableQuery: null,
+      editableQueryName: ""
     };
+
+    // this.handleChangeName = this.handleChangeName.bind(this);
   }
 
   handleSelectProjectClick = event => {
@@ -535,28 +543,53 @@ class AddQueries extends React.Component {
     });
   };
 
-  handleChangeName = e => {
+  handleClickChangeMap = () => {
     this.setState({
-      queryName: e.target.value
+      isMapChangable: true
+    });
+    // var mapOverlay = document.getElementById("map-overlay");
+    // mapOverlay.parentNode.removeChild(mapOverlay);
+    // var mapBtn = document.getElementById("map-btn");
+    // mapBtn.parentNode.removeChild(mapBtn);
+    // var mapBox = document.getElementById("map-box");
+    // mapBox.style.borderColor = "#4753ff";
+  };
+
+  handleChangeName = e => {
+    e.persist();
+    // console.log(e);
+
+    this.setState(prevState => ({
+      editableQuery: {
+        ...prevState.editableQuery,
+        name: e.target.value
+      }
+    }));
+  };
+
+  componentDidMount = () => {
+    this.setState({
+      instagramUsers: this.props.editableQuery.social.instagramUsers,
+      twitterUsers: this.props.editableQuery.social.twitterUsers,
+      hashtags: this.props.editableQuery.hashtags,
+      keywords: this.props.editableQuery.keywords,
+
+      twitter: this.props.editableQuery.social.twitter,
+      instagram: this.props.editableQuery.social.instagram,
+
+      isLocationEnable: this.props.editableQuery.location.isLocationEnable,
+      isMapChangable: this.props.editableQuery.location.isLocationEnable,
+      mapCenter: this.props.editableQuery.location.center,
+
+      selectedProject: this.props.editableQuery.selectedProject,
+
+      selectedDay: this.props.editableQuery.selectedDay,
+      isDaySelected: this.props.editableQuery.isDaySelected,
+
+      editableQuery: this.props.editableQuery,
+      editableQueryName: this.props.editableQuery.name
     });
   };
-
-  handleClickChangeMap = () => {
-    var mapOverlay = document.getElementById("map-overlay");
-    mapOverlay.parentNode.removeChild(mapOverlay);
-    var mapBtn = document.getElementById("map-btn");
-    mapBtn.parentNode.removeChild(mapBtn);
-    var mapBox = document.getElementById("map-box");
-    mapBox.style.borderColor = "#4753ff";
-  };
-
-  //   componentDidMount = () => {
-  //     console.log(
-  //       moment()
-  //         .subtract(10, "days")
-  //         .format("Do")
-  //     );
-  //   };
 
   render() {
     const {classes} = this.props;
@@ -665,7 +698,11 @@ class AddQueries extends React.Component {
                   type="text"
                   className={classes.input}
                   placeholder="وارد کردن نام ردیاب"
-                  value={this.state.queryName}
+                  value={
+                    this.state.editableQuery
+                      ? this.state.editableQuery.name
+                      : ""
+                  }
                   onChange={e => this.handleChangeName(e)}
                 />
               </Grid>
@@ -930,20 +967,32 @@ class AddQueries extends React.Component {
                   </div>
                   <Grid container className={classes.root} spacing={2}>
                     <Grid item md={6}>
-                      <div className={classes.mapBox} id="map-box">
+                      <div
+                        className={classNames(
+                          classes.mapBox,
+                          this.state.isMapChangable ? classes.mapBoxEnable : ""
+                        )}
+                        id="map-box"
+                      >
                         <MapComponent center={this.state.mapCenter} />
-                        <div
-                          id="map-overlay"
-                          className={classes.mapOverlay}
-                        ></div>
-                        <Button
-                          id="map-btn"
-                          color="primary"
-                          className={classes.changeMapBtn}
-                          onClick={() => this.handleClickChangeMap()}
-                        >
-                          انتخاب محدوده
-                        </Button>
+                        {this.state.isMapChangable ? (
+                          ""
+                        ) : (
+                          <div>
+                            <div
+                              id="map-overlay"
+                              className={classes.mapOverlay}
+                            ></div>
+                            <Button
+                              id="map-btn"
+                              color="primary"
+                              className={classes.changeMapBtn}
+                              onClick={() => this.handleClickChangeMap()}
+                            >
+                              انتخاب محدوده
+                            </Button>
+                          </div>
+                        )}
                       </div>
                     </Grid>
                     <Grid item md={6}>
@@ -969,7 +1018,7 @@ class AddQueries extends React.Component {
   }
 }
 
-AddQueries.propTypes = {
+EditQueries.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired
 };
@@ -980,7 +1029,8 @@ const mapStateToProps = state => {
     selectedQuery: state.selectedQuery,
     queries: state.queries,
     selectedQueriesType: state.selectedQueriesType,
-    projects: state.projects
+    projects: state.projects,
+    editableQuery: state.editableQuery
   };
 };
 
@@ -1006,4 +1056,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(styles, {withTheme: true})(AddQueries));
+)(withStyles(styles, {withTheme: true})(EditQueries));

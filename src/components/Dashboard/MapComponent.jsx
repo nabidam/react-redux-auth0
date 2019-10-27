@@ -119,13 +119,25 @@ class MapComponent extends React.Component {
       //   lng: 54.4504,
       //   lat: 33.1064,
       //   zoom: 5
+      center: [51.4124, 35.7325],
       lng: 51.4124,
       lat: 35.7325,
       zoom: 13.89
     };
   }
 
+  handleMoveMap = e => {
+    // console.log(e.getCenter());
+    this.setState({
+      center: [e.getCenter().lng.toFixed(4), e.getCenter().lat.toFixed(4)],
+      zoom: e.getZoom().toFixed(2)
+    });
+  };
+
   componentDidMount() {
+    this.setState({
+      center: this.props.center
+    });
     // const map = new mapboxgl.Map({
     //   container: this.mapContainer,
     //   style: "mapbox://styles/mapbox/streets-v11",
@@ -200,27 +212,28 @@ class MapComponent extends React.Component {
         <div ref={el => (this.mapContainer = el)} className="mapContainer" /> */}
         {/* <div className="sidebarStyle">
           <div>
-            Longitude: {this.state.lng} | Latitude: {this.state.lat} | Zoom:{" "}
-            {this.state.zoom}
+            Longitude, Latitude: {this.state.center} | Zoom: {this.state.zoom}
           </div>
         </div> */}
         <Map
           style="mapbox://styles/mapbox/streets-v8"
           ref={el => (this.mapContainer = el)}
-          center={[this.state.lng, this.state.lat]}
+          // center={[this.state.lng, this.state.lat]}
+          center={this.props.center}
           zoom={[this.state.zoom]}
           className="mapContainer"
+          onMove={e => this.handleMoveMap(e)}
         >
           <Layer
             type="symbol"
             id="marker"
             layout={{
-              "icon-image": "harbor-15"
+              "icon-image": "marker-15"
             }}
           >
             <Marker
               //   anchor="bottom"
-              coordinates={[this.state.lng, this.state.lat]}
+              coordinates={this.state.center}
             >
               {/* <img src="http://maps.google.com/mapfiles/ms/icons/red-dot.png" /> */}
             </Marker>

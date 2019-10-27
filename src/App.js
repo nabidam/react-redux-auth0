@@ -65,7 +65,11 @@ class App extends Component {
               }
             />
             <Route exact path="/svg" component={PieChart} />
-            <Route exact path="/map" component={MapComponent} />
+            <Route
+              exact
+              path="/map"
+              render={() => <MapComponent center={[51.4124, 35.7325]} />}
+            />
             <Route path="/callback" component={Callback} />
             <Route path="/about" component={About} />
             <Route path="/cloud" component={WordsCloud} />

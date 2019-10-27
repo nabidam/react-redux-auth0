@@ -25,6 +25,7 @@ const initState = {
   selectedAnalysisType: 1,
   selectedQueriesType: 1,
   selectedQuery: 0,
+  editableQuery: null,
   analysis: [
     {
       id: 1,
@@ -55,11 +56,64 @@ const initState = {
       active: 1,
       social: {
         twitter: 1,
-        instagram: 1
+        instagram: 1,
+        instagramUsers: ["mohrza"],
+        twitterUsers: ["kolimor"]
       },
       retrieved_posts: 682,
       date: "12 خرداد 98",
-      time: "16:43"
+      time: "16:43",
+      selectedProject: {
+        id: 1,
+        name: "کاله",
+        date: "12 خرداد 1398",
+        time: "16:43",
+        queries: [
+          {
+            id: 1,
+            name: "ماست",
+            date: "12 خرداد 1398",
+            time: "16:43",
+            retrieved_posts: 682,
+            active: 1
+          },
+          {
+            id: 2,
+            name: "صبحانه",
+            date: "12 خرداد 1398",
+            time: "16:43",
+            retrieved_posts: 682,
+            active: 1
+          },
+          {
+            id: 3,
+            name: "سفر",
+            date: "12 خرداد 1398",
+            time: "16:43",
+            retrieved_posts: 682,
+            active: 1
+          }
+        ]
+      },
+      isDaySelected: true,
+      selectedDay: {
+        from: {
+          year: 1398,
+          month: 8,
+          day: 14
+        },
+        to: {
+          year: 1398,
+          month: 8,
+          day: 24
+        }
+      },
+      location: {
+        isLocationEnable: true,
+        center: [51.4124, 35.7325]
+      },
+      keywords: ["کتاب"],
+      hashtags: ["کتاب"]
     },
     {
       id: 2,
@@ -67,11 +121,64 @@ const initState = {
       active: 1,
       social: {
         twitter: 1,
-        instagram: null
+        instagram: null,
+        instagramUsers: ["mohrza"],
+        twitterUsers: ["kolimor"]
       },
       retrieved_posts: 682,
       date: "18 خرداد 98",
-      time: "16:43"
+      time: "16:43",
+      selectedProject: {
+        id: 1,
+        name: "کاله",
+        date: "12 خرداد 1398",
+        time: "16:43",
+        queries: [
+          {
+            id: 1,
+            name: "ماست",
+            date: "12 خرداد 1398",
+            time: "16:43",
+            retrieved_posts: 682,
+            active: 1
+          },
+          {
+            id: 2,
+            name: "صبحانه",
+            date: "12 خرداد 1398",
+            time: "16:43",
+            retrieved_posts: 682,
+            active: 1
+          },
+          {
+            id: 3,
+            name: "سفر",
+            date: "12 خرداد 1398",
+            time: "16:43",
+            retrieved_posts: 682,
+            active: 1
+          }
+        ]
+      },
+      isDaySelected: true,
+      selectedDay: {
+        from: {
+          year: 1398,
+          month: 8,
+          day: 14
+        },
+        to: {
+          year: 1398,
+          month: 8,
+          day: 24
+        }
+      },
+      location: {
+        isLocationEnable: true,
+        center: [51.4124, 35.7325]
+      },
+      keywords: ["کتاب"],
+      hashtags: ["کتاب"]
     },
     {
       id: 3,
@@ -79,11 +186,64 @@ const initState = {
       active: 1,
       social: {
         twitter: 1,
-        instagram: 1
+        instagram: 1,
+        instagramUsers: ["mohrza"],
+        twitterUsers: ["kolimor"]
       },
       retrieved_posts: 682,
       date: "10 خرداد 98",
-      time: "16:43"
+      time: "16:43",
+      selectedProject: {
+        id: 1,
+        name: "کاله",
+        date: "12 خرداد 1398",
+        time: "16:43",
+        queries: [
+          {
+            id: 1,
+            name: "ماست",
+            date: "12 خرداد 1398",
+            time: "16:43",
+            retrieved_posts: 682,
+            active: 1
+          },
+          {
+            id: 2,
+            name: "صبحانه",
+            date: "12 خرداد 1398",
+            time: "16:43",
+            retrieved_posts: 682,
+            active: 1
+          },
+          {
+            id: 3,
+            name: "سفر",
+            date: "12 خرداد 1398",
+            time: "16:43",
+            retrieved_posts: 682,
+            active: 1
+          }
+        ]
+      },
+      isDaySelected: true,
+      selectedDay: {
+        from: {
+          year: 1398,
+          month: 8,
+          day: 14
+        },
+        to: {
+          year: 1398,
+          month: 8,
+          day: 24
+        }
+      },
+      location: {
+        isLocationEnable: true,
+        center: [51.4124, 35.7325]
+      },
+      keywords: ["کتاب"],
+      hashtags: ["کتاب"]
     },
     {
       id: 4,
@@ -91,11 +251,64 @@ const initState = {
       active: 0,
       social: {
         twitter: 1,
-        instagram: 1
+        instagram: 1,
+        instagramUsers: ["mohrza"],
+        twitterUsers: ["kolimor"]
       },
       retrieved_posts: 682,
       date: "10 خرداد 98",
-      time: "16:43"
+      time: "16:43",
+      selectedProject: {
+        id: 1,
+        name: "کاله",
+        date: "12 خرداد 1398",
+        time: "16:43",
+        queries: [
+          {
+            id: 1,
+            name: "ماست",
+            date: "12 خرداد 1398",
+            time: "16:43",
+            retrieved_posts: 682,
+            active: 1
+          },
+          {
+            id: 2,
+            name: "صبحانه",
+            date: "12 خرداد 1398",
+            time: "16:43",
+            retrieved_posts: 682,
+            active: 1
+          },
+          {
+            id: 3,
+            name: "سفر",
+            date: "12 خرداد 1398",
+            time: "16:43",
+            retrieved_posts: 682,
+            active: 1
+          }
+        ]
+      },
+      isDaySelected: true,
+      selectedDay: {
+        from: {
+          year: 1398,
+          month: 8,
+          day: 14
+        },
+        to: {
+          year: 1398,
+          month: 8,
+          day: 24
+        }
+      },
+      location: {
+        isLocationEnable: true,
+        center: [51.4124, 35.7325]
+      },
+      keywords: ["کتاب"],
+      hashtags: ["کتاب"]
     },
     {
       id: 5,
@@ -103,11 +316,33 @@ const initState = {
       active: 0,
       social: {
         twitter: 1,
-        instagram: null
+        instagram: null,
+        instagramUsers: ["mohrza"],
+        twitterUsers: ["kolimor"]
       },
       retrieved_posts: 682,
       date: "10 خرداد 98",
-      time: "16:43"
+      time: "16:43",
+      selectedProject: null,
+      isDaySelected: true,
+      selectedDay: {
+        from: {
+          year: 1398,
+          month: 8,
+          day: 14
+        },
+        to: {
+          year: 1398,
+          month: 8,
+          day: 24
+        }
+      },
+      location: {
+        isLocationEnable: true,
+        center: [51.4124, 35.7325]
+      },
+      keywords: ["کتاب"],
+      hashtags: ["کتاب"]
     }
   ],
   groups: [
@@ -1085,6 +1320,17 @@ const rootReducer = (state = initState, action) => {
       return {
         ...state,
         selectedPage: action.page
+      };
+    case types.EDITABLE_QUERY:
+      var editableQuery = {};
+      state.queries.map(q => {
+        if (q.id == action.id) {
+          editableQuery = q;
+        }
+      });
+      return {
+        ...state,
+        editableQuery
       };
     default:
       return state;

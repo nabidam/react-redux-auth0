@@ -54,6 +54,7 @@ import moment from "moment";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import PauseIcon from "@material-ui/icons/Pause";
 import selectPage from "../../actions/selectPage";
+import editableQuery from "../../actions/editableQuery";
 
 const styles = theme => ({
   wrapper: {
@@ -262,6 +263,11 @@ class Queries extends React.Component {
     this.props.selectPage("queries/add");
   };
 
+  handleClickEdit = id => {
+    this.props.editableQuery(id);
+    this.props.selectPage("queries/edit");
+  };
+
   //   componentDidMount = () => {
   //     console.log(
   //       moment()
@@ -417,6 +423,7 @@ class Queries extends React.Component {
                               <Typography
                                 variant="body1"
                                 className={classes.edit}
+                                onClick={() => this.handleClickEdit(item.id)}
                               >
                                 ویرایش
                               </Typography>
@@ -456,7 +463,8 @@ const mapDispatchToProps = dispatch => {
     selectQuery: id => dispatch(selectQuery(id)),
     selectQueriesType: type => dispatch(selectQueriesType(type)),
     changeQueryStatus: query => dispatch(changeQueryStatus(query)),
-    selectPage: page => dispatch(selectPage(page))
+    selectPage: page => dispatch(selectPage(page)),
+    editableQuery: id => dispatch(editableQuery(id))
   };
 };
 
