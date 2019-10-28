@@ -22,6 +22,7 @@ import {
 // import {Map, GoogleApiWrapper} from "google-maps-react";
 import IconButton from "@material-ui/core/IconButton";
 import AddIcon from "@material-ui/icons/Add";
+import CheckIcon from "@material-ui/icons/Check";
 
 const styles = theme => ({
   wrapper: {
@@ -72,7 +73,7 @@ const styles = theme => ({
     backgroundColor: "#edf1f6",
     border: "none",
     padding: "0px 22px",
-    color: "#a2a5a9",
+    color: "#08080d",
     display: "flex",
     justifyContent: "right",
     "&::placeholder": {
@@ -150,14 +151,138 @@ const styles = theme => ({
     left: "19px",
     fontSize: "0.75em",
     color: "rgba(8, 8, 13, 0.33)"
+  },
+
+  selectedQueryItem: {
+    width: "100%",
+    height: 44,
+    position: "relative",
+    borderRadius: 3,
+    backgroundColor: "#d6d9ff",
+    border: "solid 2px #4753ff",
+    padding: "0px 22px",
+    color: "#a2a5a9",
+    display: "flex",
+    justifyContent: "right",
+    "&::placeholder": {
+      color: "#a2a5a9"
+    }
+  },
+  divider: {
+    width: "100%",
+    backgroundColor: "#e4e8ed",
+    height: 1,
+    marginTop: 22,
+    marginBottom: 22
+  },
+  actions: {
+    display: "flex",
+    alignItems: "center"
+  },
+  searchInput: {
+    width: "100%",
+    height: 44,
+    borderRadius: 22,
+    background: "#edf1f6",
+    padding: 21,
+    border: "1px solid #edf1f6",
+    "&:focus": {
+      background: "#fff",
+      border: "1px solid #4753ff",
+      outlineWidth: 0
+    }
+  },
+  searchIconBtn: {
+    color: "#fff",
+    backgroundColor: "#4753ff",
+    minWidth: 44,
+    height: 44,
+    borderRadius: 22,
+    margin: "0px 15px",
+    border: "solid 5px rgba(255, 255, 255, 0.85)",
+    "&:hover": {
+      opacity: 0.7,
+      backgroundColor: "#4753ff"
+    }
+  },
+  count: {
+    display: "flex",
+    justifyContent: "flex-end",
+    alignItems: "center"
+  },
+  countText: {
+    color: "#08080d",
+    fontSize: 12
   }
 });
 
 class AddProjects extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      projectName: "",
+      selectedQueries: [],
+
+      searchInput: "",
+      searchedQueries: []
+    };
   }
+
+  handleChangeName = e => {
+    this.setState({
+      projectName: e.target.value
+    });
+  };
+
+  handleClickQuery = id => {
+    var selectedQueries = this.state.selectedQueries;
+    var removed_list = [];
+    if (selectedQueries.includes(id)) {
+      selectedQueries.map((item, index) => {
+        if (item != id) {
+          removed_list.push(item);
+        }
+      });
+      selectedQueries = removed_list;
+    } else {
+      selectedQueries.push(id);
+    }
+    this.setState({
+      selectedQueries
+    });
+  };
+
+  handleChangeSearchInput = e => {
+    var searched_query = e.target.value.toUpperCase();
+    var queries = this.props.queries;
+    var searched_queries = [];
+    queries.map((item, index) => {
+      if (item.name.toUpperCase().indexOf(searched_query) > -1) {
+        searched_queries.push(item);
+      }
+    });
+
+    this.setState({
+      searchInput: e.target.value,
+      searchedQueries: searched_queries
+    });
+  };
+
+  handleSearchQueries = e => {
+    var searched_query = e.target.value.toUpperCase();
+    var queries = this.props.queries;
+    var searched_queries = [];
+    queries.map((item, index) => {
+      if (item.name.toUpperCase().indexOf(searched_query) > -1) {
+        searched_queries.push(item);
+      }
+    });
+
+    this.setState({
+      searchInput: e.target.value,
+      searchedQueries: searched_queries
+    });
+  };
 
   //   componentDidMount = () => {
   //     console.log(
@@ -182,15 +307,16 @@ class AddProjects extends React.Component {
                     className={classNames(classes.bulbIcon, "far fa-lightbulb")}
                   ></i>
                   <Typography variant="body2">
-                    یک بازه زمانی برای ردیاب خود انتخاب کنید
+                    نام پروژه را وارد کنید
                   </Typography>
                 </div>
-                <Button className={classes.input}>
-                  انتخاب بازه زمانی
-                  <div className={classes.chevronDownIcon}>
-                    <i className="fas fa-chevron-down" />
-                  </div>
-                </Button>
+                <input
+                  type="text"
+                  className={classes.input}
+                  placeholder="نام پروژه"
+                  value={this.state.projectName}
+                  onChange={e => this.handleChangeName(e)}
+                />
               </Grid>
             </Grid>
             <Grid container className={classes.root} spacing={2}>
@@ -208,16 +334,73 @@ class AddProjects extends React.Component {
                   className={classNames(classes.root, classes.queriesContainer)}
                   spacing={2}
                 >
-                  {this.props.queries.map(query => (
-                    <Grid item md={6} key={query.id}>
-                      <Button className={classes.queriesItem}>
-                        {query.name}
-                        <div className={classes.addIcon}>
-                          <AddIcon />
-                        </div>
-                      </Button>
-                    </Grid>
-                  ))}
+                  <Grid item md={6} className={classes.actions}>
+                    <input
+                      type="text"
+                      className={classes.searchInput}
+                      placeholder="نام ردیاب"
+                      value={this.state.searchInput}
+                      onChange={e => this.handleChangeSearchInput(e)}
+                    />
+                    <Button
+                      className={classes.searchIconBtn}
+                      onClick={e => this.handleSearchQueries(e)}
+                    >
+                      <i className="fa fa-search fa-lg"></i>
+                    </Button>
+                  </Grid>
+                  <Grid item md={6} className={classes.count}>
+                    <div className={classes.countList}>
+                      {this.state.selectedQueries.length
+                        ? this.state.selectedQueries.length +
+                          " ردیاب انتخاب شده"
+                        : ""}
+                    </div>
+                  </Grid>
+                  <Divider className={classes.divider} />
+                  {this.state.searchInput == ""
+                    ? this.props.queries.map(query => (
+                        <Grid item md={6} key={query.id}>
+                          <Button
+                            className={
+                              this.state.selectedQueries.includes(query.id)
+                                ? classes.selectedQueryItem
+                                : classes.queriesItem
+                            }
+                            onClick={() => this.handleClickQuery(query.id)}
+                          >
+                            {query.name}
+                            <div className={classes.addIcon}>
+                              {this.state.selectedQueries.includes(query.id) ? (
+                                <CheckIcon />
+                              ) : (
+                                <AddIcon />
+                              )}
+                            </div>
+                          </Button>
+                        </Grid>
+                      ))
+                    : this.state.searchedQueries.map(query => (
+                        <Grid item md={6} key={query.id}>
+                          <Button
+                            className={
+                              this.state.selectedQueries.includes(query.id)
+                                ? classes.selectedQueryItem
+                                : classes.queriesItem
+                            }
+                            onClick={() => this.handleClickQuery(query.id)}
+                          >
+                            {query.name}
+                            <div className={classes.addIcon}>
+                              {this.state.selectedQueries.includes(query.id) ? (
+                                <CheckIcon />
+                              ) : (
+                                <AddIcon />
+                              )}
+                            </div>
+                          </Button>
+                        </Grid>
+                      ))}
                 </Grid>
               </Grid>
             </Grid>
