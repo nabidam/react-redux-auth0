@@ -20,15 +20,26 @@ import {
   Tooltip as MTooltip
 } from "@material-ui/core";
 import MapComponent from "./MapComponent";
-// import {Map, GoogleApiWrapper} from "google-maps-react";
-// import ReactMapboxGl, {Layer, Feature} from "react-mapbox-gl";
-// import ReactMapGL from "react-map-gl";
-// import Map from "./Map";
+import "react-modern-calendar-datepicker/lib/DatePicker.css";
+import {Calendar} from "react-modern-calendar-datepicker";
+import Popover from "@material-ui/core/Popover";
+import AddIcon from "@material-ui/icons/Add";
 
-// const Map = ReactMapboxGl({
-//   accessToken:
-//     "pk.eyJ1IjoibmFiaWRhbSIsImEiOiJjazFsejVrdXgwYWFiM2hwY2xzcng2YnRvIn0.9oIMFnFAebsE812OCde1Fw"
-// });
+const months = [
+  "",
+  "فروردین",
+  "اردیبهشت",
+  "خرداد",
+  "تیر",
+  "مرداد",
+  "شهریور",
+  "مهر",
+  "آبان",
+  "آذر",
+  "دی",
+  "بهمن",
+  "اسفند"
+];
 
 const styles = theme => ({
   wrapper: {
@@ -38,7 +49,8 @@ const styles = theme => ({
   },
   root: {
     display: "flex",
-    flexGrow: 1
+    flexGrow: 1,
+    marginBottom: 20
   },
   toolbar: {
     display: "flex",
@@ -78,7 +90,7 @@ const styles = theme => ({
     backgroundColor: "#edf1f6",
     border: "none",
     padding: "0px 22px",
-    color: "#a2a5a9",
+    color: "#08080d",
     display: "flex",
     justifyContent: "right",
     "&::placeholder": {
@@ -138,6 +150,13 @@ const styles = theme => ({
     "&:active": {
       opacity: 0.7
     }
+  },
+
+  label: {
+    fontSize: 12
+  },
+  dayIsSelected: {
+    color: "#08080d"
   }
 });
 
@@ -150,13 +169,19 @@ class AddTrafficAnalysis extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      viewport: {
-        width: 400,
-        height: 400,
-        latitude: 37.7577,
-        longitude: -122.4376,
-        zoom: 8
-      }
+      isLocationEnable: false,
+      mapCenter: [51.4124, 35.7325],
+
+      isCalenderOpen: false,
+      calenderAnchorEl: null,
+
+      selectedDay: {
+        from: null,
+        to: null
+      },
+      isDaySelected: false,
+
+      analysisName: ""
     };
   }
 
@@ -167,6 +192,34 @@ class AddTrafficAnalysis extends React.Component {
     mapBtn.parentNode.removeChild(mapBtn);
     var mapBox = document.getElementById("map-box");
     mapBox.style.borderColor = "#4753ff";
+  };
+
+  handleCalenderClick = event => {
+    this.setState({
+      calenderAnchorEl: event.currentTarget,
+      isCalenderOpen: Boolean(event.currentTarget)
+    });
+  };
+
+  handleCloseCalender = () => {
+    this.setState({
+      calenderAnchorEl: null,
+      isCalenderOpen: false
+    });
+  };
+
+  handleSelectedDay = day => {
+    // console.log(day);
+    this.setState({
+      selectedDay: day,
+      isDaySelected: true
+    });
+  };
+
+  handleChangeName = e => {
+    this.setState({
+      analysisName: e.target.value
+    });
   };
 
   componentDidMount = () => {
@@ -192,23 +245,81 @@ class AddTrafficAnalysis extends React.Component {
                   <i
                     className={classNames(classes.bulbIcon, "far fa-lightbulb")}
                   ></i>
-                  <Typography variant="body2">
-                    فواصل زمانی ردیاب خود را انتخاب کنید
-                  </Typography>
+                  <Typography variant="body2">نام تحلیل</Typography>
                 </div>
-                <Button className={classes.input}>
-                  انتخاب فاصله زمانی تحلیل
-                  <div className={classes.chevronDownIcon}>
-                    <i className="fas fa-chevron-down" />
-                  </div>
-                </Button>
+                <input
+                  type="text"
+                  className={classes.input}
+                  placeholder="وارد کردن نام تحلیل"
+                  value={this.state.analysisName}
+                  onChange={e => this.handleChangeName(e)}
+                />
               </Grid>
               <Grid item md={12} sm={12} xs={12}>
                 <div className={classes.labelBox}>
                   <i
                     className={classNames(classes.bulbIcon, "far fa-lightbulb")}
                   ></i>
-                  <Typography variant="body2">
+                  <Typography variant="body2" className={classes.label}>
+                    فواصل زمانی ردیاب خود را انتخاب کنید
+                  </Typography>
+                </div>
+                <Button
+                  className={classNames(
+                    classes.input,
+                    this.state.isDaySelected ? classes.dayIsSelected : ""
+                  )}
+                  onClick={event => this.handleCalenderClick(event)}
+                >
+                  {this.state.isDaySelected == false
+                    ? "انتخاب بازه زمانی"
+                    : this.state.selectedDay.from.day +
+                      " " +
+                      months[this.state.selectedDay.from.month] +
+                      " " +
+                      this.state.selectedDay.from.year +
+                      " - " +
+                      (this.state.selectedDay.to
+                        ? this.state.selectedDay.to.day +
+                          " " +
+                          months[this.state.selectedDay.to.month] +
+                          " " +
+                          this.state.selectedDay.to.year
+                        : "")}
+                  <div className={classes.chevronDownIcon}>
+                    <i className="fas fa-chevron-down" />
+                  </div>
+                </Button>
+                <Popover
+                  open={this.state.isCalenderOpen}
+                  onClose={() => this.handleCloseCalender()}
+                  anchorEl={this.state.calenderAnchorEl}
+                  anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "right"
+                  }}
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right"
+                  }}
+                  classes={{
+                    paper: classes.calenderPopover
+                  }}
+                >
+                  <Calendar
+                    value={this.state.selectedDay}
+                    onChange={day => this.handleSelectedDay(day)}
+                    shouldHighlightWeekends
+                    isPersian
+                  />
+                </Popover>
+              </Grid>
+              <Grid item md={12} sm={12} xs={12}>
+                <div className={classes.labelBox}>
+                  <i
+                    className={classNames(classes.bulbIcon, "far fa-lightbulb")}
+                  ></i>
+                  <Typography variant="body2" className={classes.label}>
                     محدوده جغرافیایی که می‌خواهید تحلیل ترافیکی شود را انتخاب
                     کنید
                   </Typography>
@@ -221,7 +332,7 @@ class AddTrafficAnalysis extends React.Component {
               </Grid>
               <Grid item md={12} sm={12} xs={12}>
                 <div className={classes.mapBox} id="map-box">
-                  <MapComponent />
+                  <MapComponent center={this.state.mapCenter} />
                   <div id="map-overlay" className={classes.mapOverlay}></div>
                   <Button
                     id="map-btn"
@@ -231,25 +342,6 @@ class AddTrafficAnalysis extends React.Component {
                   >
                     انتخاب محدوده
                   </Button>
-                  {/* <div id="map" className={classes.mapDiv}></div> */}
-                  {/* <Map /> */}
-                  {/* <Map
-                    style="mapbox://styles/mapbox/streets-v9"
-                    containerStyle={{
-                      height: "100vh",
-                      width: "100vw"
-                    }}
-                  >
-                    <Layer
-                      type="symbol"
-                      id="marker"
-                      layout={{"icon-image": "marker-15"}}
-                    >
-                      <Feature
-                        coordinates={[-0.481747846041145, 51.3233379650232]}
-                      />
-                    </Layer>
-                  </Map> */}
                 </div>
               </Grid>
             </Grid>
