@@ -44,6 +44,8 @@ import AddPosts from "./AddPosts";
 import AddPostsHeader from "./AddPostsHeader";
 import EditQueries from "./EditQueries";
 import EditQueriesHeader from "./EditQueriesHeader";
+import EditProjects from "./EditProjects";
+import EditProjectsHeader from "./EditProjectsHeader";
 
 const drawerWidth = 240;
 
@@ -129,6 +131,11 @@ class Dashboard extends React.Component {
         />
         <Route
           exact
+          path="/dashboard/projects/edit"
+          component={EditProjectsHeader}
+        />
+        <Route
+          exact
           path="/dashboard/accounts/add-post"
           component={AddPostsHeader}
         />
@@ -166,6 +173,7 @@ class Dashboard extends React.Component {
         <Route exact path="/dashboard/accounts/add-post" component={AddPosts} />
         <Route exact path="/dashboard/projects" component={Projects} />
         <Route exact path="/dashboard/projects/add" component={AddProjects} />
+        <Route exact path="/dashboard/projects/edit" component={EditProjects} />
         <Route exact path="/dashboard/trends" component={Trends} />
         <Route exact path="/dashboard" component={MainDashboard} />
         <Snackbar

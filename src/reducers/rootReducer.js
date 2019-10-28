@@ -26,6 +26,7 @@ const initState = {
   selectedQueriesType: 1,
   selectedQuery: 0,
   editableQuery: null,
+  editableProject: null,
   analysis: [
     {
       id: 1,
@@ -776,7 +777,8 @@ const initState = {
           retrieved_posts: 682,
           active: 1
         }
-      ]
+      ],
+      selectedQueries: [1]
     },
     {
       id: 2,
@@ -824,7 +826,8 @@ const initState = {
           retrieved_posts: 682,
           active: 1
         }
-      ]
+      ],
+      selectedQueries: [1]
     },
     {
       id: 3,
@@ -880,7 +883,8 @@ const initState = {
           retrieved_posts: 682,
           active: 1
         }
-      ]
+      ],
+      selectedQueries: [1]
     }
   ],
   myPosts: [
@@ -1331,6 +1335,17 @@ const rootReducer = (state = initState, action) => {
       return {
         ...state,
         editableQuery
+      };
+    case types.EDITABLE_PROJECT:
+      var editableProject = {};
+      state.projects.map(p => {
+        if (p.id == action.id) {
+          editableProject = p;
+        }
+      });
+      return {
+        ...state,
+        editableProject
       };
     default:
       return state;

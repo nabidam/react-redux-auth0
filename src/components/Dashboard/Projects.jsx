@@ -25,6 +25,7 @@ import PauseIcon from "@material-ui/icons/Pause";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import selectPage from "../../actions/selectPage";
+import editableProject from "../../actions/editableProject";
 
 const styles = theme => ({
   wrapper: {
@@ -409,8 +410,13 @@ class Projects extends React.Component {
     });
   };
 
-  handleClickAddQueries = () => {
+  handleClickAddProject = () => {
     this.props.selectPage("projects/add");
+  };
+
+  handleClickEdit = id => {
+    this.props.editableProject(id);
+    this.props.selectPage("projects/edit");
   };
 
   //   componentDidMount = () => {
@@ -445,7 +451,7 @@ class Projects extends React.Component {
                   <Button
                     color="primary"
                     className={classes.newProjectBtn}
-                    onClick={() => this.handleClickAddQueries()}
+                    onClick={() => this.handleClickAddProject()}
                   >
                     ساخت پروژه جدید
                   </Button>
@@ -537,7 +543,11 @@ class Projects extends React.Component {
                                 />
                               </Button>
                             )}
-                            <Typography variant="body" className={classes.edit}>
+                            <Typography
+                              variant="body"
+                              className={classes.edit}
+                              onClick={() => this.handleClickEdit(item.id)}
+                            >
                               ویرایش
                             </Typography>
                           </div>
@@ -630,7 +640,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    selectPage: page => dispatch(selectPage(page))
+    selectPage: page => dispatch(selectPage(page)),
+    editableProject: id => dispatch(editableProject(id))
   };
 };
 
