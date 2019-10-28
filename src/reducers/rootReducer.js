@@ -27,27 +27,79 @@ const initState = {
   selectedQuery: 0,
   editableQuery: null,
   editableProject: null,
+  editableTrafficAnalysis: null,
   analysis: [
     {
       id: 1,
       name: "رز میرداماد",
       active: 1,
       date: "12 خرداد 98",
-      time: "16:43"
+      time: "16:43",
+      isDaySelected: true,
+      selectedDay: {
+        from: {
+          year: 1398,
+          month: 8,
+          day: 14
+        },
+        to: {
+          year: 1398,
+          month: 8,
+          day: 24
+        }
+      },
+      location: {
+        isLocationEnable: true,
+        center: [51.4124, 35.7325]
+      }
     },
     {
       id: 2,
       name: "آزادی",
       active: 1,
       date: "18 خرداد 98",
-      time: "16:43"
+      time: "16:43",
+      isDaySelected: true,
+      selectedDay: {
+        from: {
+          year: 1398,
+          month: 8,
+          day: 14
+        },
+        to: {
+          year: 1398,
+          month: 8,
+          day: 24
+        }
+      },
+      location: {
+        isLocationEnable: true,
+        center: [51.4124, 35.7325]
+      }
     },
     {
       id: 3,
       name: "تیراژه",
       active: 0,
       date: "10 خرداد 98",
-      time: "16:43"
+      time: "16:43",
+      isDaySelected: true,
+      selectedDay: {
+        from: {
+          year: 1398,
+          month: 8,
+          day: 14
+        },
+        to: {
+          year: 1398,
+          month: 8,
+          day: 24
+        }
+      },
+      location: {
+        isLocationEnable: true,
+        center: [51.4124, 35.7325]
+      }
     }
   ],
   queries: [
@@ -1346,6 +1398,17 @@ const rootReducer = (state = initState, action) => {
       return {
         ...state,
         editableProject
+      };
+    case types.EDITABLE_TRAFFIC_ANALYSIS:
+      var editableTrafficAnalysis = {};
+      state.analysis.map(a => {
+        if (a.id == action.id) {
+          editableTrafficAnalysis = a;
+        }
+      });
+      return {
+        ...state,
+        editableTrafficAnalysis
       };
     default:
       return state;

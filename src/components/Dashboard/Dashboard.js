@@ -46,6 +46,8 @@ import EditQueries from "./EditQueries";
 import EditQueriesHeader from "./EditQueriesHeader";
 import EditProjects from "./EditProjects";
 import EditProjectsHeader from "./EditProjectsHeader";
+import EditTrafficAnalysis from "./EditTrafficAnalysis";
+import EditTrafficAnalysisHeader from "./EditTrafficAnalysisHeader";
 
 const drawerWidth = 240;
 
@@ -116,6 +118,11 @@ class Dashboard extends React.Component {
         />
         <Route
           exact
+          path="/dashboard/traffic-analysis/edit"
+          component={EditTrafficAnalysisHeader}
+        />
+        <Route
+          exact
           path="/dashboard/queries/add"
           component={AddQueriesHeader}
         />
@@ -167,6 +174,11 @@ class Dashboard extends React.Component {
           exact
           path="/dashboard/traffic-analysis/add"
           component={AddTrafficAnalysis}
+        />
+        <Route
+          exact
+          path="/dashboard/traffic-analysis/edit"
+          component={EditTrafficAnalysis}
         />
         <Route exact path="/dashboard/influencers" component={Influencers} />
         <Route exact path="/dashboard/accounts" component={Accounts} />

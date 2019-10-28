@@ -54,6 +54,7 @@ import moment from "moment";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import PauseIcon from "@material-ui/icons/Pause";
 import selectPage from "../../actions/selectPage";
+import editableTrafficAnalysis from "../../actions/editableTrafficAnalysis";
 
 const styles = theme => ({
   wrapper: {
@@ -233,6 +234,11 @@ class TrafficAnalysis extends React.Component {
     this.props.selectPage("traffic-analysis/add");
   };
 
+  handleClickEdit = id => {
+    this.props.editableTrafficAnalysis(id);
+    this.props.selectPage("traffic-analysis/edit");
+  };
+
   //   componentDidMount = () => {
   //     console.log(
   //       moment()
@@ -325,9 +331,6 @@ class TrafficAnalysis extends React.Component {
                               classes.listItem,
                               classes.listAnalysisItem
                             )}
-                            onClick={() =>
-                              this.props.changeAnalysisStatus(item.id)
-                            }
                           >
                             {console.log(this.props.analysis)}
                             <div className={classes.analysisListText}>
@@ -347,11 +350,21 @@ class TrafficAnalysis extends React.Component {
 
                             <div className={classes.analysisListActions}>
                               {item.active == 1 ? (
-                                <Button className={classes.pauseBtn}>
+                                <Button
+                                  className={classes.pauseBtn}
+                                  onClick={() =>
+                                    this.props.changeAnalysisStatus(item.id)
+                                  }
+                                >
                                   <PauseIcon className={classes.activeIcon} />
                                 </Button>
                               ) : (
-                                <Button className={classes.playBtn}>
+                                <Button
+                                  className={classes.playBtn}
+                                  onClick={() =>
+                                    this.props.changeAnalysisStatus(item.id)
+                                  }
+                                >
                                   <PlayArrowIcon
                                     className={classes.activeIcon}
                                   />
@@ -360,6 +373,7 @@ class TrafficAnalysis extends React.Component {
                               <Typography
                                 variant="body1"
                                 className={classes.edit}
+                                onClick={() => this.handleClickEdit(item.id)}
                               >
                                 ویرایش
                               </Typography>
@@ -399,7 +413,8 @@ const mapDispatchToProps = dispatch => {
     changeSelectedQuery: id => dispatch(changeSelectedQuery(id)),
     selectAnalysisType: type => dispatch(selectAnalysisType(type)),
     changeAnalysisStatus: analysis => dispatch(changeAnalysisStatus(analysis)),
-    selectPage: page => dispatch(selectPage(page))
+    selectPage: page => dispatch(selectPage(page)),
+    editableTrafficAnalysis: id => dispatch(editableTrafficAnalysis(id))
   };
 };
 
