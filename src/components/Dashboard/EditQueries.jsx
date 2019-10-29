@@ -30,6 +30,7 @@ import CheckIcon from "@material-ui/icons/Check";
 import CalenderComponent from "./CalenderCompnent";
 import "react-modern-calendar-datepicker/lib/DatePicker.css";
 import {Calendar} from "react-modern-calendar-datepicker";
+import changeEditableQuery from "../../actions/changeEditableQuery";
 
 const months = [
   "",
@@ -413,10 +414,18 @@ class EditQueries extends React.Component {
 
   handleSeletProject = project => {
     this.setState({
-      selectedProject: project
+      selectedProject: project,
+      editableQuery: {
+        ...this.state.editableQuery,
+        selectedProject: project
+      }
     });
 
     this.handleCloseSelectProject();
+    this.props.changeEditableQuery({
+      ...this.state.editableQuery,
+      selectedProject: project
+    });
   };
 
   handleCalenderClick = event => {
@@ -437,14 +446,37 @@ class EditQueries extends React.Component {
     // console.log(day);
     this.setState({
       selectedDay: day,
-      isDaySelected: true
+      isDaySelected: true,
+      editableQuery: {
+        ...this.state.editableQuery,
+        selectedDay: day,
+        isDaySelected: true
+      }
+    });
+    this.props.changeEditableQuery({
+      ...this.state.editableQuery,
+      name: e.target.value
     });
   };
 
   handleAddInstagramUser = e => {
     if (e.keyCode == 13 && e.target.value != "") {
       this.setState({
-        instagramUsers: [...this.state.instagramUsers, e.target.value]
+        instagramUsers: [...this.state.instagramUsers, e.target.value],
+        editableQuery: {
+          ...this.state.editableQuery,
+          social: {
+            ...this.state.editableQuery.social,
+            instagramUsers: [...this.state.instagramUsers, e.target.value]
+          }
+        }
+      });
+      this.props.changeEditableQuery({
+        ...this.state.editableQuery,
+        social: {
+          ...this.state.editableQuery.social,
+          instagramUsers: [...this.state.instagramUsers, e.target.value]
+        }
       });
       e.target.value = "";
     }
@@ -458,14 +490,42 @@ class EditQueries extends React.Component {
       }
     });
     this.setState({
-      instagramUsers: removed_list
+      instagramUsers: removed_list,
+      editableQuery: {
+        ...this.state.editableQuery,
+        social: {
+          ...this.state.editableQuery.social,
+          instagramUsers: removed_list
+        }
+      }
+    });
+    this.props.changeEditableQuery({
+      ...this.state.editableQuery,
+      social: {
+        ...this.state.editableQuery.social,
+        instagramUsers: removed_list
+      }
     });
   };
 
   handleAddTwitterUser = e => {
     if (e.keyCode == 13 && e.target.value != "") {
       this.setState({
-        twitterUsers: [...this.state.twitterUsers, e.target.value]
+        twitterUsers: [...this.state.twitterUsers, e.target.value],
+        editableQuery: {
+          ...this.state.editableQuery,
+          social: {
+            ...this.state.editableQuery.social,
+            twitterUsers: [...this.state.twitterUsers, e.target.value]
+          }
+        }
+      });
+      this.props.changeEditableQuery({
+        ...this.state.editableQuery,
+        social: {
+          ...this.state.editableQuery.social,
+          twitterUsers: [...this.state.twitterUsers, e.target.value]
+        }
       });
       e.target.value = "";
     }
@@ -479,13 +539,35 @@ class EditQueries extends React.Component {
       }
     });
     this.setState({
-      twitterUsers: removed_list
+      twitterUsers: removed_list,
+      editableQuery: {
+        ...this.state.editableQuery,
+        social: {
+          ...this.state.editableQuery.social,
+          twitterUsers: removed_list
+        }
+      }
+    });
+    this.props.changeEditableQuery({
+      ...this.state.editableQuery,
+      social: {
+        ...this.state.editableQuery.social,
+        twitterUsers: removed_list
+      }
     });
   };
 
   handleAddHashtag = e => {
     if (e.keyCode == 13 && e.target.value != "") {
       this.setState({
+        hashtags: [...this.state.hashtags, e.target.value],
+        editableQuery: {
+          ...this.state.editableQuery,
+          hashtags: [...this.state.hashtags, e.target.value]
+        }
+      });
+      this.props.changeEditableQuery({
+        ...this.state.editableQuery,
         hashtags: [...this.state.hashtags, e.target.value]
       });
       e.target.value = "";
@@ -500,6 +582,14 @@ class EditQueries extends React.Component {
       }
     });
     this.setState({
+      hashtags: removed_list,
+      editableQuery: {
+        ...this.state.editableQuery,
+        hashtags: removed_list
+      }
+    });
+    this.props.changeEditableQuery({
+      ...this.state.editableQuery,
       hashtags: removed_list
     });
   };
@@ -507,6 +597,14 @@ class EditQueries extends React.Component {
   handleAddKeyword = e => {
     if (e.keyCode == 13 && e.target.value != "") {
       this.setState({
+        keywords: [...this.state.keywords, e.target.value],
+        editableQuery: {
+          ...this.state.editableQuery,
+          keywords: [...this.state.keywords, e.target.value]
+        }
+      });
+      this.props.changeEditableQuery({
+        ...this.state.editableQuery,
         keywords: [...this.state.keywords, e.target.value]
       });
       e.target.value = "";
@@ -521,31 +619,95 @@ class EditQueries extends React.Component {
       }
     });
     this.setState({
+      keywords: removed_list,
+      editableQuery: {
+        ...this.state.editableQuery,
+        keywords: removed_list
+      }
+    });
+    this.props.changeEditableQuery({
+      ...this.state.editableQuery,
       keywords: removed_list
     });
   };
 
   handleTwitterClick = () => {
     this.setState({
-      twitter: !this.state.twitter
+      twitter: !this.state.twitter,
+      editableQuery: {
+        ...this.state.editableQuery,
+        social: {
+          ...this.state.editableQuery.social,
+          twitter: !this.state.twitter
+        }
+      }
+    });
+    this.props.changeEditableQuery({
+      ...this.state.editableQuery,
+      social: {
+        ...this.state.editableQuery.social,
+        twitter: !this.state.twitter
+      }
     });
   };
 
   handleInstagramClick = () => {
     this.setState({
-      instagram: !this.state.instagram
+      instagram: !this.state.instagram,
+      editableQuery: {
+        ...this.state.editableQuery,
+        social: {
+          ...this.state.editableQuery.social,
+          instagram: !this.state.instagram
+        }
+      }
+    });
+    this.props.changeEditableQuery({
+      ...this.state.editableQuery,
+      social: {
+        ...this.state.editableQuery.social,
+        instagram: !this.state.instagram
+      }
     });
   };
 
   handleEnableLocation = () => {
     this.setState({
-      isLocationEnable: !this.state.isLocationEnable
+      isLocationEnable: !this.state.isLocationEnable,
+      editableQuery: {
+        ...this.state.editableQuery,
+        lacation: {
+          ...this.state.editableQuery.lacation,
+          isLocationEnable: !this.state.isLocationEnable
+        }
+      }
+    });
+    this.props.changeEditableQuery({
+      ...this.state.editableQuery,
+      lacation: {
+        ...this.state.editableQuery.lacation,
+        isLocationEnable: !this.state.isLocationEnable
+      }
     });
   };
 
   handleClickChangeMap = () => {
     this.setState({
-      isMapChangable: true
+      isMapChangable: true,
+      editableQuery: {
+        ...this.state.editableQuery,
+        lacation: {
+          ...this.state.editableQuery.lacation,
+          isMapChangable: true
+        }
+      }
+    });
+    this.props.changeEditableQuery({
+      ...this.state.editableQuery,
+      lacation: {
+        ...this.state.editableQuery.lacation,
+        isMapChangable: true
+      }
     });
     // var mapOverlay = document.getElementById("map-overlay");
     // mapOverlay.parentNode.removeChild(mapOverlay);
@@ -557,14 +719,17 @@ class EditQueries extends React.Component {
 
   handleChangeName = e => {
     e.persist();
-    // console.log(e);
 
-    this.setState(prevState => ({
+    this.setState({
       editableQuery: {
-        ...prevState.editableQuery,
+        ...this.state.editableQuery,
         name: e.target.value
       }
-    }));
+    });
+    this.props.changeEditableQuery({
+      ...this.state.editableQuery,
+      name: e.target.value
+    });
   };
 
   componentDidMount = () => {
@@ -1039,7 +1204,8 @@ const mapDispatchToProps = dispatch => {
     selectQuery: id => dispatch(selectQuery(id)),
     selectQueriesType: type => dispatch(selectQueriesType(type)),
     changeQueryStatus: query => dispatch(changeQueryStatus(query)),
-    selectPage: page => dispatch(selectPage(page))
+    selectPage: page => dispatch(selectPage(page)),
+    changeEditableQuery: data => dispatch(changeEditableQuery(data))
   };
 };
 

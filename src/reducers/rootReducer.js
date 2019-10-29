@@ -28,6 +28,7 @@ const initState = {
   editableQuery: null,
   editableProject: null,
   editableTrafficAnalysis: null,
+  addQuery: null,
   analysis: [
     {
       id: 1,
@@ -1409,6 +1410,87 @@ const rootReducer = (state = initState, action) => {
       return {
         ...state,
         editableTrafficAnalysis
+      };
+    case types.GO_TO_ADD_QUERY:
+      var addQuery = {
+        id: null,
+        name: "",
+        active: 1,
+        social: {
+          twitter: 0,
+          instagram: 0,
+          instagramUsers: [],
+          twitterUsers: []
+        },
+        retrieved_posts: 0,
+        date: "12 خرداد 98",
+        time: "16:43",
+        selectedProject: null,
+        isDaySelected: false,
+        selectedDay: {
+          from: null,
+          to: null
+        },
+        location: {
+          isLocationEnable: false,
+          center: [51.4124, 35.7325]
+        },
+        keywords: [],
+        hashtags: []
+      };
+      // console.log(addQuery);
+      return {
+        ...state,
+        addQuery
+      };
+    case types.CHANGE_ADD_QUERY:
+      // console.log(action.data);
+      return {
+        ...state,
+        addQuery: action.data
+      };
+    case types.CREATE_QUERY:
+      var last_id = state.queries[state.queries.length - 1].id;
+      var addQuery = state.addQuery;
+      addQuery.id = last_id + 1;
+      return {
+        ...state,
+        queries: [...state.queries, addQuery]
+      };
+    case types.DELETE_QUERY:
+      var removed_list = [];
+      // console.log(action.query.id);
+      state.queries.map((item, index) => {
+        if (item.id != action.query.id) {
+          removed_list.push(item);
+        }
+      });
+      return {
+        ...state,
+        queries: removed_list
+      };
+    case types.CHANGE_EDITABLE_QUERY:
+      // console.log(action.data);
+      return {
+        ...state,
+        editableQuery: action.data
+      };
+    case types.EDIT_QUERY:
+      // console.log(state.editableQuery);
+
+      var editableQuery = state.editableQuery;
+      var queries = state.queries;
+      var new_queries = [];
+      queries.map((item, index) => {
+        if (item.id != editableQuery.id) {
+          new_queries.push(item);
+        } else {
+          new_queries.push(editableQuery);
+        }
+      });
+      return {
+        ...state,
+        queries: new_queries
       };
     default:
       return state;

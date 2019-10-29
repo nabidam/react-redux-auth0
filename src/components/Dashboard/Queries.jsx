@@ -55,6 +55,7 @@ import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import PauseIcon from "@material-ui/icons/Pause";
 import selectPage from "../../actions/selectPage";
 import editableQuery from "../../actions/editableQuery";
+import goToAddQuery from "../../actions/goToAddQuery";
 
 const styles = theme => ({
   wrapper: {
@@ -260,6 +261,7 @@ class Queries extends React.Component {
   }
 
   handleClickAddQueries = () => {
+    this.props.goToAddQuery();
     this.props.selectPage("queries/add");
   };
 
@@ -464,7 +466,8 @@ const mapDispatchToProps = dispatch => {
     selectQueriesType: type => dispatch(selectQueriesType(type)),
     changeQueryStatus: query => dispatch(changeQueryStatus(query)),
     selectPage: page => dispatch(selectPage(page)),
-    editableQuery: id => dispatch(editableQuery(id))
+    editableQuery: id => dispatch(editableQuery(id)),
+    goToAddQuery: () => dispatch(goToAddQuery())
   };
 };
 

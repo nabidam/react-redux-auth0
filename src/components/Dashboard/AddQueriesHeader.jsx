@@ -26,6 +26,7 @@ import TrafficIcon from "@material-ui/icons/Traffic";
 import PeopleIcon from "@material-ui/icons/People";
 import CloseIcon from "@material-ui/icons/Close";
 import cancelCreate from "../../actions/cancelCreate";
+import createQuery from "../../actions/createQuery";
 
 const styles = theme => ({
   root: {
@@ -171,6 +172,14 @@ class AddQueriesHeader extends React.Component {
     super(props);
   }
 
+  handleClickAddQuery = () => {
+    const addQuery = this.props.addQuery;
+    if (addQuery.name != "") {
+      this.props.createQuery();
+      this.props.selectPage("queries");
+    }
+  };
+
   render() {
     const {classes} = this.props;
 
@@ -185,7 +194,7 @@ class AddQueriesHeader extends React.Component {
                     <Button
                       color="primary"
                       className={classes.newAnalysisBtn}
-                      onClick={() => this.handleClickAddAnalysis()}
+                      onClick={() => this.handleClickAddQuery()}
                     >
                       ایجاد ردیاب
                     </Button>
@@ -225,7 +234,8 @@ const mapStateToProps = state => {
     auth: state.auth,
     isAuthenticated: state.isAuthenticated,
     isDrawerOpen: state.isDrawerOpen,
-    selectedPage: state.selectedPage
+    selectedPage: state.selectedPage,
+    addQuery: state.addQuery
   };
 };
 
@@ -233,7 +243,8 @@ const mapDispatchToProps = dispatch => {
   return {
     requestLogout: () => dispatch(requestLogout()),
     triggerDrawer: () => dispatch(triggerDrawer()),
-    selectPage: page => dispatch(selectPage(page))
+    selectPage: page => dispatch(selectPage(page)),
+    createQuery: () => dispatch(createQuery())
   };
 };
 

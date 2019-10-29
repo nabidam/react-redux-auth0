@@ -30,6 +30,8 @@ import CheckIcon from "@material-ui/icons/Check";
 import CalenderComponent from "./CalenderCompnent";
 import "react-modern-calendar-datepicker/lib/DatePicker.css";
 import {Calendar} from "react-modern-calendar-datepicker";
+import addQuery from "../../actions/addQuery";
+import changeAddQuery from "../../actions/changeAddQuery";
 
 const months = [
   "",
@@ -385,7 +387,8 @@ class AddQueries extends React.Component {
       },
       isDaySelected: false,
 
-      queryName: ""
+      addQueryName: "",
+      addQuery: {}
     };
   }
 
@@ -405,10 +408,18 @@ class AddQueries extends React.Component {
 
   handleSeletProject = project => {
     this.setState({
-      selectedProject: project
+      selectedProject: project,
+      addQuery: {
+        ...this.state.addQuery,
+        selectedProject: project
+      }
     });
 
     this.handleCloseSelectProject();
+    this.props.changeAddQuery({
+      ...this.state.addQuery,
+      selectedProject: project
+    });
   };
 
   handleCalenderClick = event => {
@@ -429,14 +440,39 @@ class AddQueries extends React.Component {
     // console.log(day);
     this.setState({
       selectedDay: day,
+      isDaySelected: true,
+      addQuery: {
+        ...this.state.addQuery,
+        selectedDay: day,
+        isDaySelected: true
+      }
+    });
+    this.props.changeAddQuery({
+      ...this.state.addQuery,
+      selectedDay: day,
       isDaySelected: true
     });
   };
 
   handleAddInstagramUser = e => {
+    e.persist();
     if (e.keyCode == 13 && e.target.value != "") {
       this.setState({
-        instagramUsers: [...this.state.instagramUsers, e.target.value]
+        instagramUsers: [...this.state.instagramUsers, e.target.value],
+        addQuery: {
+          ...this.state.addQuery,
+          social: {
+            ...this.state.addQuery.social,
+            instagramUsers: [...this.state.instagramUsers, e.target.value]
+          }
+        }
+      });
+      this.props.changeAddQuery({
+        ...this.state.addQuery,
+        social: {
+          ...this.state.addQuery.social,
+          instagramUsers: [...this.state.instagramUsers, e.target.value]
+        }
       });
       e.target.value = "";
     }
@@ -450,14 +486,43 @@ class AddQueries extends React.Component {
       }
     });
     this.setState({
-      instagramUsers: removed_list
+      instagramUsers: removed_list,
+      addQuery: {
+        ...this.state.addQuery,
+        social: {
+          ...this.state.addQuery.social,
+          instagramUsers: removed_list
+        }
+      }
+    });
+    this.props.changeAddQuery({
+      ...this.state.addQuery,
+      social: {
+        ...this.state.addQuery.social,
+        instagramUsers: removed_list
+      }
     });
   };
 
   handleAddTwitterUser = e => {
+    e.persist();
     if (e.keyCode == 13 && e.target.value != "") {
       this.setState({
-        twitterUsers: [...this.state.twitterUsers, e.target.value]
+        twitterUsers: [...this.state.twitterUsers, e.target.value],
+        addQuery: {
+          ...this.state.addQuery,
+          social: {
+            ...this.state.addQuery.social,
+            twitterUsers: [...this.state.twitterUsers, e.target.value]
+          }
+        }
+      });
+      this.props.changeAddQuery({
+        ...this.state.addQuery,
+        social: {
+          ...this.state.addQuery.social,
+          twitterUsers: [...this.state.twitterUsers, e.target.value]
+        }
       });
       e.target.value = "";
     }
@@ -471,13 +536,36 @@ class AddQueries extends React.Component {
       }
     });
     this.setState({
-      twitterUsers: removed_list
+      twitterUsers: removed_list,
+      addQuery: {
+        ...this.state.addQuery,
+        social: {
+          ...this.state.addQuery.social,
+          twitterUsers: removed_list
+        }
+      }
+    });
+    this.props.changeAddQuery({
+      ...this.state.addQuery,
+      social: {
+        ...this.state.addQuery.social,
+        twitterUsers: removed_list
+      }
     });
   };
 
   handleAddHashtag = e => {
+    e.persist();
     if (e.keyCode == 13 && e.target.value != "") {
       this.setState({
+        hashtags: [...this.state.hashtags, e.target.value],
+        addQuery: {
+          ...this.state.addQuery,
+          hashtags: [...this.state.hashtags, e.target.value]
+        }
+      });
+      this.props.changeAddQuery({
+        ...this.state.addQuery,
         hashtags: [...this.state.hashtags, e.target.value]
       });
       e.target.value = "";
@@ -492,13 +580,30 @@ class AddQueries extends React.Component {
       }
     });
     this.setState({
+      hashtags: removed_list,
+      addQuery: {
+        ...this.state.addQuery,
+        hashtags: removed_list
+      }
+    });
+    this.props.changeAddQuery({
+      ...this.state.addQuery,
       hashtags: removed_list
     });
   };
 
   handleAddKeyword = e => {
+    e.persist();
     if (e.keyCode == 13 && e.target.value != "") {
       this.setState({
+        keywords: [...this.state.keywords, e.target.value],
+        addQuery: {
+          ...this.state.addQuery,
+          keywords: [...this.state.keywords, e.target.value]
+        }
+      });
+      this.props.changeAddQuery({
+        ...this.state.addQuery,
         keywords: [...this.state.keywords, e.target.value]
       });
       e.target.value = "";
@@ -513,31 +618,90 @@ class AddQueries extends React.Component {
       }
     });
     this.setState({
+      keywords: removed_list,
+      addQuery: {
+        ...this.state.addQuery,
+        keywords: removed_list
+      }
+    });
+    this.props.changeAddQuery({
+      ...this.state.addQuery,
       keywords: removed_list
     });
   };
 
   handleTwitterClick = () => {
     this.setState({
-      twitter: !this.state.twitter
+      twitter: !this.state.twitter,
+      addQuery: {
+        ...this.state.addQuery,
+        social: {
+          ...this.state.addQuery.social,
+          twitter: !this.state.twitter
+        }
+      }
+    });
+    this.props.changeAddQuery({
+      ...this.state.addQuery,
+      social: {
+        ...this.state.addQuery.social,
+        twitter: !this.state.twitter
+      }
     });
   };
 
   handleInstagramClick = () => {
     this.setState({
-      instagram: !this.state.instagram
+      instagram: !this.state.instagram,
+      addQuery: {
+        ...this.state.addQuery,
+        social: {
+          ...this.state.addQuery.social,
+          instagram: !this.state.instagram
+        }
+      }
+    });
+    this.props.changeAddQuery({
+      ...this.state.addQuery,
+      social: {
+        ...this.state.addQuery.social,
+        instagram: !this.state.instagram
+      }
     });
   };
 
   handleEnableLocation = () => {
     this.setState({
-      isLocationEnable: !this.state.isLocationEnable
+      isLocationEnable: !this.state.isLocationEnable,
+      addQuery: {
+        ...this.state.addQuery,
+        location: {
+          ...this.state.addQuery.location,
+          isLocationEnable: !this.state.isLocationEnable
+        }
+      }
+    });
+    this.props.changeAddQuery({
+      ...this.state.addQuery,
+      location: {
+        ...this.state.addQuery.location,
+        isLocationEnable: !this.state.isLocationEnable
+      }
     });
   };
 
   handleChangeName = e => {
+    e.persist();
     this.setState({
-      queryName: e.target.value
+      addQueryName: e.target.value,
+      addQuery: {
+        ...this.state.addQuery,
+        name: e.target.value
+      }
+    });
+    this.props.changeAddQuery({
+      ...this.state.addQuery,
+      name: e.target.value
     });
   };
 
@@ -550,13 +714,30 @@ class AddQueries extends React.Component {
     mapBox.style.borderColor = "#4753ff";
   };
 
-  //   componentDidMount = () => {
-  //     console.log(
-  //       moment()
-  //         .subtract(10, "days")
-  //         .format("Do")
-  //     );
-  //   };
+  componentDidMount = () => {
+    // console.log(this.props.addQuery);
+    this.setState({
+      instagramUsers: this.props.addQuery.social.instagramUsers,
+      twitterUsers: this.props.addQuery.social.twitterUsers,
+      hashtags: this.props.addQuery.hashtags,
+      keywords: this.props.addQuery.keywords,
+
+      twitter: this.props.addQuery.social.twitter,
+      instagram: this.props.addQuery.social.instagram,
+
+      isLocationEnable: this.props.addQuery.location.isLocationEnable,
+      isMapChangable: this.props.addQuery.location.isLocationEnable,
+      mapCenter: this.props.addQuery.location.center,
+
+      selectedProject: this.props.addQuery.selectedProject,
+
+      selectedDay: this.props.addQuery.selectedDay,
+      isDaySelected: this.props.addQuery.isDaySelected,
+
+      addQuery: this.props.addQuery,
+      addQueryName: this.props.addQuery.name
+    });
+  };
 
   render() {
     const {classes} = this.props;
@@ -665,7 +846,7 @@ class AddQueries extends React.Component {
                   type="text"
                   className={classes.input}
                   placeholder="وارد کردن نام ردیاب"
-                  value={this.state.queryName}
+                  value={this.state.addQueryName}
                   onChange={e => this.handleChangeName(e)}
                 />
               </Grid>
@@ -864,8 +1045,7 @@ class AddQueries extends React.Component {
                       <input
                         type="text"
                         className={classes.tagInput}
-                        placeholder="نام کاربری فرد موثر برای ردیابی"
-                        id="instagram-users"
+                        placeholder="هشتگ مرتبط با ردیاب را وارد کنید"
                         onKeyUp={e => this.handleAddHashtag(e)}
                       />
                     </div>
@@ -888,8 +1068,7 @@ class AddQueries extends React.Component {
                       <input
                         type="text"
                         className={classes.tagInput}
-                        placeholder="نام کاربری فرد موثر برای ردیابی"
-                        id="instagram-users"
+                        placeholder="کلمات کلیدی مرتبط با ردیاب را وارد کنید"
                         onKeyUp={e => this.handleAddKeyword(e)}
                       />
                     </div>
@@ -980,7 +1159,8 @@ const mapStateToProps = state => {
     selectedQuery: state.selectedQuery,
     queries: state.queries,
     selectedQueriesType: state.selectedQueriesType,
-    projects: state.projects
+    projects: state.projects,
+    addQuery: state.addQuery
   };
 };
 
@@ -989,7 +1169,8 @@ const mapDispatchToProps = dispatch => {
     selectQuery: id => dispatch(selectQuery(id)),
     selectQueriesType: type => dispatch(selectQueriesType(type)),
     changeQueryStatus: query => dispatch(changeQueryStatus(query)),
-    selectPage: page => dispatch(selectPage(page))
+    selectPage: page => dispatch(selectPage(page)),
+    changeAddQuery: data => dispatch(changeAddQuery(data))
   };
 };
 

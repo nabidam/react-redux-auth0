@@ -27,6 +27,9 @@ import PeopleIcon from "@material-ui/icons/People";
 import CloseIcon from "@material-ui/icons/Close";
 import cancelCreate from "../../actions/cancelCreate";
 import editableQuery from "../../actions/editableQuery";
+import deleteQuery from "../../actions/deleteQuery";
+import editQuery from "../../actions/editQuery";
+import changeEditableQuery from "../../actions/changeEditableQuery";
 
 const styles = theme => ({
   root: {
@@ -183,9 +186,20 @@ class EditQueriesHeader extends React.Component {
     super(props);
   }
 
-  handleCancelEdit = () => {
+  handleEditQuery = () => {
+    this.props.changeEditableQuery(this.props.editableQuery);
     this.props.selectPage("queries");
-    this.props.editableQuery(null);
+    this.props.editQeury();
+  };
+
+  handleDeleteQuery = () => {
+    this.props.deleteQuery(this.props.editableQuery);
+    this.props.selectPage("queries");
+  };
+
+  handleCancelEdit = () => {
+    this.props.changeEditableQuery(null);
+    this.props.selectPage("queries");
   };
 
   render() {
@@ -202,7 +216,7 @@ class EditQueriesHeader extends React.Component {
                     <Button
                       color="primary"
                       className={classes.newAnalysisBtn}
-                      onClick={() => this.handle()}
+                      onClick={() => this.handleEditQuery()}
                     >
                       ثبت تغییرات
                     </Button>
@@ -210,6 +224,7 @@ class EditQueriesHeader extends React.Component {
                       variant="subtitle1"
                       component="p"
                       className={classes.deleteText}
+                      onClick={() => this.handleDeleteQuery()}
                     >
                       حذف ردیاب
                     </Typography>
@@ -249,7 +264,8 @@ const mapStateToProps = state => {
     auth: state.auth,
     isAuthenticated: state.isAuthenticated,
     isDrawerOpen: state.isDrawerOpen,
-    selectedPage: state.selectedPage
+    selectedPage: state.selectedPage,
+    editableQuery: state.editableQuery
   };
 };
 
@@ -258,7 +274,9 @@ const mapDispatchToProps = dispatch => {
     requestLogout: () => dispatch(requestLogout()),
     triggerDrawer: () => dispatch(triggerDrawer()),
     selectPage: page => dispatch(selectPage(page)),
-    editableQuery: id => dispatch(editableQuery(id))
+    deleteQuery: query => dispatch(deleteQuery(query)),
+    editQeury: () => dispatch(editQuery()),
+    changeEditableQuery: data => dispatch(changeEditableQuery(data))
   };
 };
 
