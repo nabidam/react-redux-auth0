@@ -92,7 +92,8 @@ const styles = theme => ({
     }
   },
   headerItemIcon: {
-    marginLeft: 17
+    // marginLeft: 17
+    marginLeft: 7
   },
   cardText: {
     display: "flex",
@@ -104,7 +105,8 @@ const styles = theme => ({
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
-    textAlign: "right"
+    textAlign: "right",
+    alignItems: "center"
   },
   primaryText: {
     fontSize: 18,

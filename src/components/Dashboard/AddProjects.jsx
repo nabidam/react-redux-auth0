@@ -23,6 +23,7 @@ import {
 import IconButton from "@material-ui/core/IconButton";
 import AddIcon from "@material-ui/icons/Add";
 import CheckIcon from "@material-ui/icons/Check";
+import changeAddProject from "../../actions/changeAddProject";
 
 const styles = theme => ({
   wrapper: {
@@ -220,17 +221,26 @@ class AddProjects extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      projectName: "",
+      addProjectName: "",
       selectedQueries: [],
 
       searchInput: "",
-      searchedQueries: []
+      searchedQueries: [],
+      addProject: null
     };
   }
 
   handleChangeName = e => {
     this.setState({
-      projectName: e.target.value
+      addProjectName: e.target.value,
+      addProject: {
+        ...this.state.addProject,
+        name: e.target.value
+      }
+    });
+    this.props.changeAddProject({
+      ...this.state.addProject,
+      name: e.target.value
     });
   };
 
@@ -248,6 +258,14 @@ class AddProjects extends React.Component {
       selectedQueries.push(id);
     }
     this.setState({
+      selectedQueries,
+      addProject: {
+        ...this.state.addProject,
+        selectedQueries
+      }
+    });
+    this.props.changeAddProject({
+      ...this.state.addProject,
       selectedQueries
     });
   };
@@ -284,13 +302,14 @@ class AddProjects extends React.Component {
     });
   };
 
-  //   componentDidMount = () => {
-  //     console.log(
-  //       moment()
-  //         .subtract(10, "days")
-  //         .format("Do")
-  //     );
-  //   };
+  componentDidMount = () => {
+    this.setState({
+      selectedQueries: this.props.addProject.selectedQueries,
+
+      addProject: this.props.addProject,
+      addProjectName: this.props.addProject.name
+    });
+  };
 
   render() {
     const {classes} = this.props;
@@ -301,7 +320,7 @@ class AddProjects extends React.Component {
           <div className={classes.toolbar} />
           <Container maxWidth="md" className={classes.container}>
             <Grid container className={classes.root} spacing={2}>
-              <Grid item md={6} sm={6} xs={12}>
+              <Grid item md={6} sm={12} xs={12}>
                 <div className={classes.labelBox}>
                   <i
                     className={classNames(classes.bulbIcon, "far fa-lightbulb")}
@@ -314,7 +333,7 @@ class AddProjects extends React.Component {
                   type="text"
                   className={classes.input}
                   placeholder="نام پروژه"
-                  value={this.state.projectName}
+                  value={this.state.addProjectName}
                   onChange={e => this.handleChangeName(e)}
                 />
               </Grid>
@@ -360,7 +379,7 @@ class AddProjects extends React.Component {
                   <Divider className={classes.divider} />
                   {this.state.searchInput == ""
                     ? this.props.queries.map(query => (
-                        <Grid item md={6} key={query.id}>
+                        <Grid item md={6} sm={12} xs={12} key={query.id}>
                           <Button
                             className={
                               this.state.selectedQueries.includes(query.id)
@@ -381,7 +400,7 @@ class AddProjects extends React.Component {
                         </Grid>
                       ))
                     : this.state.searchedQueries.map(query => (
-                        <Grid item md={6} key={query.id}>
+                        <Grid item md={6} sm={12} xs={12} key={query.id}>
                           <Button
                             className={
                               this.state.selectedQueries.includes(query.id)
@@ -421,7 +440,8 @@ const mapStateToProps = state => {
     latestQueries: state.latestQueries,
     selectedQuery: state.selectedQuery,
     queries: state.queries,
-    selectedQueriesType: state.selectedQueriesType
+    selectedQueriesType: state.selectedQueriesType,
+    addProject: state.addProject
   };
 };
 
@@ -429,7 +449,8 @@ const mapDispatchToProps = dispatch => {
   return {
     selectQuery: id => dispatch(selectQuery(id)),
     selectQueriesType: type => dispatch(selectQueriesType(type)),
-    changeQueryStatus: query => dispatch(changeQueryStatus(query))
+    changeQueryStatus: query => dispatch(changeQueryStatus(query)),
+    changeAddProject: data => dispatch(changeAddProject(data))
   };
 };
 

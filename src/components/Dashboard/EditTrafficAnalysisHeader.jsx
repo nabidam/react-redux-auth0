@@ -26,6 +26,8 @@ import TrafficIcon from "@material-ui/icons/Traffic";
 import PeopleIcon from "@material-ui/icons/People";
 import CloseIcon from "@material-ui/icons/Close";
 import cancelCreate from "../../actions/cancelCreate";
+import deleteTrafficAnalysis from "../../actions/deleteTrafficAnalysis";
+import editTrafficAnalysis from "../../actions/editTrafficAnalysis";
 
 const styles = theme => ({
   root: {
@@ -182,9 +184,19 @@ class AddTrafficAnalysisHeader extends React.Component {
     super(props);
   }
 
+  handleEditTrafficAnalysis = () => {
+    this.props.selectPage("traffic-analysis");
+    this.props.editTrafficAnalysis();
+  };
+
+  handleDeleteTrafficAnalysis = () => {
+    this.props.deleteTrafficAnalysis(this.props.editableTrafficAnalysis);
+    this.props.selectPage("traffic-analysis");
+  };
+
   handleCancelEdit = () => {
-    this.props.selectPage("queries");
-    this.props.editableQuery(null);
+    this.props.deleteTrafficAnalysis(null);
+    this.props.selectPage("traffic-analysis");
   };
 
   render() {
@@ -201,7 +213,7 @@ class AddTrafficAnalysisHeader extends React.Component {
                     <Button
                       color="primary"
                       className={classes.newAnalysisBtn}
-                      onClick={() => this.handleClickAddAnalysis()}
+                      onClick={() => this.handleEditTrafficAnalysis()}
                     >
                       ثبت تغییرات
                     </Button>
@@ -209,6 +221,7 @@ class AddTrafficAnalysisHeader extends React.Component {
                       variant="subtitle1"
                       component="p"
                       className={classes.deleteText}
+                      onClick={() => this.handleDeleteTrafficAnalysis()}
                     >
                       حذف تحلیل
                     </Typography>
@@ -250,7 +263,8 @@ const mapStateToProps = state => {
     auth: state.auth,
     isAuthenticated: state.isAuthenticated,
     isDrawerOpen: state.isDrawerOpen,
-    selectedPage: state.selectedPage
+    selectedPage: state.selectedPage,
+    editableTrafficAnalysis: state.editableTrafficAnalysis
   };
 };
 
@@ -258,7 +272,10 @@ const mapDispatchToProps = dispatch => {
   return {
     requestLogout: () => dispatch(requestLogout()),
     triggerDrawer: () => dispatch(triggerDrawer()),
-    selectPage: page => dispatch(selectPage(page))
+    selectPage: page => dispatch(selectPage(page)),
+    deleteTrafficAnalysis: analysis =>
+      dispatch(deleteTrafficAnalysis(analysis)),
+    editTrafficAnalysis: () => dispatch(editTrafficAnalysis())
   };
 };
 

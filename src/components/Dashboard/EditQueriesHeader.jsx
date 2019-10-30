@@ -189,7 +189,7 @@ class EditQueriesHeader extends React.Component {
   handleEditQuery = () => {
     this.props.changeEditableQuery(this.props.editableQuery);
     this.props.selectPage("queries");
-    this.props.editQeury();
+    this.props.editQuery();
   };
 
   handleDeleteQuery = () => {
@@ -275,7 +275,7 @@ const mapDispatchToProps = dispatch => {
     triggerDrawer: () => dispatch(triggerDrawer()),
     selectPage: page => dispatch(selectPage(page)),
     deleteQuery: query => dispatch(deleteQuery(query)),
-    editQeury: () => dispatch(editQuery()),
+    editQuery: () => dispatch(editQuery()),
     changeEditableQuery: data => dispatch(changeEditableQuery(data))
   };
 };

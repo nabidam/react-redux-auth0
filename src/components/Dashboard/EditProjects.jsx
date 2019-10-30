@@ -23,6 +23,7 @@ import {
 import IconButton from "@material-ui/core/IconButton";
 import AddIcon from "@material-ui/icons/Add";
 import CheckIcon from "@material-ui/icons/Check";
+import changeEditableProject from "../../actions/changeEditableProject";
 
 const styles = theme => ({
   wrapper: {
@@ -233,7 +234,15 @@ class EditProjects extends React.Component {
 
   handleChangeName = e => {
     this.setState({
-      editableProjectName: e.target.value
+      editableProjectName: e.target.value,
+      editableProject: {
+        ...this.state.editableProject,
+        name: e.target.value
+      }
+    });
+    this.props.changeEditableProject({
+      ...this.state.editableProject,
+      name: e.target.value
     });
   };
 
@@ -250,7 +259,17 @@ class EditProjects extends React.Component {
     } else {
       selectedQueries.push(id);
     }
+    // console.log(selectedQueries);
+
     this.setState({
+      selectedQueries,
+      editableProject: {
+        ...this.state.editableProject,
+        selectedQueries
+      }
+    });
+    this.props.changeEditableProject({
+      ...this.state.editableProject,
       selectedQueries
     });
   };
@@ -364,7 +383,7 @@ class EditProjects extends React.Component {
                   <Divider className={classes.divider} />
                   {this.state.searchInput == ""
                     ? this.props.queries.map(query => (
-                        <Grid item md={6} key={query.id}>
+                        <Grid item md={6} sm={12} xs={12} key={query.id}>
                           <Button
                             className={
                               this.state.selectedQueries.includes(query.id)
@@ -385,7 +404,7 @@ class EditProjects extends React.Component {
                         </Grid>
                       ))
                     : this.state.searchedQueries.map(query => (
-                        <Grid item md={6} key={query.id}>
+                        <Grid item md={6} sm={12} xs={12} key={query.id}>
                           <Button
                             className={
                               this.state.selectedQueries.includes(query.id)
@@ -434,7 +453,8 @@ const mapDispatchToProps = dispatch => {
   return {
     selectQuery: id => dispatch(selectQuery(id)),
     selectQueriesType: type => dispatch(selectQueriesType(type)),
-    changeQueryStatus: query => dispatch(changeQueryStatus(query))
+    changeQueryStatus: query => dispatch(changeQueryStatus(query)),
+    changeEditableProject: data => dispatch(changeEditableProject(data))
   };
 };
 

@@ -26,6 +26,7 @@ import TrafficIcon from "@material-ui/icons/Traffic";
 import PeopleIcon from "@material-ui/icons/People";
 import CloseIcon from "@material-ui/icons/Close";
 import cancelCreate from "../../actions/cancelCreate";
+import createTrafficAnalysis from "../../actions/createTrafficAnalysis";
 
 const styles = theme => ({
   root: {
@@ -171,6 +172,14 @@ class AddTrafficAnalysisHeader extends React.Component {
     super(props);
   }
 
+  handleClickAddTrafficAnalysis = () => {
+    const addTrafficAnalysis = this.props.addTrafficAnalysis;
+    if (addTrafficAnalysis.name != "") {
+      this.props.createTrafficAnalysis();
+      this.props.selectPage("traffic-analysis");
+    }
+  };
+
   render() {
     const {classes} = this.props;
 
@@ -185,7 +194,7 @@ class AddTrafficAnalysisHeader extends React.Component {
                     <Button
                       color="primary"
                       className={classes.newAnalysisBtn}
-                      onClick={() => this.handleClickAddAnalysis()}
+                      onClick={() => this.handleClickAddTrafficAnalysis()}
                     >
                       ایجاد تحلیل
                     </Button>
@@ -227,7 +236,8 @@ const mapStateToProps = state => {
     auth: state.auth,
     isAuthenticated: state.isAuthenticated,
     isDrawerOpen: state.isDrawerOpen,
-    selectedPage: state.selectedPage
+    selectedPage: state.selectedPage,
+    addTrafficAnalysis: state.addTrafficAnalysis
   };
 };
 
@@ -235,7 +245,8 @@ const mapDispatchToProps = dispatch => {
   return {
     requestLogout: () => dispatch(requestLogout()),
     triggerDrawer: () => dispatch(triggerDrawer()),
-    selectPage: page => dispatch(selectPage(page))
+    selectPage: page => dispatch(selectPage(page)),
+    createTrafficAnalysis: () => dispatch(createTrafficAnalysis())
   };
 };
 

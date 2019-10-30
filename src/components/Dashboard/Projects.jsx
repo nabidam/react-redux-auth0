@@ -26,6 +26,7 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import selectPage from "../../actions/selectPage";
 import editableProject from "../../actions/editableProject";
+import goToAddProject from "../../actions/goToAddProject";
 
 const styles = theme => ({
   wrapper: {
@@ -411,6 +412,7 @@ class Projects extends React.Component {
   };
 
   handleClickAddProject = () => {
+    this.props.goToAddProject();
     this.props.selectPage("projects/add");
   };
 
@@ -441,7 +443,6 @@ class Projects extends React.Component {
                 md={12}
                 sm={12}
                 xs={12}
-                center
                 className={classes.headerContainer}
               >
                 <div className={classes.headerBox}>
@@ -481,7 +482,6 @@ class Projects extends React.Component {
                 md={12}
                 sm={12}
                 xs={12}
-                center
                 className={classes.projectsContainer}
               >
                 <List className={classes.projects}>
@@ -544,7 +544,7 @@ class Projects extends React.Component {
                               </Button>
                             )}
                             <Typography
-                              variant="body"
+                              variant="body1"
                               className={classes.edit}
                               onClick={() => this.handleClickEdit(item.id)}
                             >
@@ -553,7 +553,7 @@ class Projects extends React.Component {
                           </div>
                         </ListItem>
                         <Collapse
-                          in={this.state.open_row == item.id ? 1 : 0}
+                          in={this.state.open_row == item.id ? true : false}
                           timeout="auto"
                           unmountOnExit
                         >
@@ -641,7 +641,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     selectPage: page => dispatch(selectPage(page)),
-    editableProject: id => dispatch(editableProject(id))
+    editableProject: id => dispatch(editableProject(id)),
+    goToAddProject: () => dispatch(goToAddProject())
   };
 };
 

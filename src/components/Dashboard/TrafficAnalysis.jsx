@@ -55,6 +55,7 @@ import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import PauseIcon from "@material-ui/icons/Pause";
 import selectPage from "../../actions/selectPage";
 import editableTrafficAnalysis from "../../actions/editableTrafficAnalysis";
+import goToAddTrafficAnalysis from "../../actions/goToAddTrafficAnalysis";
 
 const styles = theme => ({
   wrapper: {
@@ -231,6 +232,7 @@ class TrafficAnalysis extends React.Component {
   }
 
   handleClickAddAnalysis = () => {
+    this.props.goToAddTrafficAnalysis();
     this.props.selectPage("traffic-analysis/add");
   };
 
@@ -414,7 +416,8 @@ const mapDispatchToProps = dispatch => {
     selectAnalysisType: type => dispatch(selectAnalysisType(type)),
     changeAnalysisStatus: analysis => dispatch(changeAnalysisStatus(analysis)),
     selectPage: page => dispatch(selectPage(page)),
-    editableTrafficAnalysis: id => dispatch(editableTrafficAnalysis(id))
+    editableTrafficAnalysis: id => dispatch(editableTrafficAnalysis(id)),
+    goToAddTrafficAnalysis: () => dispatch(goToAddTrafficAnalysis())
   };
 };
 

@@ -29,6 +29,8 @@ const initState = {
   editableProject: null,
   editableTrafficAnalysis: null,
   addQuery: null,
+  addTrafficAnalysis: null,
+  addProject: null,
   analysis: [
     {
       id: 1,
@@ -1491,6 +1493,145 @@ const rootReducer = (state = initState, action) => {
       return {
         ...state,
         queries: new_queries
+      };
+    /* *** */
+    case types.GO_TO_ADD_TRAFFIC_ANALYSIS:
+      var addTrafficAnalysis = {
+        id: null,
+        name: "",
+        active: 1,
+        date: "12 خرداد 98",
+        time: "16:43",
+        isDaySelected: false,
+        selectedDay: {
+          from: null,
+          to: null
+        },
+        location: {
+          isLocationEnable: false,
+          center: [51.4124, 35.7325]
+        }
+      };
+      // console.log(addTrafficAnalysis);
+      return {
+        ...state,
+        addTrafficAnalysis
+      };
+    case types.CHANGE_ADD_TRAFFIC_ANALYSIS:
+      // console.log(action.data);
+      return {
+        ...state,
+        addTrafficAnalysis: action.data
+      };
+    case types.CREATE_TRAFFIC_ANALYSIS:
+      var last_id = state.analysis[state.analysis.length - 1].id;
+      var addTrafficAnalysis = state.addTrafficAnalysis;
+      addTrafficAnalysis.id = last_id + 1;
+      // console.log(addTrafficAnalysis);
+
+      return {
+        ...state,
+        analysis: [...state.analysis, addTrafficAnalysis]
+      };
+    case types.DELETE_TRAFFIC_ANALYSIS:
+      var removed_list = [];
+      // console.log(action.query.id);
+      state.analysis.map((item, index) => {
+        if (item.id != action.analysis.id) {
+          removed_list.push(item);
+        }
+      });
+      return {
+        ...state,
+        analysis: removed_list
+      };
+    case types.CHANGE_EDITABLE_TRAFFIC_ANALYSIS:
+      // console.log(action.data);
+      return {
+        ...state,
+        editableTrafficAnalysis: action.data
+      };
+    case types.EDIT_TRAFFIC_ANALYSIS:
+      // console.log(state.editableTrafficAnalysis);
+
+      var editableTrafficAnalysis = state.editableTrafficAnalysis;
+      var analysis = state.analysis;
+      var new_analysis = [];
+      analysis.map((item, index) => {
+        if (item.id != editableTrafficAnalysis.id) {
+          new_analysis.push(item);
+        } else {
+          new_analysis.push(editableTrafficAnalysis);
+        }
+      });
+      return {
+        ...state,
+        analysis: new_analysis
+      };
+    /* *** */
+    case types.GO_TO_ADD_PROJECT:
+      var addProject = {
+        id: null,
+        name: "",
+        date: "12 خرداد 1398",
+        time: "16:43",
+        queries: [],
+        selectedQueries: []
+      };
+      return {
+        ...state,
+        addProject
+      };
+    case types.CHANGE_ADD_PROJECT:
+      // console.log(action.data);
+      return {
+        ...state,
+        addProject: action.data
+      };
+    case types.CREATE_PROJECT:
+      var last_id = state.projects[state.projects.length - 1].id;
+      var addProject = state.addProject;
+      addProject.id = last_id + 1;
+      // console.log(addProject);
+
+      return {
+        ...state,
+        projects: [...state.projects, addProject]
+      };
+    case types.DELETE_PROJECT:
+      var removed_list = [];
+      // console.log(action.query.id);
+      state.projects.map((item, index) => {
+        if (item.id != action.project.id) {
+          removed_list.push(item);
+        }
+      });
+      return {
+        ...state,
+        projects: removed_list
+      };
+    case types.CHANGE_EDITABLE_PROJECT:
+      // console.log(action.data);
+      return {
+        ...state,
+        editableProject: action.data
+      };
+    case types.EDIT_PROJECT:
+      // console.log(state.editableProject);
+
+      var editableProject = state.editableProject;
+      var projects = state.projects;
+      var new_projects = [];
+      projects.map((item, index) => {
+        if (item.id != editableProject.id) {
+          new_projects.push(item);
+        } else {
+          new_projects.push(editableProject);
+        }
+      });
+      return {
+        ...state,
+        projects: new_projects
       };
     default:
       return state;

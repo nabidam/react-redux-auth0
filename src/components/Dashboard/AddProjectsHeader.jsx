@@ -26,6 +26,7 @@ import TrafficIcon from "@material-ui/icons/Traffic";
 import PeopleIcon from "@material-ui/icons/People";
 import CloseIcon from "@material-ui/icons/Close";
 import cancelCreate from "../../actions/cancelCreate";
+import createProject from "../../actions/createProject";
 
 const styles = theme => ({
   root: {
@@ -171,6 +172,14 @@ class AddProjectsHeader extends React.Component {
     super(props);
   }
 
+  handleClickAddProject = () => {
+    const addProject = this.props.addProject;
+    if (addProject.name != "") {
+      this.props.createProject();
+      this.props.selectPage("projects");
+    }
+  };
+
   render() {
     const {classes} = this.props;
 
@@ -178,14 +187,14 @@ class AddProjectsHeader extends React.Component {
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar className={classes.toolBar}>
           <Grid container className={classes.headerContainer}>
-            <Grid item md={4}>
+            <Grid item md={4} sm={4} xs={4}>
               <Paper className={classes.titlePaper}>
                 <Grid container wrap="nowrap" spacing={2}>
                   <Grid item xs zeroMinWidth className={classes.cardText}>
                     <Button
                       color="primary"
                       className={classes.newAnalysisBtn}
-                      onClick={() => this.handleClickAddAnalysis()}
+                      onClick={() => this.handleClickAddProject()}
                     >
                       ایجاد پروژه
                     </Button>
@@ -193,7 +202,7 @@ class AddProjectsHeader extends React.Component {
                 </Grid>
               </Paper>
             </Grid>
-            <Grid item md={4} className={classes.titleGrid}>
+            <Grid item md={4} sm={4} xs={4} className={classes.titleGrid}>
               <Paper className={classNames(classes.headerPaper)}>
                 <Grid container wrap="nowrap">
                   <Grid item xs zeroMinWidth className={classes.headerItem}>
@@ -208,7 +217,7 @@ class AddProjectsHeader extends React.Component {
                 </Grid>
               </Paper>
             </Grid>
-            <Grid item md={4} className={classes.closeIconGrid}>
+            <Grid item md={4} sm={4} xs={4} className={classes.closeIconGrid}>
               <IconButton onClick={() => this.props.selectPage("projects")}>
                 <CloseIcon className={classes.closeIcon} />
               </IconButton>
@@ -225,7 +234,8 @@ const mapStateToProps = state => {
     auth: state.auth,
     isAuthenticated: state.isAuthenticated,
     isDrawerOpen: state.isDrawerOpen,
-    selectedPage: state.selectedPage
+    selectedPage: state.selectedPage,
+    addProject: state.addProject
   };
 };
 
@@ -233,7 +243,8 @@ const mapDispatchToProps = dispatch => {
   return {
     requestLogout: () => dispatch(requestLogout()),
     triggerDrawer: () => dispatch(triggerDrawer()),
-    selectPage: page => dispatch(selectPage(page))
+    selectPage: page => dispatch(selectPage(page)),
+    createProject: () => dispatch(createProject())
   };
 };
 

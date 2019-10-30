@@ -24,6 +24,7 @@ import "react-modern-calendar-datepicker/lib/DatePicker.css";
 import {Calendar} from "react-modern-calendar-datepicker";
 import Popover from "@material-ui/core/Popover";
 import AddIcon from "@material-ui/icons/Add";
+import changeAddTrafficAnalysis from "../../actions/changeAddTrafficAnalysis";
 
 const months = [
   "",
@@ -181,7 +182,8 @@ class AddTrafficAnalysis extends React.Component {
       },
       isDaySelected: false,
 
-      analysisName: ""
+      addTrafficAnalysis: {},
+      addTrafficAnalysisName: ""
     };
   }
 
@@ -212,23 +214,45 @@ class AddTrafficAnalysis extends React.Component {
     // console.log(day);
     this.setState({
       selectedDay: day,
+      isDaySelected: true,
+      addTrafficAnalysis: {
+        ...this.state.addTrafficAnalysis,
+        selectedDay: day,
+        isDaySelected: true
+      }
+    });
+    this.props.changeAddTrafficAnalysis({
+      ...this.state.addTrafficAnalysis,
+      selectedDay: day,
       isDaySelected: true
     });
   };
 
   handleChangeName = e => {
     this.setState({
-      analysisName: e.target.value
+      addTrafficAnalysisName: e.target.value,
+      addTrafficAnalysis: {
+        ...this.state.addTrafficAnalysis,
+        name: e.target.value
+      }
+    });
+    this.props.changeAddTrafficAnalysis({
+      ...this.state.addTrafficAnalysis,
+      name: e.target.value
     });
   };
 
   componentDidMount = () => {
-    // mapboxgl.accessToken =
-    //   "pk.eyJ1IjoibmFiaWRhbSIsImEiOiJjazFsejVrdXgwYWFiM2hwY2xzcng2YnRvIn0.9oIMFnFAebsE812OCde1Fw";
-    // var map = new mapboxgl.Map({
-    //   container: "map",
-    //   style: "mapbox://styles/mapbox/streets-v10"
-    // });
+    this.setState({
+      isLocationEnable: this.props.addTrafficAnalysis.location.isLocationEnable,
+      mapCenter: this.props.addTrafficAnalysis.location.center,
+
+      selectedDay: this.props.addTrafficAnalysis.selectedDay,
+      isDaySelected: this.props.addTrafficAnalysis.isDaySelected,
+
+      addTrafficAnalysis: this.props.addTrafficAnalysis,
+      addTrafficAnalysisName: this.props.addTrafficAnalysis.name
+    });
   };
 
   render() {
@@ -251,7 +275,7 @@ class AddTrafficAnalysis extends React.Component {
                   type="text"
                   className={classes.input}
                   placeholder="وارد کردن نام تحلیل"
-                  value={this.state.analysisName}
+                  value={this.state.addTrafficAnalysisName}
                   onChange={e => this.handleChangeName(e)}
                 />
               </Grid>
@@ -362,7 +386,8 @@ const mapStateToProps = state => {
     latestQueries: state.latestQueries,
     selectedQuery: state.selectedQuery,
     queries: state.queries,
-    selectedQueriesType: state.selectedQueriesType
+    selectedQueriesType: state.selectedQueriesType,
+    addTrafficAnalysis: state.addTrafficAnalysis
   };
 };
 
@@ -370,7 +395,8 @@ const mapDispatchToProps = dispatch => {
   return {
     selectQuery: id => dispatch(selectQuery(id)),
     selectQueriesType: type => dispatch(selectQueriesType(type)),
-    changeQueryStatus: query => dispatch(changeQueryStatus(query))
+    changeQueryStatus: query => dispatch(changeQueryStatus(query)),
+    changeAddTrafficAnalysis: data => dispatch(changeAddTrafficAnalysis(data))
   };
 };
 

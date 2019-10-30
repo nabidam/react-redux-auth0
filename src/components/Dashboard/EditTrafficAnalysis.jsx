@@ -24,6 +24,7 @@ import "react-modern-calendar-datepicker/lib/DatePicker.css";
 import {Calendar} from "react-modern-calendar-datepicker";
 import Popover from "@material-ui/core/Popover";
 import AddIcon from "@material-ui/icons/Add";
+import changeEditableTrafficAnalysis from "../../actions/changeEditableTrafficAnalysis";
 
 const months = [
   "",
@@ -219,13 +220,31 @@ class AddTrafficAnalysis extends React.Component {
     // console.log(day);
     this.setState({
       selectedDay: day,
+      isDaySelected: true,
+      editableTrafficAnalysis: {
+        ...this.state.editableTrafficAnalysis,
+        selectedDay: day,
+        isDaySelected: true
+      }
+    });
+    this.props.changeEditableTrafficAnalysis({
+      ...this.state.editableTrafficAnalysis,
+      selectedDay: day,
       isDaySelected: true
     });
   };
 
   handleChangeName = e => {
     this.setState({
-      editableTrafficAnalysisName: e.target.value
+      editableTrafficAnalysisName: e.target.value,
+      editableTrafficAnalysis: {
+        ...this.state.editableTrafficAnalysis,
+        name: e.target.value
+      }
+    });
+    this.props.changeEditableTrafficAnalysis({
+      ...this.state.editableTrafficAnalysis,
+      name: e.target.value
     });
   };
 
@@ -403,7 +422,9 @@ const mapDispatchToProps = dispatch => {
   return {
     selectQuery: id => dispatch(selectQuery(id)),
     selectQueriesType: type => dispatch(selectQueriesType(type)),
-    changeQueryStatus: query => dispatch(changeQueryStatus(query))
+    changeQueryStatus: query => dispatch(changeQueryStatus(query)),
+    changeEditableTrafficAnalysis: data =>
+      dispatch(changeEditableTrafficAnalysis(data))
   };
 };
 
