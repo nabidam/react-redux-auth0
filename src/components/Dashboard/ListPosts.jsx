@@ -83,6 +83,35 @@ const styles = theme => ({
       borderRadius: "50%"
     }
   },
+  neutralEmotion: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    position: "relative",
+    "&::after": {
+      content: `""`,
+      position: "absolute",
+      width: 16,
+      height: 16,
+      background: "#4a90e2",
+      border: "solid 5px rgba(255, 255, 255, 0.85)",
+      borderRadius: "50%"
+    }
+  },
+  selectedNeutralEmotion: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    position: "relative",
+    "&::after": {
+      content: `""`,
+      position: "absolute",
+      width: 16,
+      height: 16,
+      background: "#4a90e2",
+      borderRadius: "50%"
+    }
+  },
   positiveEmotion: {
     display: "flex",
     justifyContent: "center",
@@ -316,12 +345,20 @@ class ListPosts extends React.Component {
                             : classes.negativeEmotion
                         }
                       ></div>
-                    ) : (
+                    ) : row.emotion == "positive" ? (
                       <div
                         className={
                           this.props.selectedEmotion == "positive"
                             ? classes.selectedPositiveEmotion
                             : classes.positiveEmotion
+                        }
+                      ></div>
+                    ) : (
+                      <div
+                        className={
+                          this.props.selectedEmotion == "neutral"
+                            ? classes.selectedNeutralEmotion
+                            : classes.neutralEmotion
                         }
                       ></div>
                     )}

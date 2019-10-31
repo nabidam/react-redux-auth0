@@ -1133,7 +1133,7 @@ const initState = {
       name: "سارا مرادی",
       post:
         "نصیحت به غرض می‌شنود به نزدیک صاحب دیوان رفتم به سابقه معرفتی که در میان ما بود و صورت حالش بیان",
-      emotion: "positive",
+      emotion: "neutral",
       comment_emotion: "negative",
       sharable: 1,
       likes: 240,
