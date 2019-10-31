@@ -10,7 +10,8 @@ import {
   Paper,
   Divider,
   Button,
-  Tooltip as MTooltip
+  Tooltip as MTooltip,
+  Popover
 } from "@material-ui/core";
 import {
   ResponsiveContainer,
@@ -64,6 +65,24 @@ import {
   RandomizeNodePositions,
   SigmaEnableWebGL
 } from "react-sigma";
+import "react-modern-calendar-datepicker/lib/DatePicker.css";
+import {Calendar} from "react-modern-calendar-datepicker";
+
+const months = [
+  "",
+  "فروردین",
+  "اردیبهشت",
+  "خرداد",
+  "تیر",
+  "مرداد",
+  "شهریور",
+  "مهر",
+  "آبان",
+  "آذر",
+  "دی",
+  "بهمن",
+  "اسفند"
+];
 
 const styles = theme => ({
   root: {
@@ -779,7 +798,24 @@ class QueryInfluencersContainer extends React.Component {
       twitter: 1,
       instagram: 0,
       graph: null,
-      graphCategories: []
+      graphCategories: [],
+
+      isCalenderOpen: false,
+      calenderAnchorEl: null,
+
+      selectedDay: {
+        from: {
+          year: 1398,
+          month: 8,
+          day: 1
+        },
+        to: {
+          year: 1398,
+          month: 8,
+          day: 24
+        }
+      },
+      isDaySelected: true
     };
 
     this.handleSelectTab = this.handleSelectTab.bind(this);
@@ -955,6 +991,28 @@ class QueryInfluencersContainer extends React.Component {
     ]
   });
 
+  handleCalenderClick = event => {
+    this.setState({
+      calenderAnchorEl: event.currentTarget,
+      isCalenderOpen: Boolean(event.currentTarget)
+    });
+  };
+
+  handleCloseCalender = () => {
+    this.setState({
+      calenderAnchorEl: null,
+      isCalenderOpen: false
+    });
+  };
+
+  handleSelectedDay = day => {
+    // console.log(day);
+    this.setState({
+      selectedDay: day,
+      isDaySelected: true
+    });
+  };
+
   //   componentDidMount = () => {
   //     console.log(
   //       moment()
@@ -1033,12 +1091,51 @@ class QueryInfluencersContainer extends React.Component {
                     orientation="vertical"
                     className={classes.metaDivider}
                   />
-                  <Button color="primary" className={classes.selectDateRange}>
-                    ۱ مرداد - ۱۹ مرداد
+                  <Button
+                    color="primary"
+                    className={classes.selectDateRange}
+                    onClick={event => this.handleCalenderClick(event)}
+                  >
+                    {this.state.isDaySelected == false
+                      ? "انتخاب بازه زمانی"
+                      : this.state.selectedDay.from.day +
+                        " " +
+                        months[this.state.selectedDay.from.month] +
+                        " " +
+                        " - " +
+                        (this.state.selectedDay.to
+                          ? this.state.selectedDay.to.day +
+                            " " +
+                            months[this.state.selectedDay.to.month] +
+                            " "
+                          : "")}
                     <div className={classes.selectDateRangeIcon}>
                       <i className="fas fa-chevron-down" />
                     </div>
                   </Button>
+                  <Popover
+                    open={this.state.isCalenderOpen}
+                    onClose={() => this.handleCloseCalender()}
+                    anchorEl={this.state.calenderAnchorEl}
+                    anchorOrigin={{
+                      vertical: "bottom",
+                      horizontal: "right"
+                    }}
+                    transformOrigin={{
+                      vertical: "top",
+                      horizontal: "right"
+                    }}
+                    classes={{
+                      paper: classes.calenderPopover
+                    }}
+                  >
+                    <Calendar
+                      value={this.state.selectedDay}
+                      onChange={day => this.handleSelectedDay(day)}
+                      shouldHighlightWeekends
+                      isPersian
+                    />
+                  </Popover>
                 </div>
               </Paper>
             </Grid>

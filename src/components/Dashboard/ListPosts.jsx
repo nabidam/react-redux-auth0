@@ -40,7 +40,7 @@ const styles = theme => ({
     borderRadius: 22,
     position: "absolute",
     top: 2,
-    left: 2,
+    left: 12,
     display: "flex",
     justifyContent: "center",
     alignItems: "center"

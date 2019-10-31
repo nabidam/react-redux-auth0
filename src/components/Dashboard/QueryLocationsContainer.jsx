@@ -17,7 +17,8 @@ import {
   Divider,
   Modal,
   Button,
-  Tooltip as MTooltip
+  Tooltip as MTooltip,
+  Popover
 } from "@material-ui/core";
 import Slider from "@material-ui/lab/Slider";
 // import {Slider} from "material-ui-slider";
@@ -70,6 +71,24 @@ import ListPosts from "./ListPosts";
 import GridPosts from "./GridPosts";
 import WorldMap from "./WorldMap";
 import PieChart from "./PieChart";
+import "react-modern-calendar-datepicker/lib/DatePicker.css";
+import {Calendar} from "react-modern-calendar-datepicker";
+
+const months = [
+  "",
+  "فروردین",
+  "اردیبهشت",
+  "خرداد",
+  "تیر",
+  "مرداد",
+  "شهریور",
+  "مهر",
+  "آبان",
+  "آذر",
+  "دی",
+  "بهمن",
+  "اسفند"
+];
 
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
@@ -1029,7 +1048,24 @@ class QueryLocationsContainer extends React.Component {
       selectedView: "row",
       selectedChartAction: "day",
       twitter: 1,
-      instagram: 0
+      instagram: 0,
+
+      isCalenderOpen: false,
+      calenderAnchorEl: null,
+
+      selectedDay: {
+        from: {
+          year: 1398,
+          month: 8,
+          day: 1
+        },
+        to: {
+          year: 1398,
+          month: 8,
+          day: 24
+        }
+      },
+      isDaySelected: true
     };
 
     this.handleSelectTab = this.handleSelectTab.bind(this);
@@ -1065,6 +1101,28 @@ class QueryLocationsContainer extends React.Component {
   handleInstagramClick = () => {
     this.setState({
       instagram: !this.state.instagram
+    });
+  };
+
+  handleCalenderClick = event => {
+    this.setState({
+      calenderAnchorEl: event.currentTarget,
+      isCalenderOpen: Boolean(event.currentTarget)
+    });
+  };
+
+  handleCloseCalender = () => {
+    this.setState({
+      calenderAnchorEl: null,
+      isCalenderOpen: false
+    });
+  };
+
+  handleSelectedDay = day => {
+    // console.log(day);
+    this.setState({
+      selectedDay: day,
+      isDaySelected: true
     });
   };
 
@@ -1146,12 +1204,51 @@ class QueryLocationsContainer extends React.Component {
                     orientation="vertical"
                     className={classes.metaDivider}
                   />
-                  <Button color="primary" className={classes.selectDateRange}>
-                    ۱ مرداد - ۱۹ مرداد
+                  <Button
+                    color="primary"
+                    className={classes.selectDateRange}
+                    onClick={event => this.handleCalenderClick(event)}
+                  >
+                    {this.state.isDaySelected == false
+                      ? "انتخاب بازه زمانی"
+                      : this.state.selectedDay.from.day +
+                        " " +
+                        months[this.state.selectedDay.from.month] +
+                        " " +
+                        " - " +
+                        (this.state.selectedDay.to
+                          ? this.state.selectedDay.to.day +
+                            " " +
+                            months[this.state.selectedDay.to.month] +
+                            " "
+                          : "")}
                     <div className={classes.selectDateRangeIcon}>
                       <i className="fas fa-chevron-down" />
                     </div>
                   </Button>
+                  <Popover
+                    open={this.state.isCalenderOpen}
+                    onClose={() => this.handleCloseCalender()}
+                    anchorEl={this.state.calenderAnchorEl}
+                    anchorOrigin={{
+                      vertical: "bottom",
+                      horizontal: "right"
+                    }}
+                    transformOrigin={{
+                      vertical: "top",
+                      horizontal: "right"
+                    }}
+                    classes={{
+                      paper: classes.calenderPopover
+                    }}
+                  >
+                    <Calendar
+                      value={this.state.selectedDay}
+                      onChange={day => this.handleSelectedDay(day)}
+                      shouldHighlightWeekends
+                      isPersian
+                    />
+                  </Popover>
                 </div>
               </Paper>
             </Grid>
