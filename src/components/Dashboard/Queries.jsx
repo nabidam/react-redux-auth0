@@ -251,6 +251,20 @@ const styles = theme => ({
     flexDirection: "row",
     textAlign: "right",
     marginBottom: 15
+  },
+
+  welcomeBox: {
+    width: "50%",
+    margin: "0px auto"
+  },
+  welcomeTitle: {
+    fontSize: 24,
+    margin: "10px 0px"
+  },
+  welcomeText: {
+    fontSize: 12,
+    margin: "10px 0px 30px 0px",
+    lineHeight: 2.33
   }
 });
 
@@ -311,133 +325,164 @@ class Queries extends React.Component {
                   </Button>
                   <div style={{flexGrow: 1}} />
                   <Typography variant="body1" className={classes.numberOfQuery}>
-                    {this.props.queries.length} ردیاب ایجاد شده
+                    {this.props.queries.length
+                      ? this.props.queries.length + " ردیاب ایجاد شده"
+                      : "ردیابی ایجاد نشده است."}
                   </Typography>
                 </div>
               </Grid>
-              <Grid item md={3} sm={3} xs={3}>
-                <List className={classes.typeOfQuery}>
-                  <ListItem
-                    className={classNames(
-                      classes.listItem,
-                      this.props.selectedQueriesType == 1
-                        ? classes.selectedQueriesType
-                        : ""
-                    )}
-                    onClick={() => this.props.selectQueriesType(1)}
-                  >
-                    <ListItemText
-                      primary="ردیاب‌های فعال"
-                      className="list-item-right"
-                    />
-                  </ListItem>
-                  <ListItem
-                    className={classNames(
-                      classes.listItem,
-                      this.props.selectedQueriesType == 0
-                        ? classes.selectedQueriesType
-                        : ""
-                    )}
-                    onClick={() => this.props.selectQueriesType(0)}
-                  >
-                    <ListItemText
-                      primary="ردیاب‌های متوقف شده"
-                      className="list-item-right"
-                    />
-                  </ListItem>
-                </List>
-              </Grid>
-              <Grid item md={9} sm={9} xs={9}>
-                <List className={classes.activeQuery}>
-                  <Divider />
-                  {this.props.queries.map((item, index) => {
-                    if (item.active == this.props.selectedQueriesType) {
-                      return (
-                        <div key={index}>
-                          <ListItem
-                            className={classNames(
-                              classes.listItem,
-                              classes.listQueryItem
-                            )}
-                          >
-                            <div className={classes.queriesListText}>
-                              <div className={classes.queryTitle}>
-                                <Typography
-                                  variant="h1"
-                                  className={classes.queriesName}
-                                  onClick={() =>
-                                    this.props.selectQuery(item.id)
-                                  }
-                                >
-                                  {item.name}
-                                </Typography>
-                                <div className={classes.socialIcons}>
-                                  {item.social.instagram != null ? (
-                                    <i
-                                      className={classNames(
-                                        classes.instagram,
-                                        "fab fa-instagram fa-lg"
-                                      )}
-                                    ></i>
-                                  ) : (
-                                    ""
-                                  )}
-                                  {item.social.twitter != null ? (
-                                    <i
-                                      className={classNames(
-                                        classes.twitter,
-                                        "fab fa-twitter fa-lg"
-                                      )}
-                                    ></i>
-                                  ) : (
-                                    ""
-                                  )}
+              {this.props.queries.length ? (
+                <Grid item md={3} sm={3} xs={3}>
+                  <List className={classes.typeOfQuery}>
+                    <ListItem
+                      className={classNames(
+                        classes.listItem,
+                        this.props.selectedQueriesType == 1
+                          ? classes.selectedQueriesType
+                          : ""
+                      )}
+                      onClick={() => this.props.selectQueriesType(1)}
+                    >
+                      <ListItemText
+                        primary="ردیاب‌های فعال"
+                        className="list-item-right"
+                      />
+                    </ListItem>
+                    <ListItem
+                      className={classNames(
+                        classes.listItem,
+                        this.props.selectedQueriesType == 0
+                          ? classes.selectedQueriesType
+                          : ""
+                      )}
+                      onClick={() => this.props.selectQueriesType(0)}
+                    >
+                      <ListItemText
+                        primary="ردیاب‌های متوقف شده"
+                        className="list-item-right"
+                      />
+                    </ListItem>
+                  </List>
+                </Grid>
+              ) : (
+                ""
+              )}
+              {this.props.queries.length ? (
+                <Grid item md={9} sm={9} xs={9}>
+                  <List className={classes.activeQuery}>
+                    <Divider />
+                    {this.props.queries.map((item, index) => {
+                      if (item.active == this.props.selectedQueriesType) {
+                        return (
+                          <div key={index}>
+                            <ListItem
+                              className={classNames(
+                                classes.listItem,
+                                classes.listQueryItem
+                              )}
+                            >
+                              <div className={classes.queriesListText}>
+                                <div className={classes.queryTitle}>
+                                  <Typography
+                                    variant="h1"
+                                    className={classes.queriesName}
+                                    onClick={() =>
+                                      this.props.selectQuery(item.id)
+                                    }
+                                  >
+                                    {item.name}
+                                  </Typography>
+                                  <div className={classes.socialIcons}>
+                                    {item.social.instagram != null ? (
+                                      <i
+                                        className={classNames(
+                                          classes.instagram,
+                                          "fab fa-instagram fa-lg"
+                                        )}
+                                      ></i>
+                                    ) : (
+                                      ""
+                                    )}
+                                    {item.social.twitter != null ? (
+                                      <i
+                                        className={classNames(
+                                          classes.twitter,
+                                          "fab fa-twitter fa-lg"
+                                        )}
+                                      ></i>
+                                    ) : (
+                                      ""
+                                    )}
+                                  </div>
+                                </div>
+                                <div className={classes.textMute}>
+                                  ساخته شده در {item.date}, ساعت {item.time}
+                                  <Divider className={classes.statsDivider} />
+                                  پست‌های ردیابی شده: {item.retrieved_posts}
                                 </div>
                               </div>
-                              <div className={classes.textMute}>
-                                ساخته شده در {item.date}, ساعت {item.time}
-                                <Divider className={classes.statsDivider} />
-                                پست‌های ردیابی شده: {item.retrieved_posts}
+                              <div className={classes.queriesListActions}>
+                                {item.active == 1 ? (
+                                  <Button
+                                    className={classes.pauseBtn}
+                                    onClick={() =>
+                                      this.props.changeQueryStatus(item.id)
+                                    }
+                                  >
+                                    <PauseIcon className={classes.activeIcon} />
+                                  </Button>
+                                ) : (
+                                  <Button
+                                    className={classes.playBtn}
+                                    onClick={() =>
+                                      this.props.changeQueryStatus(item.id)
+                                    }
+                                  >
+                                    <PlayArrowIcon
+                                      className={classes.activeIcon}
+                                    />
+                                  </Button>
+                                )}
+                                <Typography
+                                  variant="body1"
+                                  className={classes.edit}
+                                  onClick={() => this.handleClickEdit(item.id)}
+                                >
+                                  ویرایش
+                                </Typography>
                               </div>
-                            </div>
-                            <div className={classes.queriesListActions}>
-                              {item.active == 1 ? (
-                                <Button
-                                  className={classes.pauseBtn}
-                                  onClick={() =>
-                                    this.props.changeQueryStatus(item.id)
-                                  }
-                                >
-                                  <PauseIcon className={classes.activeIcon} />
-                                </Button>
-                              ) : (
-                                <Button
-                                  className={classes.playBtn}
-                                  onClick={() =>
-                                    this.props.changeQueryStatus(item.id)
-                                  }
-                                >
-                                  <PlayArrowIcon
-                                    className={classes.activeIcon}
-                                  />
-                                </Button>
-                              )}
-                              <Typography
-                                variant="body1"
-                                className={classes.edit}
-                                onClick={() => this.handleClickEdit(item.id)}
-                              >
-                                ویرایش
-                              </Typography>
-                            </div>
-                          </ListItem>
-                          <Divider />
-                        </div>
-                      );
-                    }
-                  })}
-                </List>
-              </Grid>
+                            </ListItem>
+                            <Divider />
+                          </div>
+                        );
+                      }
+                    })}
+                  </List>
+                </Grid>
+              ) : (
+                <Grid item md={12} sm={12} xs={12}>
+                  <div className={classes.welcomeBox}>
+                    <Typography
+                      variant="body1"
+                      className={classes.welcomeTitle}
+                    >
+                      هنوز ردیابی ندارید!
+                    </Typography>
+                    <Typography variant="body1" className={classes.welcomeText}>
+                      برای تحلیل و ردیابی موضوعات مورد نظر خود در شبکه‌های
+                      اجتماعی می‌توانید <b>ردیاب</b> ایجاد کنید و به صورت ۲۴
+                      ساعت موضوعات را ردیابی کنید.
+                    </Typography>
+                    <Button
+                      color="primary"
+                      className={classes.newQueryBtn}
+                      onClick={() => this.handleClickAddQueries()}
+                    >
+                      ساخت ردیاب جدید
+                    </Button>
+                  </div>
+                </Grid>
+              )}
             </Grid>
           </Container>
         </main>

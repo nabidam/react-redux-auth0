@@ -222,6 +222,20 @@ const styles = theme => ({
   },
   activeIcon: {
     fontSize: "0.8em"
+  },
+
+  welcomeBox: {
+    width: "50%",
+    margin: "0px auto"
+  },
+  welcomeTitle: {
+    fontSize: 24,
+    margin: "10px 0px"
+  },
+  welcomeText: {
+    fontSize: 12,
+    margin: "10px 0px 30px 0px",
+    lineHeight: 2.33
   }
 });
 
@@ -285,109 +299,140 @@ class TrafficAnalysis extends React.Component {
                     variant="body1"
                     className={classes.numberOfAnalysis}
                   >
-                    ۳ تحلیل ایجاد شده
+                    {this.props.analysis.length
+                      ? this.props.analysis.length + " تحلیل ایجاد شده"
+                      : "تحلیلی ایجاد نشده است."}
                   </Typography>
                 </div>
               </Grid>
-              <Grid item md={3} sm={3} xs={3} center="true">
-                <List className={classes.typeOfAnalysis}>
-                  <ListItem
-                    className={classNames(
-                      classes.listItem,
-                      this.props.selectedAnalysisType == 1
-                        ? classes.selectedAnalysisType
-                        : ""
-                    )}
-                    onClick={() => this.props.selectAnalysisType(1)}
-                  >
-                    <ListItemText
-                      primary="تحلیل‌های فعال"
-                      className="list-item-right"
-                    />
-                  </ListItem>
-                  <ListItem
-                    className={classNames(
-                      classes.listItem,
-                      this.props.selectedAnalysisType == 0
-                        ? classes.selectedAnalysisType
-                        : ""
-                    )}
-                    onClick={() => this.props.selectAnalysisType(0)}
-                  >
-                    <ListItemText
-                      primary="تحلیل‌های متوقف شده"
-                      className="list-item-right"
-                    />
-                  </ListItem>
-                </List>
-              </Grid>
-              <Grid item md={9} sm={9} xs={9} center="true">
-                <List className={classes.activeAnalysis}>
-                  <Divider />
-                  {this.props.analysis.map(item => {
-                    if (item.active == this.props.selectedAnalysisType) {
-                      return (
-                        <div key={item.id}>
-                          <ListItem
-                            className={classNames(
-                              classes.listItem,
-                              classes.listAnalysisItem
-                            )}
-                          >
-                            {console.log(this.props.analysis)}
-                            <div className={classes.analysisListText}>
-                              <Typography
-                                variant="h1"
-                                className={classes.analysisName}
-                              >
-                                {item.name}
-                              </Typography>
-                              <Typography
-                                variant="body1"
-                                className={classes.textMute}
-                              >
-                                ساخته شده در: {item.date}, ساعت: {item.time}
-                              </Typography>
-                            </div>
-
-                            <div className={classes.analysisListActions}>
-                              {item.active == 1 ? (
-                                <Button
-                                  className={classes.pauseBtn}
-                                  onClick={() =>
-                                    this.props.changeAnalysisStatus(item.id)
-                                  }
-                                >
-                                  <PauseIcon className={classes.activeIcon} />
-                                </Button>
-                              ) : (
-                                <Button
-                                  className={classes.playBtn}
-                                  onClick={() =>
-                                    this.props.changeAnalysisStatus(item.id)
-                                  }
-                                >
-                                  <PlayArrowIcon
-                                    className={classes.activeIcon}
-                                  />
-                                </Button>
+              {this.props.analysis.length ? (
+                <Grid item md={3} sm={3} xs={3} center="true">
+                  <List className={classes.typeOfAnalysis}>
+                    <ListItem
+                      className={classNames(
+                        classes.listItem,
+                        this.props.selectedAnalysisType == 1
+                          ? classes.selectedAnalysisType
+                          : ""
+                      )}
+                      onClick={() => this.props.selectAnalysisType(1)}
+                    >
+                      <ListItemText
+                        primary="تحلیل‌های فعال"
+                        className="list-item-right"
+                      />
+                    </ListItem>
+                    <ListItem
+                      className={classNames(
+                        classes.listItem,
+                        this.props.selectedAnalysisType == 0
+                          ? classes.selectedAnalysisType
+                          : ""
+                      )}
+                      onClick={() => this.props.selectAnalysisType(0)}
+                    >
+                      <ListItemText
+                        primary="تحلیل‌های متوقف شده"
+                        className="list-item-right"
+                      />
+                    </ListItem>
+                  </List>
+                </Grid>
+              ) : (
+                ""
+              )}
+              {this.props.analysis.length ? (
+                <Grid item md={9} sm={9} xs={9} center="true">
+                  <List className={classes.activeAnalysis}>
+                    <Divider />
+                    {this.props.analysis.map(item => {
+                      if (item.active == this.props.selectedAnalysisType) {
+                        return (
+                          <div key={item.id}>
+                            <ListItem
+                              className={classNames(
+                                classes.listItem,
+                                classes.listAnalysisItem
                               )}
-                              <Typography
-                                variant="body1"
-                                className={classes.edit}
-                                onClick={() => this.handleClickEdit(item.id)}
-                              >
-                                ویرایش
-                              </Typography>
-                            </div>
-                          </ListItem>
-                          <Divider />
-                        </div>
-                      );
-                    }
-                  })}
-                </List>
-              </Grid>
+                            >
+                              {console.log(this.props.analysis)}
+                              <div className={classes.analysisListText}>
+                                <Typography
+                                  variant="h1"
+                                  className={classes.analysisName}
+                                >
+                                  {item.name}
+                                </Typography>
+                                <Typography
+                                  variant="body1"
+                                  className={classes.textMute}
+                                >
+                                  ساخته شده در: {item.date}, ساعت: {item.time}
+                                </Typography>
+                              </div>
+
+                              <div className={classes.analysisListActions}>
+                                {item.active == 1 ? (
+                                  <Button
+                                    className={classes.pauseBtn}
+                                    onClick={() =>
+                                      this.props.changeAnalysisStatus(item.id)
+                                    }
+                                  >
+                                    <PauseIcon className={classes.activeIcon} />
+                                  </Button>
+                                ) : (
+                                  <Button
+                                    className={classes.playBtn}
+                                    onClick={() =>
+                                      this.props.changeAnalysisStatus(item.id)
+                                    }
+                                  >
+                                    <PlayArrowIcon
+                                      className={classes.activeIcon}
+                                    />
+                                  </Button>
+                                )}
+                                <Typography
+                                  variant="body1"
+                                  className={classes.edit}
+                                  onClick={() => this.handleClickEdit(item.id)}
+                                >
+                                  ویرایش
+                                </Typography>
+                              </div>
+                            </ListItem>
+                            <Divider />
+                          </div>
+                        );
+                      }
+                    })}
+                  </List>
+                </Grid>
+              ) : (
+                <Grid item md={12} sm={12} xs={12}>
+                  <div className={classes.welcomeBox}>
+                    <Typography
+                      variant="body1"
+                      className={classes.welcomeTitle}
+                    >
+                      هنوز تحلیل ترافیکی ندارید!
+                    </Typography>
+                    <Typography variant="body1" className={classes.welcomeText}>
+                      برای تحلیل و بررسی منطقه مکانی خاصی روی نقشه و شناخت
+                      فرصت‌ها و ‌آشنایی با فضای مجازی مرتبط با آن مکان می‌توانید
+                      <b>تحلیل ترافیکی</b> ایجاد کنید.
+                    </Typography>
+                    <Button
+                      color="primary"
+                      className={classes.newAnalysisBtn}
+                      onClick={() => this.handleClickAddAnalysis()}
+                    >
+                      ساخت تحلیل جدید
+                    </Button>
+                  </div>
+                </Grid>
+              )}
             </Grid>
           </Container>
         </main>
