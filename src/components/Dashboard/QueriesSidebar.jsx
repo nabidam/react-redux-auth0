@@ -276,11 +276,16 @@ const styles = theme => ({
     fontSize: 18
   },
   postsBadge: {
-    padding: "5px 5px",
+    padding: "0px 5px",
     backgroundColor: "#edf1f6",
     borderRadius: 3,
     color: "#08080d",
     marginRight: 11
+  },
+
+  selectedBadge: {
+    color: "#fff",
+    backgroundColor: "#3340ff"
   }
 });
 
@@ -574,7 +579,16 @@ class QueriesSidebar extends Component {
             >
               <ListItemText className="list-item-right level-2-items">
                 پست‌ها
-                <span className={classes.postsBadge}>347</span>
+                <span
+                  className={classNames(
+                    classes.postsBadge,
+                    this.props.selectedQueryDashboardItem == "posts"
+                      ? classes.selectedBadge
+                      : ""
+                  )}
+                >
+                  347
+                </span>
               </ListItemText>
             </ListItem>
             <ListItem
@@ -720,6 +734,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    selectQuery: id => dispatch(selectQuery(id)),
     selectQueryDashboardListItem: item =>
       dispatch(selectQueryDashboardListItem(item)),
     selectPage: page => dispatch(selectPage(page)),
