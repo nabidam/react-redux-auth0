@@ -31,6 +31,20 @@ const initState = {
   addQuery: null,
   addTrafficAnalysis: null,
   addProject: null,
+  myBag: [
+    {
+      name: "گرینلند",
+      selected: false
+    },
+    {
+      name: "# پمپئو",
+      selected: true
+    },
+    {
+      name: "فلورانس",
+      selected: true
+    }
+  ],
   analysis: [
     {
       id: 1,
@@ -1632,6 +1646,30 @@ const rootReducer = (state = initState, action) => {
       return {
         ...state,
         projects: new_projects
+      };
+    case types.CHANGE_BAG_ITEM_STATUS:
+      var myBag = state.myBag;
+      var newBag = [];
+      myBag.map((item, index) => {
+        if (action.item == item.name) {
+          newBag.push({name: item.name, selected: !item.selected});
+        } else {
+          newBag.push(item);
+        }
+      });
+      return {
+        ...state,
+        myBag: newBag
+      };
+    case types.CHECK_ALL_BAG_ITEM_STATUS:
+      var myBag = state.myBag;
+      var newBag = [];
+      myBag.map((item, index) => {
+        newBag.push({name: item.name, selected: action.status});
+      });
+      return {
+        ...state,
+        myBag: newBag
       };
     default:
       return state;

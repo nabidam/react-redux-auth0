@@ -8,7 +8,13 @@ import {
   Tooltip,
   Snackbar,
   SnackbarContent,
-  IconButton
+  IconButton,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemIcon,
+  Typography,
+  Button
 } from "@material-ui/core";
 
 import Header from "./Header";
@@ -48,6 +54,21 @@ import EditProjects from "./EditProjects";
 import EditProjectsHeader from "./EditProjectsHeader";
 import EditTrafficAnalysis from "./EditTrafficAnalysis";
 import EditTrafficAnalysisHeader from "./EditTrafficAnalysisHeader";
+import Fab from "@material-ui/core/Fab";
+import CallToActionIcon from "@material-ui/icons/CallToAction";
+import Badge from "@material-ui/core/Badge";
+import Popover from "@material-ui/core/Popover";
+import AddIcon from "@material-ui/icons/Add";
+import goToAddQuery from "../../actions/goToAddQuery";
+import goToAddTrafficAnalysis from "../../actions/goToAddTrafficAnalysis";
+import selectPage from "../../actions/selectPage";
+import changeBagItemStatus from "../../actions/changeBagItemStatus";
+import checkAllBagItemStatus from "../../actions/checkAllBagItemStatus";
+import Checkbox from "@material-ui/core/Checkbox";
+import FormGroup from "@material-ui/core/FormGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormControl from "@material-ui/core/FormControl";
+import FormLabel from "@material-ui/core/FormLabel";
 
 const drawerWidth = 240;
 
@@ -73,6 +94,108 @@ const styles = theme => ({
   message: {
     display: "flex",
     alignItems: "center"
+  },
+
+  fab: {
+    position: "fixed",
+    left: 18,
+    bottom: 18,
+    backgroundColor: "#fc4c81",
+    boxShadow: "0 4px 10px 0 rgba(0, 0, 0, 0.28)",
+    color: "#fff",
+    "&:hover": {
+      backgroundColor: "#f54581"
+    }
+  },
+  badge: {
+    position: "absolute",
+    top: -3,
+    right: -3,
+    width: 22,
+    height: 22,
+    backgroundColor: "#000",
+    color: "#fff",
+    borderRadius: "50%"
+  },
+  popover: {
+    width: 280,
+    // height: 335,
+    bordeRadius: 5,
+    boxShadow: "0 2px 15px 0 rgba(0, 0, 0, 0.1)"
+  },
+  popoverHeader: {
+    height: 56,
+    borderRadius: 5,
+    width: "100%",
+    backgroundColor: "#08080d",
+    color: "#fff",
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: "0px 15px"
+  },
+  closeIcon: {
+    fontSize: "1rem",
+    color: "#fff",
+    padding: 0
+  },
+  popoverActions: {
+    display: "flex",
+    justifyContent: "space-between",
+    padding: 15
+  },
+  newAnalysisBtn: {
+    width: 110,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: "#4753ff",
+    border: "solid 5px rgba(255, 255, 255, 0.85)",
+    color: "#fff",
+    "&:hover": {
+      backgroundColor: "#0500cb"
+    },
+    "&:active": {
+      opacity: 0.7
+    }
+  },
+  newQueryBtn: {
+    width: 110,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: "#4753ff",
+    border: "solid 5px rgba(255, 255, 255, 0.85)",
+    color: "#fff",
+    "&:hover": {
+      backgroundColor: "#0500cb"
+    },
+    "&:active": {
+      opacity: 0.7
+    }
+  },
+  popoverList: {
+    margin: "0px 15px"
+  },
+  popoverListItem: {
+    height: 40,
+    padding: 0,
+    borderBottom: "1px solid #e4e8ed"
+  },
+  popoverListItemBody: {
+    marginRight: 0
+  },
+  popoverCheckbox: {
+    padding: 0
+  },
+  popoverListItemText: {
+    marginRight: 10,
+    fontSize: 12
+  },
+  checkAllBtn: {
+    fontSize: 10,
+    maxWidth: 100,
+    "&:hover": {
+      cursor: "pointer"
+    }
   }
 });
 
@@ -87,7 +210,12 @@ class Dashboard extends React.Component {
         "accounts",
         "projects",
         "trends"
-      ]
+      ],
+
+      isPopoverOpen: false,
+      popoverAnchorEl: null,
+
+      allBagItemsChecked: false
     };
 
     this.handleCloseSnackbar = this.handleCloseSnackbar.bind(this);
@@ -98,6 +226,63 @@ class Dashboard extends React.Component {
       open: false,
       msg: ""
     });
+  };
+
+  handlePopoverClick = event => {
+    this.setState({
+      popoverAnchorEl: event.currentTarget,
+      isPopoverOpen: Boolean(event.currentTarget)
+    });
+  };
+
+  handleClosePopover = () => {
+    this.setState({
+      popoverAnchorEl: null,
+      isPopoverOpen: false
+    });
+  };
+
+  handleClickAddAnalysis = () => {
+    this.setState({
+      popoverAnchorEl: null,
+      isPopoverOpen: false
+    });
+    this.props.goToAddTrafficAnalysis();
+    this.props.selectPage("traffic-analysis/add");
+  };
+
+  handleClickAddQueries = () => {
+    this.setState({
+      popoverAnchorEl: null,
+      isPopoverOpen: false
+    });
+    this.props.goToAddQuery();
+    this.props.selectPage("queries/add");
+  };
+
+  handleClickBagItem = item => {
+    this.props.changeBagItemStatus(item.name);
+  };
+
+  handleCheckAllBagItems = () => {
+    this.props.checkAllBagItemStatus(!this.state.allBagItemsChecked);
+    this.setState({
+      allBagItemsChecked: !this.state.allBagItemsChecked
+    });
+  };
+
+  componentDidMount = () => {
+    var c = 0;
+    this.props.myBag.map((item, index) => {
+      if (item.selected) {
+        c++;
+      }
+    });
+    if (c == this.props.myBag.length) {
+      this.setState({
+        allBagItemsChecked: true
+      });
+    }
   };
 
   render() {
@@ -188,6 +373,89 @@ class Dashboard extends React.Component {
         <Route exact path="/dashboard/projects/edit" component={EditProjects} />
         <Route exact path="/dashboard/trends" component={Trends} />
         <Route exact path="/dashboard" component={MainDashboard} />
+        <Fab
+          className={classes.fab}
+          onClick={event => this.handlePopoverClick(event)}
+        >
+          <CallToActionIcon />
+          <div className={classes.badge}>4</div>
+        </Fab>
+        <Popover
+          open={this.state.isPopoverOpen}
+          onClose={() => this.handleClosePopover()}
+          anchorEl={this.state.popoverAnchorEl}
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "center"
+          }}
+          transformOrigin={{
+            vertical: "bottom",
+            horizontal: "left"
+          }}
+          classes={{
+            paper: classes.popover
+          }}
+        >
+          <div className={classes.popoverHeader}>
+            <Typography
+              variant="body2"
+              onClick={() => this.handleCheckAllBagItems()}
+              className={classes.checkAllBtn}
+            >
+              {this.state.allBagItemsChecked ? "حذف همه" : "انتخاب همه"}
+            </Typography>
+            <Typography
+              variant="body2"
+              style={{fontSize: 12, fontWeight: "bold"}}
+            >
+              خورجین من
+            </Typography>
+            <IconButton onClick={() => this.handleClosePopover()}>
+              <CloseIcon className={classes.closeIcon} />
+            </IconButton>
+          </div>
+          <List component="nav" className={classes.popoverList}>
+            {this.props.myBag.map((item, index) => {
+              return (
+                <ListItem
+                  className={classNames(classes.popoverListItem)}
+                  key={item.id}
+                  button
+                >
+                  <Checkbox
+                    value={item.name}
+                    checked={item.selected}
+                    color="primary"
+                    className={classes.popoverCheckbox}
+                    onChange={() => this.handleClickBagItem(item)}
+                  />
+                  <Typography
+                    variant="body2"
+                    className={classes.popoverListItemText}
+                  >
+                    {item.name}
+                  </Typography>
+                </ListItem>
+              );
+            })}
+          </List>
+          <div className={classes.popoverActions}>
+            <Button
+              color="primary"
+              className={classes.newQueryBtn}
+              onClick={() => this.handleClickAddQueries()}
+            >
+              ساخت ردیاب
+            </Button>
+            <Button
+              color="primary"
+              className={classes.newAnalysisBtn}
+              onClick={() => this.handleClickAddAnalysis()}
+            >
+              ساخت تحلیل
+            </Button>
+          </div>
+        </Popover>
         <Snackbar
           anchorOrigin={{
             vertical: "bottom",
@@ -230,15 +498,19 @@ const mapStateToProps = state => {
     isSnackbarOpen: state.isSnackbarOpen,
     snackbarMessage: state.snackbarMessage,
     selectedPage: state.selectedPage,
-    selectedQueryDashboardItem: state.selectedQueryDashboardItem
+    selectedQueryDashboardItem: state.selectedQueryDashboardItem,
+    myBag: state.myBag
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    changeSnackbarStatus: data => {
-      dispatch(changeSnackbarStatus(data));
-    }
+    changeSnackbarStatus: data => dispatch(changeSnackbarStatus(data)),
+    selectPage: page => dispatch(selectPage(page)),
+    goToAddTrafficAnalysis: () => dispatch(goToAddTrafficAnalysis()),
+    goToAddQuery: () => dispatch(goToAddQuery()),
+    changeBagItemStatus: item => dispatch(changeBagItemStatus(item)),
+    checkAllBagItemStatus: status => dispatch(checkAllBagItemStatus(status))
   };
 };
 
