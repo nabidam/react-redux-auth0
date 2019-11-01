@@ -419,7 +419,7 @@ class Dashboard extends React.Component {
               return (
                 <ListItem
                   className={classNames(classes.popoverListItem)}
-                  key={item.id}
+                  key={index}
                   button
                 >
                   <Checkbox

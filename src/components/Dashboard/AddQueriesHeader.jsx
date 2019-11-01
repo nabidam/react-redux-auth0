@@ -187,7 +187,7 @@ class AddQueriesHeader extends React.Component {
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar className={classes.toolBar}>
           <Grid container className={classes.headerContainer}>
-            <Grid item md={4}>
+            <Grid item md={4} sm={4} xs={4}>
               <Paper className={classes.titlePaper}>
                 <Grid container wrap="nowrap" spacing={2}>
                   <Grid item xs zeroMinWidth className={classes.cardText}>
@@ -202,7 +202,7 @@ class AddQueriesHeader extends React.Component {
                 </Grid>
               </Paper>
             </Grid>
-            <Grid item md={4} className={classes.titleGrid}>
+            <Grid item md={4} sm={4} xs={4} className={classes.titleGrid}>
               <Paper className={classNames(classes.headerPaper)}>
                 <Grid container wrap="nowrap">
                   <Grid item xs zeroMinWidth className={classes.headerItem}>
@@ -217,7 +217,7 @@ class AddQueriesHeader extends React.Component {
                 </Grid>
               </Paper>
             </Grid>
-            <Grid item md={4} className={classes.closeIconGrid}>
+            <Grid item md={4} sm={4} xs={4} className={classes.closeIconGrid}>
               <IconButton onClick={() => this.props.selectPage("queries")}>
                 <CloseIcon className={classes.closeIcon} />
               </IconButton>

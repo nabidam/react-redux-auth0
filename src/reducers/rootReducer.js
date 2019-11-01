@@ -16,6 +16,13 @@ const initState = {
   access_token: null,
   id_token: null,
   expires_at: null,
+  comeFrom: "",
+  globalVar: {
+    hashtags: [],
+    keywords: [],
+    instagram: 0,
+    twitter: 0
+  },
   isDrawerOpen: false,
   selectedQueryDashboardItem: null,
   selectedPage: "queries",
@@ -1670,6 +1677,16 @@ const rootReducer = (state = initState, action) => {
       return {
         ...state,
         myBag: newBag
+      };
+    case types.CHANGE_GLOBAL_VAR:
+      return {
+        ...state,
+        globalVar: action.data
+      };
+    case types.CHANGE_COME_FROM:
+      return {
+        ...state,
+        comeFrom: action.comeFrom
       };
     default:
       return state;

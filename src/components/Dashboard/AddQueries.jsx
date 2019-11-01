@@ -748,7 +748,7 @@ class AddQueries extends React.Component {
           <div className={classes.toolbar} />
           <Container maxWidth="md" className={classes.container}>
             <Grid container className={classes.root} spacing={2}>
-              <Grid item md={6} sm={6} xs={12}>
+              <Grid item md={6} sm={12} xs={12}>
                 <div className={classes.labelBox}>
                   <i
                     className={classNames(classes.bulbIcon, "far fa-lightbulb")}
@@ -835,7 +835,7 @@ class AddQueries extends React.Component {
               </Grid>
             </Grid>
             <Grid container className={classes.root} spacing={2}>
-              <Grid item md={6} sm={6} xs={12}>
+              <Grid item md={6} sm={12} xs={12}>
                 <div className={classes.labelBox}>
                   <i
                     className={classNames(classes.bulbIcon, "far fa-lightbulb")}
@@ -850,7 +850,7 @@ class AddQueries extends React.Component {
                   onChange={e => this.handleChangeName(e)}
                 />
               </Grid>
-              <Grid item md={6} sm={6} xs={12}>
+              <Grid item md={6} sm={12} xs={12}>
                 <div className={classes.labelBox}>
                   <i
                     className={classNames(classes.bulbIcon, "far fa-lightbulb")}
@@ -920,7 +920,7 @@ class AddQueries extends React.Component {
                   </Typography>
                 </div>
                 <Grid container className={classes.root} spacing={2}>
-                  <Grid item md={1}>
+                  <Grid item md={1} sm={1} xs={1}>
                     <div className={classes.socialMediaIconBox}>
                       <IconButton
                         className={
@@ -941,7 +941,7 @@ class AddQueries extends React.Component {
                       )}
                     </div>
                   </Grid>
-                  <Grid item md={5}>
+                  <Grid item md={5} sm={11} xs={11}>
                     <div className={classes.tagWrapper}>
                       {this.state.instagramUsers.map((item, index) => {
                         return (
@@ -967,7 +967,7 @@ class AddQueries extends React.Component {
                       />
                     </div>
                   </Grid>
-                  <Grid item md={1}>
+                  <Grid item md={1} sm={1} xs={1}>
                     <div className={classes.socialMediaIconBox}>
                       <IconButton
                         className={
@@ -988,7 +988,7 @@ class AddQueries extends React.Component {
                       )}
                     </div>
                   </Grid>
-                  <Grid item md={5}>
+                  <Grid item md={5} sm={11} xs={11}>
                     <div className={classes.tagWrapper}>
                       {this.state.twitterUsers.map((item, index) => {
                         return (
@@ -1027,7 +1027,7 @@ class AddQueries extends React.Component {
                   </Typography>
                 </div>
                 <Grid container className={classes.root} spacing={2}>
-                  <Grid item md={6}>
+                  <Grid item md={6} sm={12} xs={12}>
                     <div className={classes.tagWrapper}>
                       {this.state.hashtags.map((item, index) => {
                         return (
@@ -1050,7 +1050,7 @@ class AddQueries extends React.Component {
                       />
                     </div>
                   </Grid>
-                  <Grid item md={6}>
+                  <Grid item md={6} sm={12} xs={12}>
                     <div className={classes.tagWrapper}>
                       {this.state.keywords.map((item, index) => {
                         return (
@@ -1108,7 +1108,7 @@ class AddQueries extends React.Component {
                     </Typography>
                   </div>
                   <Grid container className={classes.root} spacing={2}>
-                    <Grid item md={6}>
+                    <Grid item md={6} sm={12} xs={12}>
                       <div className={classes.mapBox} id="map-box">
                         <MapComponent center={this.state.mapCenter} />
                         <div
@@ -1125,7 +1125,7 @@ class AddQueries extends React.Component {
                         </Button>
                       </div>
                     </Grid>
-                    <Grid item md={6}>
+                    <Grid item md={6} sm={12} xs={12}>
                       <div className={classes.box}>
                         <Typography
                           variant="body2"

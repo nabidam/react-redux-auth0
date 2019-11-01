@@ -284,13 +284,11 @@ class Queries extends React.Component {
     this.props.selectPage("queries/edit");
   };
 
-  //   componentDidMount = () => {
-  //     console.log(
-  //       moment()
-  //         .subtract(10, "days")
-  //         .format("Do")
-  //     );
-  //   };
+  componentDidMount = () => {
+    if (this.props.comeFrom == "boarding") {
+      this.props.selectPage("queries/add");
+    }
+  };
 
   render() {
     const {classes} = this.props;
@@ -501,7 +499,8 @@ const mapStateToProps = state => {
     latestQueries: state.latestQueries,
     selectedQuery: state.selectedQuery,
     queries: state.queries,
-    selectedQueriesType: state.selectedQueriesType
+    selectedQueriesType: state.selectedQueriesType,
+    comeFrom: state.comeFrom
   };
 };
 

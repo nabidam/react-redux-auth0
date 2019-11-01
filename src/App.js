@@ -13,6 +13,7 @@ import history from "./history";
 import authenticateChecked from "./actions/authenticateChecked";
 import PieChart from "./components/Dashboard/PieChart";
 import MapComponent from "./components/Dashboard/MapComponent";
+import Boarding from "./components/Dashboard/Boarding";
 
 // import AddQuery from "./components/Dashboard/AddQuery";
 // import "./styles/fontawesome.css";
@@ -70,6 +71,7 @@ class App extends Component {
               path="/map"
               render={() => <MapComponent center={[51.4124, 35.7325]} />}
             />
+            <Route exact path="/boarding" component={Boarding} />
             <Route path="/callback" component={Callback} />
             <Route path="/about" component={About} />
             <Route path="/cloud" component={WordsCloud} />
