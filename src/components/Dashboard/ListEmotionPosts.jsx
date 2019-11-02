@@ -169,6 +169,10 @@ const styles = theme => ({
       cursor: "pointer",
       backgroundColor: "#f2f3fb"
     }
+  },
+  cellLowPadding: {
+    paddingRight: 4,
+    paddingLeft: 4
   }
 });
 
@@ -204,7 +208,10 @@ class ListEmotionPosts extends React.Component {
               <TableRow>
                 <TableCell
                   align="right"
-                  className={classes.tableHeader}
+                  className={classNames(
+                    classes.tableHeader,
+                    classes.cellLowPadding
+                  )}
                   style={{width: "10%"}}
                 >
                   کاربری
@@ -256,13 +263,13 @@ class ListEmotionPosts extends React.Component {
               {this.props.posts.map(row => (
                 <TableRow
                   key={row.id}
-                  className={classes.tableRow}
+                  className={classNames(classes.tableRow)}
                   onMouseEnter={() => this.handleHoverRow(row.id)}
                   onMouseLeave={() => this.handleUnHoverRow()}
                 >
                   <TableCell
                     style={{width: "25%"}}
-                    className={classes.flex}
+                    className={classNames(classes.flex, classes.cellLowPadding)}
                     // padding="none"
                     align="right"
                   >

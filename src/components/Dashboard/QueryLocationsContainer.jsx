@@ -420,9 +420,9 @@ const styles = theme => ({
   emotionStats: {
     display: "flex",
     marginBottom: 35,
-    width: 150
+    width: 250
   },
-  negativeEmotion: {
+  negativeEmotionBox: {
     flexGrow: 1,
     display: "flex",
     flexDirection: "column",
@@ -439,9 +439,9 @@ const styles = theme => ({
       right: 0,
       width: 16,
       height: 16,
-      border: "solid 5px rgba(255, 255, 255, 0.85)",
       background: "#ec373c",
-      borderRadius: "50%"
+      borderRadius: "50%",
+      border: "solid 5px rgba(255, 255, 255, 0.85)"
     }
   },
   negativeText: {
@@ -658,6 +658,68 @@ const styles = theme => ({
     justifyContent: "center",
     alignItems: "center",
     height: "100%"
+  },
+
+  relatedsPaper: {
+    height: "100%"
+  },
+  textRight: {
+    textAlign: "right"
+  },
+  textLeft: {
+    textLeft: "left"
+  },
+  fieldsContent: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "right"
+  },
+  tabs: {
+    display: "flex",
+    width: "100%",
+    margin: "0px auto"
+  },
+  listItem: {
+    paddingTop: 0,
+    paddingBottom: 0,
+    width: "100%",
+    "&:hover": {
+      color: "#4753ff",
+      cursor: "pointer"
+    }
+  },
+  textCenter: {
+    textAlign: "center",
+    fontSize: 14
+  },
+  selectedTab: {
+    color: "#3340ff",
+    borderBottom: "3px solid #4753ff"
+  },
+  textMute: {
+    color: "#adb2b9"
+  },
+  neutralEmotion: {
+    flexGrow: 1,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-start"
+  },
+  neutralPercent: {
+    position: "relative",
+    width: 45,
+    fontWeight: "bold",
+    textAlign: "left",
+    "&::after": {
+      content: `""`,
+      position: "absolute",
+      right: 0,
+      width: 16,
+      height: 16,
+      border: "solid 5px rgba(255, 255, 255, 0.85)",
+      background: "#4a90e2",
+      borderRadius: "50%"
+    }
   }
 });
 
@@ -688,13 +750,24 @@ const styles = theme => ({
 const emotionDatas = [
   {
     name: "حس منفی",
-    value: 42,
-    color: "#ec373c"
+    value: 32,
+    color: "#ec373c",
+    emotion: "negative",
+    posts: 457
+  },
+  {
+    name: "حس خنثی",
+    value: 28,
+    color: "#4a90e2",
+    emotion: "neutral",
+    posts: 457
   },
   {
     name: "حس مثبت",
-    value: 58,
-    color: "#03d588"
+    value: 40,
+    color: "#03d588",
+    emotion: "positive",
+    posts: 457
   }
 ];
 
@@ -1256,7 +1329,7 @@ class QueryLocationsContainer extends React.Component {
         </Container>
         <Container className={classes.chartContainer}>
           <Grid container className={classes.root} spacing={2}>
-            <Grid item md={12} sm={12} xs={12}>
+            <Grid item md={8} sm={12} xs={12}>
               <Paper
                 className={classNames(
                   classes.chartPaper,
@@ -1278,6 +1351,86 @@ class QueryLocationsContainer extends React.Component {
                 </div>
                 <Divider variant="fullWidth" className={classes.dividerM} />
                 <WorldMap />
+              </Paper>
+            </Grid>
+            <Grid item md={4} sm={12} xs={12}>
+              <Paper
+                className={classNames(
+                  classes.relatedsPaper,
+                  classes.chartPaper
+                )}
+              >
+                <div className={classes.paperHeader}>
+                  <Typography variant="h6" className={classes.headerText}>
+                    لفظ‌های مرتبط
+                  </Typography>
+                  <div className={classes.paperHeaderGuideIcon}>
+                    <BootstrapTooltip
+                      placement="top"
+                      title="موضوعات مرتبط با ردیاب انتخابی که نشان دهنده تاثیرپذیری یک متن تستی برای نمایش این قابلیت است و باید توضیحات هر سکشن در این قسمت نمایش داده شود."
+                    >
+                      <i className="far fa-lightbulb fa-lg"></i>
+                    </BootstrapTooltip>
+                  </div>
+                </div>
+                <Divider variant="fullWidth" className={classes.dividerM} />
+                <div className={classes.fieldsContent}>
+                  <List component="div" disablePadding className={classes.tabs}>
+                    <ListItem
+                      className={classNames(
+                        classes.listItem,
+                        "" +
+                          (this.state.selectedTab == "keyWords"
+                            ? classes.selectedTab
+                            : "")
+                      )}
+                      onClick={() => this.handleSelectTab("keyWords")}
+                    >
+                      <ListItemText
+                        primary="کلمات کلیدی"
+                        className={classNames(classes.textCenter)}
+                      />
+                    </ListItem>
+                    <ListItem
+                      className={classNames(
+                        classes.listItem,
+                        "" +
+                          (this.state.selectedTab == "hashtags"
+                            ? classes.selectedTab
+                            : "")
+                      )}
+                      onClick={() => this.handleSelectTab("hashtags")}
+                    >
+                      <ListItemText
+                        primary="هشتگ‌ها"
+                        className={classNames(classes.textCenter)}
+                      />
+                    </ListItem>
+                  </List>
+                  <List
+                    component="div"
+                    disablePadding
+                    className={classes.relateds}
+                  >
+                    {this.props.keywords.map((item, index) => {
+                      return (
+                        <ListItem className={classes.listItem} key={index}>
+                          <ListItemText
+                            primary={item.text}
+                            className={classNames(classes.textRight)}
+                          />
+                          <ListItemText
+                            primary={item.value}
+                            className={classNames(
+                              classes.textMute,
+                              classes.textLeft
+                            )}
+                          />
+                        </ListItem>
+                      );
+                    })}
+                  </List>
+                </div>
               </Paper>
             </Grid>
           </Grid>
@@ -1336,10 +1489,14 @@ class QueryLocationsContainer extends React.Component {
                 </div>
                 <div className={classes.emotionsContent}>
                   <div className={classes.emotionStats}>
-                    <div className={classes.negativeEmotion}>
+                    <div className={classes.negativeEmotionBox}>
                       <Typography
                         variant="body1"
-                        className={classes.negativePercent}
+                        className={
+                          this.props.selectedEmotion == "negative"
+                            ? classes.selectedNegativePercent
+                            : classes.negativePercent
+                        }
                       >
                         {this.state.emotionDatas[0].value}%
                       </Typography>
@@ -1350,27 +1507,39 @@ class QueryLocationsContainer extends React.Component {
                         {this.state.emotionDatas[0].name}
                       </Typography>
                     </div>
-                    <div className={classes.positiveEmotion}>
+                    <div className={classes.neutralEmotion}>
                       <Typography
                         variant="body1"
-                        className={classes.positivePercent}
+                        className={classes.neutralPercent}
                       >
                         {this.state.emotionDatas[1].value}%
                       </Typography>
                       <Typography
                         variant="body1"
-                        className={classes.positiceText}
+                        className={classes.negativeText}
+                      >
+                        {this.state.emotionDatas[1].name}
+                      </Typography>
+                    </div>
+                    <div className={classes.positiveEmotionBox}>
+                      <Typography
+                        variant="body1"
+                        className={
+                          this.props.selectedEmotion == "positive"
+                            ? classes.selectedPositivePercent
+                            : classes.positivePercent
+                        }
+                      >
+                        {this.state.emotionDatas[1].value}%
+                      </Typography>
+                      <Typography
+                        variant="body1"
+                        className={classes.positiveText}
                       >
                         {this.state.emotionDatas[1].name}
                       </Typography>
                     </div>
                   </div>
-                  <Button color="primary" className={classes.showTextEmotion}>
-                    مشاهده احساس موجود در متن
-                    <div className={classes.showTextEmotionIcon}>
-                      <i className="fas fa-chevron-left" />
-                    </div>
-                  </Button>
                 </div>
               </Paper>
             </Grid>
@@ -1476,7 +1645,8 @@ const mapStateToProps = state => {
   return {
     queries: state.queries,
     selectedQuery: state.selectedQuery,
-    selectedQueryDashboardItem: state.selectedQueryDashboardItem
+    selectedQueryDashboardItem: state.selectedQueryDashboardItem,
+    keywords: state.keywords
   };
 };
 
