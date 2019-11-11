@@ -1136,13 +1136,13 @@ class QueryEmotionsContainer extends React.Component {
                             : classes.positivePercent
                         }
                       >
-                        {this.state.emotionDatas[1].value}%
+                        {this.state.emotionDatas[2].value}%
                       </Typography>
                       <Typography
                         variant="body1"
                         className={classes.positiveText}
                       >
-                        {this.state.emotionDatas[1].name}
+                        {this.state.emotionDatas[2].name}
                       </Typography>
                     </div>
                   </div>

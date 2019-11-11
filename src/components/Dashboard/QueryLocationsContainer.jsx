@@ -1,8 +1,14 @@
-import React, {unstable_Profiler} from "react";
+import React, { unstable_Profiler } from "react";
 import PropTypes from "prop-types";
-import {withStyles} from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import classNames from "classnames";
-import {PDFDownloadLink, Document, Page, View, Text} from "@react-pdf/renderer";
+import {
+  PDFDownloadLink,
+  Document,
+  Page,
+  View,
+  Text
+} from "@react-pdf/renderer";
 import {
   CssBaseline,
   Typography,
@@ -51,7 +57,7 @@ import {
   Pie,
   linearGradient
 } from "recharts";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 import changeSelectedQuery from "../../actions/changeSelectedQuery";
 import ReactExport from "react-data-export";
 import LatestQueriesPDF from "./LatestQueriesPDF";
@@ -72,7 +78,7 @@ import GridPosts from "./GridPosts";
 import WorldMap from "./WorldMap";
 import PieChart from "./PieChart";
 import "react-modern-calendar-datepicker/lib/DatePicker.css";
-import {Calendar} from "react-modern-calendar-datepicker";
+import { Calendar } from "react-modern-calendar-datepicker";
 
 const months = [
   "",
@@ -1208,7 +1214,7 @@ class QueryLocationsContainer extends React.Component {
   //   };
 
   render() {
-    const {classes} = this.props;
+    const { classes } = this.props;
     return (
       <main className={classes.content}>
         <div className={classes.toolbar} />
@@ -1244,11 +1250,11 @@ class QueryLocationsContainer extends React.Component {
                       }
                       onClick={() => this.handleInstagramClick()}
                     >
-                      <i className="fab fa-instagram"></i>
+                      <i className="fab fa-instagram" />
                     </Button>
                     {this.state.instagram ? (
                       <span className={classes.checkIconTiny}>
-                        <CheckIcon style={{fontSize: "0.9rem"}} />
+                        <CheckIcon style={{ fontSize: "0.9rem" }} />
                       </span>
                     ) : (
                       ""
@@ -1263,11 +1269,11 @@ class QueryLocationsContainer extends React.Component {
                       }
                       onClick={() => this.handleTwitterClick()}
                     >
-                      <i className="fab fa-twitter"></i>
+                      <i className="fab fa-twitter" />
                     </Button>
                     {this.state.twitter ? (
                       <span className={classes.checkIconTiny}>
-                        <CheckIcon style={{fontSize: "0.9rem"}} />
+                        <CheckIcon style={{ fontSize: "0.9rem" }} />
                       </span>
                     ) : (
                       ""
@@ -1345,7 +1351,7 @@ class QueryLocationsContainer extends React.Component {
                       placement="top"
                       title="موضوعات مرتبط با ردیاب انتخابی که نشان دهنده تاثیرپذیری یک متن تستی برای نمایش این قابلیت است و باید توضیحات هر سکشن در این قسمت نمایش داده شود."
                     >
-                      <i className="far fa-lightbulb fa-lg"></i>
+                      <i className="far fa-lightbulb fa-lg" />
                     </BootstrapTooltip>
                   </div>
                 </div>
@@ -1369,7 +1375,7 @@ class QueryLocationsContainer extends React.Component {
                       placement="top"
                       title="موضوعات مرتبط با ردیاب انتخابی که نشان دهنده تاثیرپذیری یک متن تستی برای نمایش این قابلیت است و باید توضیحات هر سکشن در این قسمت نمایش داده شود."
                     >
-                      <i className="far fa-lightbulb fa-lg"></i>
+                      <i className="far fa-lightbulb fa-lg" />
                     </BootstrapTooltip>
                   </div>
                 </div>
@@ -1452,7 +1458,7 @@ class QueryLocationsContainer extends React.Component {
                       placement="top"
                       title="موضوعات مرتبط با ردیاب انتخابی که نشان دهنده تاثیرپذیری یک متن تستی برای نمایش این قابلیت است و باید توضیحات هر سکشن در این قسمت نمایش داده شود."
                     >
-                      <i className="far fa-lightbulb fa-lg"></i>
+                      <i className="far fa-lightbulb fa-lg" />
                     </BootstrapTooltip>
                   </div>
                 </div>
@@ -1473,7 +1479,7 @@ class QueryLocationsContainer extends React.Component {
                   </Typography>
                   <div className={classes.paperHeaderGuideIcon}>
                     <BootstrapTooltip placement="top" title="احساس‌سنج">
-                      <i className="far fa-lightbulb fa-lg"></i>
+                      <i className="far fa-lightbulb fa-lg" />
                     </BootstrapTooltip>
                   </div>
                 </div>
@@ -1565,7 +1571,7 @@ class QueryLocationsContainer extends React.Component {
                       placement="top"
                       title="موضوعات مرتبط با ردیاب انتخابی که نشان دهنده تاثیرپذیری یک متن تستی برای نمایش این قابلیت است و باید توضیحات هر سکشن در این قسمت نمایش داده شود."
                     >
-                      <i className="far fa-lightbulb fa-lg"></i>
+                      <i className="far fa-lightbulb fa-lg" />
                     </BootstrapTooltip>
                   </div>
                 </div>
@@ -1578,7 +1584,7 @@ class QueryLocationsContainer extends React.Component {
                       placeholder="هشتگ و کلمات کلیدی"
                     />
                     <Button className={classes.searchIconBtn}>
-                      <i className="fa fa-search fa-lg"></i>
+                      <i className="fa fa-search fa-lg" />
                     </Button>
 
                     <Divider
@@ -1661,4 +1667,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(styles, {withTheme: true})(QueryLocationsContainer));
+)(withStyles(styles, { withTheme: true })(QueryLocationsContainer));

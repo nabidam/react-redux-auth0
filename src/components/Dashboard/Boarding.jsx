@@ -573,7 +573,7 @@ const styles = theme => ({
   }
 });
 
-class AddQueries extends React.Component {
+class Boarding extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -832,7 +832,7 @@ class AddQueries extends React.Component {
   }
 }
 
-AddQueries.propTypes = {
+Boarding.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired
 };
@@ -866,4 +866,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(styles, {withTheme: true})(AddQueries));
+)(withStyles(styles, {withTheme: true})(Boarding));
